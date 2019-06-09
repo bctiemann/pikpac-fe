@@ -37,8 +37,8 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>menu</v-icon>
+      <v-btn icon to="/auth/sign-out/">
+        <v-icon>power_settings_new</v-icon>
       </v-btn>
     </v-toolbar>
     <v-content>
@@ -80,15 +80,15 @@ export default {
           to: '/'
         },
         {
-          icon: 'bubble_chart',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'attach_money',
+          title: 'Price Check',
+          to: '/price'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'ThinkSmall'
     };
   }
 };

@@ -2,7 +2,7 @@
   <v-card class="auth-form-card" elevation="5">
     <v-responsive>
       <h1 class="display-2 text-uppercase font-weight-black">
-        Drumline
+        ThinkSmall
       </h1>
     </v-responsive>
 
