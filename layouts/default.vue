@@ -3,13 +3,17 @@
     <ul class="nav nav-pills nav-fill">
       <a class="">Pikpac</a>
       <li class="nav-item">
-        <a class="nav-link" href="#">Design a box</a>
+        <nuxt-link class="nav-link" to="/price">
+          Design a box
+        </nuxt-link>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">How it works</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">FAQ</a>
+        <nuxt-link class="nav-link" to="/faq">
+          FAQ
+        </nuxt-link>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">My account</a>
