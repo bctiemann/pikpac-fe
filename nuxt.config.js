@@ -1,4 +1,4 @@
-const colors = require('vuetify/es5/util/colors').default
+// const colors = require('vuetify/es5/util/colors').default
 
 module.exports = {
   mode: 'universal',
@@ -24,6 +24,22 @@ module.exports = {
         href:
           'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
       }
+    ],
+    script: [
+      {
+        src: "https://code.jquery.com/jquery-3.4.1.slim.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js",
+        type: "text/javascript"
+      },
+      {
+        src:
+          "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js",
+        type: "text/javascript"
+      }
     ]
   },
   /*
@@ -42,12 +58,15 @@ module.exports = {
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/vuetify',
+    // Doc: https://bootstrap-vue.js.org/docs/
+    'bootstrap-vue/nuxt',
+    // '@nuxtjs/vuetify',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    'nuxt-fontawesome'
   ],
   /*
    ** Axios module configuration
@@ -73,10 +92,24 @@ module.exports = {
     }
   },
 
+  fontawesome: {
+    imports: [
+//      {
+//        set: '@fortawesome/pro-regular-svg-icons',
+//        icons: ['faAdjust']
+//      },
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      },
+    ],
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
+   /*
   vuetify: {
     theme: {
       primary: colors.blue.darken2,
@@ -88,6 +121,7 @@ module.exports = {
       success: colors.green.accent3
     }
   },
+  */
   /*
    ** Build configuration
    */
