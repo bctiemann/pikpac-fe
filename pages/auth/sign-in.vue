@@ -107,6 +107,23 @@ export default {
       }
     },
 
+    state() {
+      return this.email.length >= 4;
+    },
+
+    invalidFeedback() {
+      if (this.email.length > 4) {
+        return '';
+      } else if (this.email.length > 0) {
+        return 'Enter at least 4 characters';
+      } else {
+        return 'Please enter something';
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : '';
+    },
+
     hasError() {
       return !!this.error;
     },
