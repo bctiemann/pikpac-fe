@@ -22,8 +22,13 @@
           My account
         </nuxt-link>
       </li>
-      <li class="nav-item">
+      <li v-if="user" class="nav-item">
         <a class="nav-link" href="#"><font-awesome-icon icon="shopping-basket" /></a>
+      </li>
+      <li v-if="user" class="nav-item">
+        <nuxt-link class="nav-link" to="/auth/sign-out">
+          <font-awesome-icon icon="sign-out-alt" />
+        </nuxt-link>
       </li>
     </ul>
     <nuxt />
@@ -106,4 +111,19 @@ export default {
     };
   }
 };
+</script>
+
+<script>
+// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+// import { validationRules, validationParams } from '~/mixins/Validation';
+
+export default {
+  computed: {
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
+  }
+}
 </script>

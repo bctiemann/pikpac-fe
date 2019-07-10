@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="title-block">
     <div>
       <h1 class="title">
         Pikpac
@@ -53,7 +53,7 @@ export default {
 </script>
 
 <style>
-.container {
+.title-block {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;

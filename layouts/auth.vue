@@ -1,5 +1,5 @@
 <template>
-  <div class="container" fluid fill-height>
+  <b-container>
     <b-row row align-center justify-center>
       <b-col />
       <b-col sm="6">
@@ -8,8 +8,11 @@
       <b-col />
     </b-row>
     <!--<PrimarySnackbar />-->
-  </div>
+  </b-container>
 </template>
+
+<style>
+</style>
 
 <script>
 // import PrimarySnackbar from '~/components/PrimarySnackbar.vue';
