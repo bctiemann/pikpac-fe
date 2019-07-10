@@ -1,7 +1,7 @@
 <template>
-  <v-layout>
+  <div class="container">
     FAQ
-  </v-layout>
+  </div>
 </template>
 
 <script>

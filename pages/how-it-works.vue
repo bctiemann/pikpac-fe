@@ -1,7 +1,7 @@
 <template>
-  <v-layout>
+  <div class="container">
     How It Works
-  </v-layout>
+  </div>
 </template>
 
 <script>

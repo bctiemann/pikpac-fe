@@ -1,31 +1,42 @@
 <template>
-  <div class="">
-    <h1 class="display-2 text-uppercase font-weight-black">
-      Pikpac
-    </h1>
-
-    <v-card-text>
+  <b-card
+    title="Sign In"
+    class="mb-2"
+  >
+    <b-card-body>
       <form class="sign-in-form" @submit.prevent="login">
         <template>
           <b-container fluid>
+            <b-form-group
+              id="email-formgroup"
+              description="Enter email."
+              label="Enter your email"
+              label-for="email"
+              :invalid-feedback="invalidFeedback"
+              :valid-feedback="validFeedback"
+              :state="state"
+            >
+              <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+            </b-form-group>
+            <!--
             <b-row class="my-1">
               <b-col sm="3">
                 <label for="email">Email:</label>
               </b-col>
               <b-col sm="9">
-                <!--<b-form-input :id="`type-${type}`" :type="type"></b-form-input>-->
-                <b-form-input id="email" v-model="email" :error="hasError" outline label="Email" />
+                <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
               </b-col>
             </b-row>
+            -->
             <b-row class="my-1">
               <b-col sm="3">
                 <label for="password">Password:</label>
               </b-col>
               <b-col sm="9">
-                <!--<b-form-input :id="`type-${type}`" :type="type"></b-form-input>-->
                 <b-form-input
                   id="password"
                   v-model="password"
+                  :state="null"
                   :error="hasError"
                   :error-count="errorMessages.length"
                   :error-messages="errorMessages"
@@ -49,22 +60,24 @@
           Sign In
         </b-button>
       </form>
-      <v-layout row>
-        <v-flex>
-          <nuxt-link to="/auth/register/">
-            Register
-          </nuxt-link>
-        </v-flex>
-        <v-flex>
-          <nuxt-link to="/auth/forgot/">
-            <p class="text-xs-right">
-              Forgot password?
-            </p>
-          </nuxt-link>
-        </v-flex>
-      </v-layout>
-    </v-card-text>
-  </div>
+      <b-container>
+        <b-row>
+          <b-col>
+            <nuxt-link to="/auth/register/">
+              Register
+            </nuxt-link>
+          </b-col>
+          <b-col>
+            <nuxt-link to="/auth/forgot/">
+              <p class="text-xs-right">
+                Forgot password?
+              </p>
+            </nuxt-link>
+          </b-col>
+        </b-row>
+      </b-container>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>

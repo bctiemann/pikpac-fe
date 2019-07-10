@@ -1,7 +1,7 @@
 <template>
-  <v-layout>
+  <div class="container">
     Design
-  </v-layout>
+  </div>
 </template>
 
 <script>
