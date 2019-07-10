@@ -6,17 +6,37 @@
 
     <v-card-text>
       <form class="sign-in-form" @submit.prevent="login">
-        <input v-model="email" :error="hasError" outline label="Email">
-
-        <input
-          v-model="password"
-          :error="hasError"
-          :error-count="errorMessages.length"
-          :error-messages="errorMessages"
-          outline
-          type="password"
-          label="Password"
-        >
+        <template>
+          <b-container fluid>
+            <b-row class="my-1">
+              <b-col sm="3">
+                <label for="email">Email:</label>
+              </b-col>
+              <b-col sm="9">
+                <!--<b-form-input :id="`type-${type}`" :type="type"></b-form-input>-->
+                <b-form-input id="email" v-model="email" :error="hasError" outline label="Email" />
+              </b-col>
+            </b-row>
+            <b-row class="my-1">
+              <b-col sm="3">
+                <label for="password">Password:</label>
+              </b-col>
+              <b-col sm="9">
+                <!--<b-form-input :id="`type-${type}`" :type="type"></b-form-input>-->
+                <b-form-input
+                  id="password"
+                  v-model="password"
+                  :error="hasError"
+                  :error-count="errorMessages.length"
+                  :error-messages="errorMessages"
+                  outline
+                  type="password"
+                  label="Password"
+                />
+              </b-col>
+            </b-row>
+          </b-container>
+        </template>
 
         <b-form-checkbox
           v-model="rememberMe"
