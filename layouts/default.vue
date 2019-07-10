@@ -3,22 +3,22 @@
     <ul class="nav nav-pills nav-fill">
       <a class="">Pikpac</a>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/design">
+        <nuxt-link class="nav-link" to="/design" data-toggle="pill">
           Design a box
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/how-it-works">
+        <nuxt-link class="nav-link" to="/how-it-works" data-toggle="pill">
           How it works
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/faq">
+        <nuxt-link class="nav-link" to="/faq" data-toggle="pill">
           FAQ
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/account">
+        <nuxt-link class="nav-link" to="/account" data-toggle="pill">
           My account
         </nuxt-link>
       </li>
