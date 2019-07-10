@@ -1,16 +1,14 @@
 <template>
-  <v-card class="auth-form-card" elevation="5">
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        ThinkSmall
-      </h1>
-    </v-responsive>
+  <div class="">
+    <h1 class="display-2 text-uppercase font-weight-black">
+      Pikpac
+    </h1>
 
     <v-card-text>
-      <v-form class="sign-in-form" @submit.prevent="login">
-        <v-text-field v-model="email" :error="hasError" outline label="Email" />
+      <form class="sign-in-form" @submit.prevent="login">
+        <input v-model="email" :error="hasError" outline label="Email">
 
-        <v-text-field
+        <input
           v-model="password"
           :error="hasError"
           :error-count="errorMessages.length"
@@ -18,18 +16,19 @@
           outline
           type="password"
           label="Password"
-        />
+        >
 
-        <v-checkbox
+        <b-form-checkbox
           v-model="rememberMe"
           class="remember-me-checkbox"
-          label="Remember me"
-        />
+        >
+          Remember me
+        </b-form-checkbox>
 
-        <v-btn block color="success" type="submit">
+        <b-button block color="success" type="submit">
           Sign In
-        </v-btn>
-      </v-form>
+        </b-button>
+      </form>
       <v-layout row>
         <v-flex>
           <nuxt-link to="/auth/register/">
@@ -45,7 +44,7 @@
         </v-flex>
       </v-layout>
     </v-card-text>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -85,6 +84,7 @@ export default {
 
   methods: {
     async login() {
+      console.log('foo');
       // const { username, password } = this;
       try {
         await this.$auth
