@@ -6,10 +6,10 @@
     </p>
     <b-breadcrumb :items="productBreadcrumbs" />
     <b-row v-if="selectedProduct">
-      <b-col v-for="style in selectedProduct.styles" :key="style.name" @click="selectStyle(style)">
+      <div v-for="style in selectedProduct.styles" :key="style.name" class="w-50 p-3" @click="selectStyle(style)">
         <b-img :src="style.image" fluid :alt="style.verboseName" />
         {{ style.verboseName }}
-      </b-col>
+      </div>
     </b-row>
     <b-row v-else>
       <b-col v-for="product in products" :key="product.name" @click="selectProduct(product)">
