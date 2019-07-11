@@ -5,7 +5,10 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
     </p>
     <b-breadcrumb :items="productBreadcrumbs" />
-    <b-row>
+    <b-row v-if="productSelected">
+      asdasdas
+    </b-row>
+    <b-row v-else>
       <b-col v-for="product in products" :key="product.name" @click="selectProduct(product, true)">
         <b-img :src="product.image" fluid :alt="product.verboseName" />
         {{ product.verboseName }}
@@ -17,6 +20,7 @@
 <script>
 const rigidBoxImageUrl = require('~/static/rigid_box.png');
 const foldingBoxImageUrl = require('~/static/folding_box.png');
+const productBreadcrumbBase = { text: 'Products', href: '/design' };
 
 export default {
   components: {},
@@ -39,7 +43,8 @@ export default {
           styles: []
         }
       ],
-      productBreadcrumbs: []
+      productSelected: null,
+      productBreadcrumbs: [ productBreadcrumbBase ]
     };
   },
 
@@ -56,12 +61,17 @@ export default {
       console.log('foo');
     },
 
-    selectProduct (item, resetBreadcrumbs) {
-      console.log(item);
+    selectProduct (product, resetBreadcrumbs) {
+      console.log(product);
       if (resetBreadcrumbs) {
-        this.productBreadcrumbs = [];
+        this.productBreadcrumbs = [ productBreadcrumbBase ];
       };
-      this.productBreadcrumbs.push(item.verboseName);
+      this.productBreadcrumbs.push(product.verboseName);
+      this.productSelected = product;
+    },
+
+    clearProduct () {
+      console.log('foo');
     }
   }
 
