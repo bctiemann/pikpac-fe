@@ -86,8 +86,11 @@ html {
 </style>
 
 <script>
+// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+// import { validationRules, validationParams } from '~/mixins/Validation';
+
 export default {
-  data() {
+  data () {
     return {
       clipped: false,
       drawer: false,
@@ -109,15 +112,8 @@ export default {
       rightDrawer: false,
       title: 'ThinkSmall'
     };
-  }
-};
-</script>
+  },
 
-<script>
-// import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
-// import { validationRules, validationParams } from '~/mixins/Validation';
-
-export default {
   computed: {
     user: {
       get () {
@@ -125,5 +121,5 @@ export default {
       }
     }
   }
-}
+};
 </script>
