@@ -5,11 +5,14 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
     </p>
     <b-breadcrumb :items="productBreadcrumbs" />
-    <b-row v-if="productSelected">
-      asdasdas
+    <b-row v-if="selectedProduct">
+      <b-col v-for="style in selectedProduct.styles" :key="style.name" @click="selectStyle(style)">
+        <b-img :src="style.image" fluid :alt="style.verboseName" />
+        {{ style.verboseName }}
+      </b-col>
     </b-row>
     <b-row v-else>
-      <b-col v-for="product in products" :key="product.name" @click="selectProduct(product, true)">
+      <b-col v-for="product in products" :key="product.name" @click="selectProduct(product)">
         <b-img :src="product.image" fluid :alt="product.verboseName" />
         {{ product.verboseName }}
       </b-col>
@@ -32,18 +35,52 @@ export default {
         { text: 'Bar', value: 2 }
       ],
       products: [
-        { name: 'rigid',
+        {
+          name: 'rigid',
           verboseName: 'Rigid box',
           image: rigidBoxImageUrl,
-          styles: []
+          styles: [
+            {
+              name: '2pc-nc',
+              verboseName: 'Two piece box / Non-collapsible',
+              image: rigidBoxImageUrl
+            },
+            {
+              name: '2pc-c',
+              verboseName: 'Two piece box / Collapsible',
+              image: rigidBoxImageUrl
+            },
+            {
+              name: 'drawer-c',
+              verboseName: 'Drawer box / Collapsible',
+              image: rigidBoxImageUrl
+            }
+          ]
         },
-        { name: 'folding',
+        {
+          name: 'folding',
           verboseName: 'Folding box',
           image: foldingBoxImageUrl,
-          styles: []
+          styles: [
+            {
+              name: '1pc-folding',
+              verboseName: 'One piece / Folding box',
+              image: rigidBoxImageUrl
+            },
+            {
+              name: '2pc-folding',
+              verboseName: 'Two piece / Folding box',
+              image: rigidBoxImageUrl
+            },
+            {
+              name: 'drawer-folding',
+              verboseName: 'Drawer / Folding box',
+              image: rigidBoxImageUrl
+            }
+          ]
         }
       ],
-      productSelected: null,
+      selectedProduct: null,
       productBreadcrumbs: [ productBreadcrumbBase ]
     };
   },
@@ -61,17 +98,21 @@ export default {
       console.log('foo');
     },
 
-    selectProduct (product, resetBreadcrumbs) {
+    selectProduct (product) {
       console.log(product);
-      if (resetBreadcrumbs) {
-        this.productBreadcrumbs = [ productBreadcrumbBase ];
-      };
+      this.productBreadcrumbs = [ productBreadcrumbBase ];
       this.productBreadcrumbs.push(product.verboseName);
-      this.productSelected = product;
+      this.selectedProduct = product;
     },
 
     clearProduct () {
       console.log('foo');
+    },
+
+    selectStyle (style) {
+      this.productBreadcrumbs = [ productBreadcrumbBase ];
+      this.productBreadcrumbs.push(this.selectedProduct.verboseName);
+      this.productBreadcrumbs.push(style.verboseName);
     }
   }
 
