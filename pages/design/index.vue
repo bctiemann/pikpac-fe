@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import products from '~/constants/products.js';
+import { products } from '~/constants/products.js';
 
 export default {
   components: {},

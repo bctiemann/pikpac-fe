@@ -6,8 +6,9 @@ const foldingBoxImageUrl = require('~/static/folding_box.png');
 const folding1PieceImageUrl = require('~/static/folding_1pc-folding.png');
 const folding2PieceImageUrl = require('~/static/folding_2pc-folding.png');
 const foldingDrawerImageUrl = require('~/static/folding_drawer-folding.png');
+export const blisterTrayImageUrl = require('~/static/blister_tray.png');
 
-export default [
+export const products = [
   {
     name: 'rigid',
     verboseName: 'Rigid box',

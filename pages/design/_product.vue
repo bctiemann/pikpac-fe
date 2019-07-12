@@ -13,7 +13,7 @@
     <b-row v-if="selectedStyle">
       <b-col sm="7">
         <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" class="mb-5" />
-        <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" />
+        <b-img :src="blisterTrayImageUrl" fluid :alt="selectedStyle.verboseName" />
       </b-col>
       <b-col>
         blah details
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import products from '~/constants/products.js';
+import { products, blisterTrayImageUrl } from '~/constants/products.js';
 
 const productBreadcrumbBase = { text: 'Products', to: '/design' };
 
@@ -46,7 +46,8 @@ export default {
       productsDict: {},
       selectedProduct: null,
       selectedStyle: null,
-      productBreadcrumbs: [ productBreadcrumbBase ]
+      productBreadcrumbs: [ productBreadcrumbBase ],
+      blisterTrayImageUrl: blisterTrayImageUrl
     };
   },
 
