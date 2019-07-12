@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <h1 v-if="selectedProduct">
+    <h1 v-if="selectedStyle">
+      {{ selectedStyle.verboseName }}
+    </h1>
+    <h1 v-else-if="selectedProduct">
       {{ selectedProduct.verboseName }}
     </h1>
     <p class="page-blurb">
@@ -8,22 +11,19 @@
     </p>
     <b-breadcrumb :items="productBreadcrumbs" />
     <b-row v-if="selectedStyle">
-      <div class="w-50 p-3">
+      <b-col sm="7">
+        <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" class="mb-5" />
         <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" />
-        {{ selectedStyle.verboseName }}
-      </div>
+      </b-col>
+      <b-col>
+        blah details
+      </b-col>
     </b-row>
     <b-row v-else-if="selectedProduct">
       <div v-for="style in selectedProduct.styles" :key="style.name" class="w-50 p-3" @click="selectStyle(style)">
         <b-img :src="style.image" fluid :alt="style.verboseName" />
         {{ style.verboseName }}
       </div>
-    </b-row>
-    <b-row v-else>
-      <b-col v-for="product in products" :key="product.name" @click="selectProduct(product)">
-        <b-img :src="product.image" fluid :alt="product.verboseName" />
-        {{ product.verboseName }}
-      </b-col>
     </b-row>
   </div>
 </template>
