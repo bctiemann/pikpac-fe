@@ -1,19 +1,19 @@
 <template>
   <div class="container">
-    <h1 v-if="selectedStyle">
-      {{ selectedStyle.verboseName }}
+    <h1 v-if="selectedProduct">
+      {{ selectedProduct.name }}
     </h1>
-    <h1 v-else-if="selectedProduct">
-      {{ selectedProduct.verboseName }}
+    <h1 v-else-if="selectedCategory">
+      {{ selectedCategory.name }}
     </h1>
     <p class="page-blurb">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
     </p>
     <b-breadcrumb :items="productBreadcrumbs" />
-    <div v-if="selectedStyle">
+    <div v-if="selectedProduct">
       <b-row>
         <b-col sm="7">
-          <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" class="mb-5" />
+          <b-img :src="selectedProduct.picture" fluid :alt="selectedProduct.name" class="mb-5" />
         </b-col>
         <b-col>
           blah details
@@ -36,7 +36,7 @@
       </b-row>
       <b-row>
         <b-col sm="7">
-          <b-img :src="blisterTrayImageUrl" fluid :alt="selectedStyle.verboseName" class="mb-5" />
+          <b-img :src="blisterTrayImageUrl" fluid :alt="selectedProduct.name" class="mb-5" />
         </b-col>
         <b-col>
           <h2>Blister Tray</h2>
@@ -91,7 +91,7 @@
           </b-row>
         </b-col>
         <b-col sm="7">
-          <b-img :src="selectedStyle.image" fluid :alt="selectedStyle.verboseName" class="mb-5" />
+          <b-img :src="selectedProduct.picture" fluid :alt="selectedProduct.name" class="mb-5" />
         </b-col>
       </b-row>
       <b-row>
@@ -112,17 +112,18 @@
         <h2>Examples</h2>
       </b-row>
     </div>
-    <b-row v-else-if="selectedProduct">
-      <div v-for="style in selectedProduct.styles" :key="style.name" class="w-50 p-3" @click="selectStyle(style)">
-        <b-img :src="style.image" fluid :alt="style.verboseName" />
-        {{ style.verboseName }}
+    <b-row v-else>
+      <div v-for="product in products" :key="product.sku" class="w-50 p-3" @click="selectProduct(product)">
+        <b-img :src="product.picture" fluid :alt="product.name" />
+        {{ product.name }}
       </div>
     </b-row>
   </div>
 </template>
 
 <script>
-import { products, blisterTrayImageUrl } from '~/constants/products.js';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { blisterTrayImageUrl } from '~/constants/products.js';
 
 const productBreadcrumbBase = { text: 'Products', to: '/design' };
 
@@ -135,10 +136,10 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      products: products,
-      productsDict: {},
+      // products: products,
+      // productsDict: {},
+      // selectedCategory: null,
       selectedProduct: null,
-      selectedStyle: null,
       productBreadcrumbs: [ productBreadcrumbBase ],
       blisterTrayImageUrl: blisterTrayImageUrl,
       size: null,
@@ -191,6 +192,16 @@ export default {
   },
 
   computed: {
+    ...mapState('products', [
+      'selectedCategory',
+      'products',
+      'productsDict',
+      'isLoading'
+    ]),
+
+    ...mapGetters('players', [
+    ]),
+
     productBreadcrumbs1: {
       get () {
         return [];
@@ -198,46 +209,57 @@ export default {
     }
   },
 
-  created () {
-    for (const p in this.products) {
-      this.productsDict[this.products[p].name] = this.products[p];
-    };
-    console.log(this.productsDict);
+  async created () {
+    // await this.getProducts();
+    await this.getCategory({ category: this.$route.params.category });
+    this.fillBreadcrumbs();
+    this.getProducts({ category: this.$route.params.category });
+
+    // for (const p in this.products) {
+    //   this.productsDict[this.products[p].name] = this.products[p];
+    // };
+    // console.log(this.productsDict);
   },
 
   mounted () {
-    console.log(this.$route.params.product);
-    this.selectedProduct = this.productsDict[this.$route.params.product];
-    console.log(this.selectedProduct);
-    this.fillBreadcrumbs();
+    // console.log(this.$route.params.category);
+    // this.selectedCategory = this.productsDict[this.$route.params.category];
+    // console.log(this.selectedCategory);
   },
 
   methods: {
+    ...mapActions('products', [
+      'getCategory',
+      'getProducts'
+    ]),
+
     refreshPrice (item) {
       console.log('foo');
     },
 
     fillBreadcrumbs () {
       this.productBreadcrumbs = [ productBreadcrumbBase ];
-      this.productBreadcrumbs.push({ text: this.selectedProduct.verboseName, href: '/design/' + this.selectedProduct.name });
+      this.productBreadcrumbs.push({ text: this.selectedCategory.name, href: '/design/' + this.selectedCategory.slug });
     },
 
+    /*
     selectProduct (product) {
       console.log(product);
       this.productBreadcrumbs = [ productBreadcrumbBase ];
       this.productBreadcrumbs.push({ text: product.verboseName, href: '/design?product=' + product.name });
       this.selectedProduct = product;
     },
+    */
 
     clearProduct () {
       console.log('foo');
     },
 
-    selectStyle (style) {
+    selectProduct (product) {
       // this.productBreadcrumbs = [ productBreadcrumbBase ];
       // this.productBreadcrumbs.push({ text: this.selectedProduct.verboseName, href: '/design?product=' + this.selectedProduct.name });
-      this.productBreadcrumbs.push(style.verboseName);
-      this.selectedStyle = style;
+      this.productBreadcrumbs.push(product.name);
+      this.selectedProduct = product;
     }
   }
 

@@ -5,15 +5,16 @@
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
     </p>
     <b-row>
-      <b-col v-for="product in products" :key="product.name" @click="selectProduct(product)">
-        <b-img :src="product.image" fluid :alt="product.verboseName" />
-        {{ product.verboseName }}
+      <b-col v-for="category in categories" :key="category.slug" @click="selectCategory(category)">
+        <b-img :src="category.picture" fluid :alt="category.name" />
+        {{ category.name }}
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
 import { products } from '~/constants/products.js';
 
 export default {
@@ -30,20 +31,35 @@ export default {
   },
 
   computed: {
+    ...mapState('products', [
+      'categories',
+      'isLoading'
+    ]),
+
+    ...mapGetters('players', [
+    ])
   },
 
   mounted () {
     console.log(this.products);
   },
 
+  created () {
+    this.getCategories();
+  },
+
   methods: {
+    ...mapActions('products', [
+      'getCategories'
+    ]),
+
     refreshPrice (item) {
       console.log('foo');
     },
 
-    selectProduct (product) {
+    selectCategory (category) {
       this.$router.push({
-        path: '/design/' + product.name
+        path: '/design/' + category.slug
       });
     },
 
