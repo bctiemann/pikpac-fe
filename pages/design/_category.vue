@@ -13,17 +13,16 @@
     <div v-if="selectedProduct">
       <b-row>
         <b-col sm="7">
-          <b-img :src="selectedProduct.picture" fluid :alt="selectedProduct.name" class="mb-5" />
+          <b-img :src="selectedProduct.picture" fluid-grow :alt="selectedProduct.name" class="mb-5" />
         </b-col>
         <b-col>
-          blah details
           <p class="page-blurb">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
           </p>
           <b-form-select v-model="size" :options="sizeOptions" />
           <b-form-select v-model="colors" :options="colorsOptions" />
           <b-form-select v-model="finishing" :options="finishingOptions" />
-          <b-form-select v-model="boxQuantity" :options="boxQuantityOptions" />
+          <b-form-select v-model="boxQuantity" :options="boxQuantityOptions" @change="refreshPrice({ product: selectedProduct, quantity: boxQuantity })" />
           <b-row>
             <b-col>
               Price
@@ -36,7 +35,7 @@
       </b-row>
       <b-row>
         <b-col sm="7">
-          <b-img :src="blisterTrayImageUrl" fluid :alt="selectedProduct.name" class="mb-5" />
+          <b-img :src="blisterTrayImageUrl" fluid-grow :alt="selectedProduct.name" class="mb-5" />
         </b-col>
         <b-col>
           <h2>Blister Tray</h2>
@@ -174,7 +173,6 @@ export default {
         { value: { C: '3PO' }, text: 'This is an option with object value' },
         { value: 'd', text: 'This one is disabled', disabled: true }
       ],
-      boxPrice: 3.5,
       blisterTrayQuantity: null,
       blisterTrayQuantityOptions: [
         { value: null, text: 'Select quantity' },
@@ -196,6 +194,7 @@ export default {
       'selectedCategory',
       'products',
       'productsDict',
+      'boxPrice',
       'isLoading'
     ]),
 
@@ -230,12 +229,9 @@ export default {
   methods: {
     ...mapActions('products', [
       'getCategory',
-      'getProducts'
+      'getProducts',
+      'refreshPrice'
     ]),
-
-    refreshPrice (item) {
-      console.log('foo');
-    },
 
     fillBreadcrumbs () {
       this.productBreadcrumbs = [ productBreadcrumbBase ];
@@ -260,6 +256,13 @@ export default {
       // this.productBreadcrumbs.push({ text: this.selectedProduct.verboseName, href: '/design?product=' + this.selectedProduct.name });
       this.productBreadcrumbs.push(product.name);
       this.selectedProduct = product;
+      this.boxQuantityOptions = [{ value: null, text: 'Select quantity' }];
+      for (const p in product.prices) {
+        console.log(product.prices[p].quantity);
+        this.boxQuantityOptions.push({ text: product.prices[p].quantity, value: product.prices[p].quantity });
+      };
+      // this.boxQuantity = product.prices[0].quantity;
+      // this.refreshPrice({ product: product, quantity: this.boxQuantity });
     }
   }
 
