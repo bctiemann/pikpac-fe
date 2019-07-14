@@ -258,7 +258,6 @@ export default {
       this.selectedProduct = product;
       this.boxQuantityOptions = [{ value: null, text: 'Select quantity' }];
       for (const p in product.prices) {
-        console.log(product.prices[p].quantity);
         this.boxQuantityOptions.push({ text: product.prices[p].quantity, value: product.prices[p].quantity });
       };
       // this.boxQuantity = product.prices[0].quantity;
