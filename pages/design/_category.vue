@@ -28,7 +28,9 @@
               Price
             </b-col>
             <b-col class="text-right">
-              {{ boxPrice || '' }}
+              <span v-if="boxQuantity">
+                {{ calculatedUnitPrice }} &times; {{ boxQuantity }} = {{ calculatedTotalPrice }}
+              </span>
             </b-col>
           </b-row>
         </b-col>
@@ -201,6 +203,18 @@ export default {
     ...mapGetters('players', [
     ]),
 
+    calculatedUnitPrice: {
+      get () {
+        return '$' + this.zeroPadPrice(this.boxPrice);
+      }
+    },
+
+    calculatedTotalPrice: {
+      get () {
+        return '$' + this.zeroPadPrice(this.boxPrice * this.boxQuantity);
+      }
+    },
+
     productBreadcrumbs1: {
       get () {
         return [];
@@ -232,6 +246,13 @@ export default {
       'getProducts',
       'refreshPrice'
     ]),
+
+    zeroPadPrice (value) {
+      if (!value) {
+        return 0;
+      }
+      return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+    },
 
     fillBreadcrumbs () {
       this.productBreadcrumbs = [ productBreadcrumbBase ];
