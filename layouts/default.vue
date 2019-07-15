@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <b-container>
     <ul class="nav nav-pills nav-fill">
-      <a class="">Pikpac</a>
+      <nuxt-link class="logo" to="/">
+        pikpac
+      </nuxt-link>
       <li class="nav-item">
         <nuxt-link class="nav-link" to="/design" data-toggle="pill">
           Design a box
@@ -32,10 +34,15 @@
       </li>
     </ul>
     <nuxt />
-  </div>
+  </b-container>
 </template>
 
 <style>
+@font-face {
+    font-family: 'mermaid';
+    src: url('/fonts/Mermaid1001.ttf');
+}
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -82,6 +89,20 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+h1, h2, h3, .logo {
+  font-family: 'mermaid';
+  font-weight: bold;
+}
+
+.logo {
+  font-size: 44px;
+  color: #000;
+}
+.logo:hover {
+  text-decoration: none;
+  color: #000;
 }
 </style>
 
