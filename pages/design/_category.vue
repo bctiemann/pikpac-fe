@@ -28,7 +28,10 @@
               Price
             </b-col>
             <b-col class="text-right">
-              <span v-if="boxQuantity">
+              <span v-if="isLoading" class="price-loading">
+                <b-img src="~/static/loading_spinner.gif" />
+              </span>
+              <span v-else-if="boxQuantity">
                 {{ calculatedUnitPrice }} &times; {{ boxQuantity }} = {{ calculatedTotalPrice }}
               </span>
             </b-col>
@@ -114,13 +117,24 @@
       </b-row>
     </div>
     <b-row v-else>
-      <div v-for="product in products" :key="product.sku" class="w-50 p-3" @click="selectProduct(product)">
+      <div v-if="isLoading" class="row">
+        <b-col />
+        <b-img src="~/static/loading_spinner.gif" />
+        <b-col />
+      </div>
+      <div v-for="product in products" v-else :key="product.sku" class="w-50 p-3" @click="selectProduct(product)">
         <b-img :src="product.picture" fluid :alt="product.name" />
         {{ product.name }}
       </div>
     </b-row>
   </div>
 </template>
+
+<style>
+.price-loading img {
+  max-height: 20px;
+}
+</style>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';

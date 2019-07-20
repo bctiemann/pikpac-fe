@@ -4,7 +4,12 @@
     <p class="page-blurb">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
     </p>
-    <b-row>
+    <b-row v-if="isLoading">
+      <b-col />
+      <b-img src="~/static/loading_spinner.gif" />
+      <b-col />
+    </b-row>
+    <b-row v-else>
       <b-col v-for="category in categories" :key="category.slug" @click="selectCategory(category)">
         <b-img :src="category.picture" fluid :alt="category.name" />
         {{ category.name }}
