@@ -160,42 +160,32 @@ export default {
       size: null,
       sizeOptions: [
         { value: null, text: 'Select size' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { value: '1x1', text: '1 x 1' },
+        { value: '2x2', text: '2 x 2' },
+        { value: '3x3', text: '3 x 3' },
+        { value: '4x4', text: '4 x 4' },
+        { value: '5x5', text: '5 x 5' }
       ],
       colors: null,
       colorsOptions: [
         { value: null, text: 'Select # of colors' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { value: 1, text: '1' },
+        { value: 2, text: '2' },
+        { value: 3, text: '3' }
       ],
       finishing: null,
       finishingOptions: [
         { value: null, text: 'Select finishing' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { value: 'a', text: 'First option' },
+        { value: 'b', text: 'Second option' }
       ],
       boxQuantity: null,
-      boxQuantityOptions: [
-        { value: null, text: 'Select quantity' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
-      ],
+      boxQuantityOptions: [],
       blisterTrayQuantity: null,
       blisterTrayQuantityOptions: [
         { value: null, text: 'Select quantity' },
-        { value: 'a', text: 'This is First option' },
-        { value: 'b', text: 'Selected Option' },
-        { value: { C: '3PO' }, text: 'This is an option with object value' },
-        { value: 'd', text: 'This one is disabled', disabled: true }
+        { value: 'a', text: 'First option' },
+        { value: 'b', text: 'Second option' }
       ],
       blisterTrayPrice: 7.21,
       material: '1.5mm Chipboard + 157 gsm Artboard',
