@@ -1,7 +1,40 @@
 <template>
   <div class="container">
     <div v-if="selectedPattern || selectedPaper">
-      <h2>Design editor</h2>
+      <b-row class="designer">
+        <b-col sm="9">
+          <b-row class="preview-pane h-100 mr-3">
+            <h3>Design editor</h3>
+          </b-row>
+        </b-col>
+        <b-col sm="3" class="designer-tools">
+          <div class="h-100 d-flex flex-column">
+            <b-row class="designer-title">
+              <h2>{{ project.title }}</h2>
+            </b-row>
+            <b-row class="flex-grow-1">
+              <b-col sm="8" class="px-1">
+                <div class="h-100 d-flex flex-column">
+                  <ul class="nav nav-tabs nav-fill">
+                    <li class="nav-item">
+                      Choose pattern
+                    </li>
+                    <li class="nav-item">
+                      Choose paper
+                    </li>
+                  </ul>
+                  <div class="flex-grow-1">
+                    Palette
+                  </div>
+                </div>
+              </b-col>
+              <b-col sm="4">
+                Buttons
+              </b-col>
+            </b-row>
+          </div>
+        </b-col>
+      </b-row>
       <b-row class="d-flex w-100 justify-content-between">
         <div>
           <b-button to="/design">
@@ -75,11 +108,33 @@
   filter: opacity(60%);
   transition: .3s;
 }
+
+.designer {
+  height: 80vh;
+}
+
+.preview-pane {
+  background-color: #e0e4df;
+}
+
+.designer-tools {
+}
+
+.designer-tools div {
+  background-color: #e0e4df;
+}
+
+.designer-title {
+  height: 60px;
+}
+
+.designer-tools .nav {
+  font-size: 10px;
+}
 </style>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import { products } from '~/constants/products.js';
 
 export default {
   components: {},
@@ -90,7 +145,9 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      products: products,
+      project: {
+        title: 'Project name'
+      },
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
