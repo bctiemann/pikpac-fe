@@ -101,7 +101,7 @@
       <b-row>
         <b-col />
         <b-col>
-          <b-button>
+          <b-button @click="savePreliminaryDesign">
             Select from our preset designs
           </b-button>
         </b-col>
@@ -137,7 +137,7 @@
 </style>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { blisterTrayImageUrl } from '~/constants/products.js';
 
 const productBreadcrumbBase = { text: 'Products', to: '/design' };
@@ -204,6 +204,10 @@ export default {
       'isLoading'
     ]),
 
+    ...mapState('design', [
+      'design'
+    ]),
+
     ...mapGetters('players', [
     ]),
 
@@ -251,6 +255,10 @@ export default {
       'refreshPrice'
     ]),
 
+    ...mapMutations('design', [
+      'setDesign'
+    ]),
+
     zeroPadPrice (value) {
       if (!value) {
         return 0;
@@ -287,6 +295,13 @@ export default {
       };
       // this.boxQuantity = product.prices[0].quantity;
       // this.refreshPrice({ product: product, quantity: this.boxQuantity });
+    },
+
+    savePreliminaryDesign () {
+      const design = {
+        foo: 'bar'
+      };
+      this.setDesign(design);
     }
   }
 
