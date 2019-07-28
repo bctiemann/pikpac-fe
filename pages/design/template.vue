@@ -2,6 +2,21 @@
   <div class="container">
     <div v-if="selectedPattern || selectedPaper">
       <h2>Design editor</h2>
+      <b-row class="d-flex w-100 justify-content-between">
+        <div>
+          <b-button to="/design">
+            Back
+          </b-button>
+        </div>
+        <div>
+          <b-button>
+            Save
+          </b-button>
+          <b-button @click="selectPatternPaper">
+            Review order &rarr;
+          </b-button>
+        </div>
+      </b-row>
     </div>
     <div v-else>
       <h2>Choose a design or paper</h2>
@@ -44,7 +59,7 @@
               <b-button>
                 Save
               </b-button>
-              <b-button>
+              <b-button :disabled="!(highlightedPattern || highlightedPaper)" @click="selectPatternPaper">
                 Next &rarr;
               </b-button>
             </div>
@@ -124,8 +139,12 @@ export default {
       this.highlightedPattern = null;
       this.highlightedPaper = paper;
       console.log(paper);
+    },
+
+    selectPatternPaper () {
+      this.selectedPattern = this.highlightedPattern;
+      this.selectedPaper = this.highlightedPaper;
     }
   }
-
 };
 </script>
