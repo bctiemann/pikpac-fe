@@ -10,7 +10,7 @@
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/how-it-works" data-toggle="pill">
+        <nuxt-link class="nav-link" to="/about" data-toggle="pill">
           How it works
         </nuxt-link>
       </li>
