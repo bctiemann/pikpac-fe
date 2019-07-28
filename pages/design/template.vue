@@ -34,6 +34,21 @@
               {{ paper.name }}
             </div>
           </b-row>
+          <b-row class="d-flex w-100 justify-content-between">
+            <div>
+              <b-button to="/design">
+                Choose another box
+              </b-button>
+            </div>
+            <div>
+              <b-button>
+                Save
+              </b-button>
+              <b-button>
+                Next &rarr;
+              </b-button>
+            </div>
+          </b-row>
         </b-row>
       </b-row>
     </div>
