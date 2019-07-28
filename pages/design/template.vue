@@ -22,14 +22,14 @@
         <b-row v-else>
           <h3>Pattern options</h3>
           <b-row>
-            <div v-for="pattern in patterns" :key="pattern.sku" class="w-25 p-3" @click="highlightPattern(pattern)">
+            <div v-for="pattern in patterns" :key="pattern.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && pattern !== highlightedPattern }" @click="highlightPattern(pattern)">
               <b-img :src="pattern.picture" fluid :alt="pattern.name" />
               {{ pattern.name }}
             </div>
           </b-row>
           <h3>Paper options</h3>
           <b-row>
-            <div v-for="paper in papers" :key="paper.sku" class="w-25 p-3" @click="highlightPaper(paper)">
+            <div v-for="paper in papers" :key="paper.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && paper !== highlightedPaper }" @click="highlightPaper(paper)">
               <b-img :src="paper.picture" fluid :alt="paper.name" />
               {{ paper.name }}
             </div>
@@ -55,6 +55,13 @@
   </div>
 </template>
 
+<style>
+.faded {
+  filter: opacity(60%);
+  transition: .3s;
+}
+</style>
+
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import { products } from '~/constants/products.js';
@@ -70,7 +77,9 @@ export default {
       ],
       products: products,
       selectedPattern: null,
-      selectedPaper: null
+      selectedPaper: null,
+      highlightedPattern: null,
+      highlightedPaper: null
     };
   },
 
@@ -106,10 +115,14 @@ export default {
     ]),
 
     highlightPattern (pattern) {
+      this.highlightedPattern = pattern;
+      this.highlightedPaper = null;
       console.log(pattern);
     },
 
     highlightPaper (paper) {
+      this.highlightedPattern = null;
+      this.highlightedPaper = paper;
       console.log(paper);
     }
   }
