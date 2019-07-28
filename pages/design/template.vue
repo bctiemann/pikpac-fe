@@ -3,9 +3,12 @@
     <div v-if="selectedPattern || selectedPaper">
       <b-row class="designer">
         <b-col sm="9">
-          <b-row class="preview-pane h-100 mr-3">
+          <div class="h-100 d-flex flex-column">
             <h3>Design editor</h3>
-          </b-row>
+            <b-row class="preview-pane h-100 mr-3 flex-grow-1">
+              Preview
+            </b-row>
+          </div>
         </b-col>
         <b-col sm="3" class="designer-tools">
           <div class="h-100 d-flex flex-column">
