@@ -2,6 +2,8 @@ export const state = () => ({
   categories: [],
   selectedCategory: null,
   products: [],
+  patterns: [],
+  papers: [],
   productsDict: {},
   boxPrice: null,
   isLoading: false
@@ -22,6 +24,12 @@ export const mutations = {
     for (const p in products) {
       state.productsDict[products[p].id] = products[p];
     };
+  },
+  setPatterns (state, patterns) {
+    state.patterns = patterns;
+  },
+  setPapers (state, papers) {
+    state.papers = papers;
   },
   setBoxPrice (state, price) {
     state.boxPrice = price.price;
@@ -56,6 +64,18 @@ export const actions = {
     commit('setIsLoading', true);
     const { data } = await this.$axios.get(`/products/?category=${payload.category}`);
     commit('setProducts', data);
+    commit('setIsLoading', false);
+  },
+  async getPatterns ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.get(`/patterns/`);
+    commit('setPatterns', data);
+    commit('setIsLoading', false);
+  },
+  async getPapers ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.get(`/papers/`);
+    commit('setPapers', data);
     commit('setIsLoading', false);
   },
   async refreshPrice ({ commit }, payload) {

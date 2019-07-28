@@ -302,6 +302,9 @@ export default {
         foo: 'bar'
       };
       this.setDesign(design);
+      this.$router.push({
+        path: '/design/template'
+      });
     }
   }
 
