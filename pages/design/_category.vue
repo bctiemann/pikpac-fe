@@ -106,7 +106,7 @@
           </b-button>
         </b-col>
         <b-col>
-          <b-button>
+          <b-button to="/design/custom">
             Upload your own design
           </b-button>
         </b-col>
