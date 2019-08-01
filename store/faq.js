@@ -1,7 +1,7 @@
 export const state = () => ({
   categories: [],
   headings: [],
-  items: [],
+  // items: [],
   isLoading: false
 });
 
@@ -11,9 +11,6 @@ export const mutations = {
   },
   setHeadings (state, headings) {
     state.headings = headings;
-  },
-  setItems (state, items) {
-    state.items = items;
   },
   setIsLoading (state, isLoading) {
     state.isLoading = isLoading;
@@ -32,11 +29,11 @@ export const actions = {
     const { data } = await this.$axios.get(`/faq_headings/?category=${payload.category}`);
     commit('setHeadings', data);
     commit('setIsLoading', false);
-  },
-  async getItems ({ commit }, payload) {
-    commit('setIsLoading', true);
-    const { data } = await this.$axios.get(`/faq_items/?heading=${payload.heading}`);
-    commit('setItems', data);
-    commit('setIsLoading', false);
   }
+//  async getItems ({ commit }, payload) {
+//    commit('setIsLoading', true);
+//    const { data } = await this.$axios.get(`/faq_items/?heading=${payload.heading}`);
+//    commit('setItems', data);
+//    commit('setIsLoading', false);
+//  }
 };

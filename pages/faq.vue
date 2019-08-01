@@ -16,9 +16,9 @@
         <div v-for="heading in headings" :key="heading.id" class="heading">
           {{ heading.title }}
           <ul>
-            <li v-for="item in heading.items" :key="item.id">
+            <li v-for="item in heading.items" :key="item.id" :class="{ hidden: !expandedItems[item.id] }" @click="toggleItem(item)">
               {{ item.title }}
-              <div class="hidden">
+              <div class="faq-item hidden">
                 {{ item.body }}
               </div>
             </li>
@@ -29,26 +29,34 @@
   </div>
 </template>
 
+<style>
+.faq-item {
+  transition: .3s;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.hidden .faq-item {
+  max-height: 0px;
+}
+</style>
+
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {},
 
   data: () => {
     return {
-      items: [
-        { text: 'Foo', value: 1 },
-        { text: 'Bar', value: 2 }
-      ]
+      expandedItems: {}
     };
   },
 
   computed: {
     ...mapState('faq', [
       'categories',
-      'headings',
-      'items'
+      'headings'
     ])
   },
 
@@ -60,9 +68,15 @@ export default {
   methods: {
     ...mapActions('faq', [
       'getCategories',
-      'getHeadings',
-      'getItems'
-    ])
+      'getHeadings'
+    ]),
+
+    ...mapMutations('faq', [
+    ]),
+
+    toggleItem (item) {
+      this.$set(this.expandedItems, item.id, !this.expandedItems[item.id]);
+    }
   }
 
 };
