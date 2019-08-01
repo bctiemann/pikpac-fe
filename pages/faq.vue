@@ -18,7 +18,7 @@
           <ul>
             <li v-for="item in heading.items" :key="item.id" :class="{ hidden: !expandedItems[item.id] }" @click="toggleItem(item)">
               {{ item.title }}
-              <div class="faq-item hidden">
+              <div class="faq-item hidden mb-3">
                 {{ item.body }}
               </div>
             </li>
@@ -34,6 +34,7 @@
   transition: .3s;
   max-height: 100vh;
   overflow: hidden;
+  white-space: pre-line;
 }
 
 .hidden .faq-item {
