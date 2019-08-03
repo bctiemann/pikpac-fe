@@ -1,11 +1,12 @@
 <template>
   <div class="container">
-    My Account
+    My Orders
   </div>
 </template>
 
 <script>
 export default {
+  layout: 'account',
   middleware: 'auth',
 
   components: {},

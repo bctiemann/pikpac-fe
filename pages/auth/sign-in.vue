@@ -149,7 +149,7 @@ export default {
             console.log(error.request);
             this.error = JSON.parse(error.request.response);
           });
-        this.$router.push('/');
+        this.$router.push('/account');
       } catch (e) {
         console.log('caught error');
         this.error = e.response.data[0];
