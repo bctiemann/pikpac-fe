@@ -1,17 +1,12 @@
 <template>
-  <v-card class="auth-form-card" elevation="5">
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Drumline
-      </h1>
-    </v-responsive>
-
-    <v-card-text>
-      <p class="text-xs-center title grey--text text--darken-1">
-        Logging out...
-      </p>
-    </v-card-text>
-  </v-card>
+  <b-card
+    title="Sign Out"
+    class="mb-2"
+  >
+    <b-card-body>
+      Signing out...
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>
