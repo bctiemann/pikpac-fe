@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    My Account
+    Account Information
   </div>
 </template>
 

@@ -34,23 +34,17 @@
       </li>
     </ul>
     <b-container>
-      <ul class="nav nav-tabs nav-fill">
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/account/orders" data-toggle="pill">
-            My Orders
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/account/history" data-toggle="pill">
-            Order History
-          </nuxt-link>
-        </li>
-        <li class="nav-item">
-          <nuxt-link class="nav-link" to="/account/info" data-toggle="pill">
-            Account Information
-          </nuxt-link>
-        </li>
-      </ul>
+      <b-nav tabs fill>
+        <b-nav-item to="/account/orders" :active="$nuxt.$route.path == '/account/orders'">
+          My Orders
+        </b-nav-item>
+        <b-nav-item to="/account/history" :active="$nuxt.$route.path == '/account/history'">
+          Order History
+        </b-nav-item>
+        <b-nav-item to="/account" :active="$nuxt.$route.path == '/account'">
+          Account Information
+        </b-nav-item>
+      </b-nav>
       <nuxt />
     </b-container>
   </b-container>
