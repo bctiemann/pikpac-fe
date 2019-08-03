@@ -35,3 +35,15 @@
     </ul>
   </b-container>
 </template>
+
+<script>
+export default {
+  computed: {
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
+  }
+};
+</script>

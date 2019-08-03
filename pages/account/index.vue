@@ -20,6 +20,14 @@ export default {
     };
   },
 
+  computed: {
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
+  },
+
   methods: {
     refreshPrice (item) {
       console.log('foo');
