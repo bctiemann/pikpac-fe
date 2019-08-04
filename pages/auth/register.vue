@@ -1,14 +1,46 @@
 <template>
-  <v-card class="auth-form-card" elevation="5">
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Pikpac
-      </h1>
-    </v-responsive>
+  <b-card
+    title="Register"
+    class="mb-2"
+  >
+    <b-card-body>
+      <b-form class="register-form" @submit.prevent="register">
+        <b-form-group
+          id="email-formgroup"
+          description="Enter email."
+          label="Enter your email"
+          label-for="email"
+          :invalid-feedback="invalidFeedback"
+          :valid-feedback="validFeedback"
+          :state="state"
+        >
+          <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+        </b-form-group>
 
-    <v-card-text>
-      Register Account
-      <v-form class="register-form" @submit.prevent="register">
+        <b-form-input
+          id="password"
+          v-model="password"
+          :state="null"
+          :error="hasError"
+          :error-count="errorMessages.length"
+          :error-messages="errorMessages"
+          outline
+          type="password"
+          label="Password"
+        />
+
+        <b-form-input
+          id="password2"
+          v-model="password2"
+          :state="null"
+          :error="hasError"
+          :error-count="errorMessages.length"
+          :error-messages="errorMessages"
+          outline
+          type="password"
+          label="Password"
+        />
+
         <v-text-field
           v-model="email"
           :error="hasError"
@@ -36,20 +68,20 @@
           label="Repeat Password"
         />
 
-        <v-btn
+        <b-btn
           block
           color="success"
           type="submit"
           :disabled="!formValid"
         >
           Register
-        </v-btn>
-      </v-form>
+        </b-btn>
+      </b-form>
       <nuxt-link to="/">
         Back
       </nuxt-link>
-    </v-card-text>
-  </v-card>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>
