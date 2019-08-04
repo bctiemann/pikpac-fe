@@ -5,7 +5,7 @@
   >
     <v-responsive>
       <h1 class="display-2 text-uppercase font-weight-black">
-        Drumline
+        Pikpac
       </h1>
     </v-responsive>
 
