@@ -4,6 +4,7 @@
     class="mb-2"
   >
     <b-card-body>
+      {{ error }}
       <b-form class="register-form" @submit.prevent="register">
         <b-form-group
           id="email-formgroup"
@@ -41,33 +42,6 @@
           label="Password"
         />
 
-        <v-text-field
-          v-model="email"
-          :error="hasError"
-          outline
-          label="Email"
-        />
-
-        <v-text-field
-          v-model="password"
-          :error="hasError"
-          error-count="1"
-          :error-messages="passwordsMatchError"
-          outline
-          type="password"
-          label="Password"
-        />
-
-        <v-text-field
-          v-model="password2"
-          :error="hasError"
-          error-count="1"
-          :error-messages="passwordsMatchError"
-          outline
-          type="password"
-          label="Repeat Password"
-        />
-
         <b-btn
           block
           color="success"
@@ -100,8 +74,28 @@ export default {
   },
 
   computed: {
-    hasError () { return !!this.error; },
-    errorMessages () { return this.error ? [this.error] : []; },
+    state() {
+      return this.email.length >= 4;
+    },
+    invalidFeedback() {
+      if (this.email.length > 4) {
+        return '';
+      } else if (this.email.length > 0) {
+        return 'Enter at least 4 characters';
+      } else {
+        return 'Please enter something';
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : '';
+    },
+
+    hasError() {
+      return !!this.error;
+    },
+    errorMessages() {
+      return this.error ? [this.error] : [];
+    },
     passwordsMatchError () {
       return (this.password === this.password2 || !this.password2) ? '' : 'Passwords must match.';
     },
@@ -126,10 +120,11 @@ export default {
             console.log('error');
             const errorList = JSON.parse(error.request.response);
             console.log(errorList);
-            this.$store.commit('setSnackbar', {
-              msg: errorList[0],
-              color: 'error'
-            }, { root: true });
+            this.error = errorList[0];
+            // this.$store.commit('setSnackbar', {
+            //   msg: errorList[0],
+            //   color: 'error'
+            // }, { root: true });
           });
       } catch (e) {
         this.error = e.response.data[0];

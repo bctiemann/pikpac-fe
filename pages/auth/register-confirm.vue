@@ -1,31 +1,25 @@
 <template>
-  <v-card
-    class="auth-form-card"
-    elevation="5"
+  <b-card
+    title="Confirm Account"
+    class="mb-2"
   >
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Pikpac
-      </h1>
-    </v-responsive>
-
-    <v-card-text>
+    <b-card-body>
       Confirm Account
-      <v-form
+      <b-form
         class="register-form"
         @submit.prevent="confirm"
       >
         Click below to confirm your account.
-        <v-btn
+        <b-btn
           block
           color="success"
           type="submit"
         >
           Confirm
-        </v-btn>
-      </v-form>
-    </v-card-text>
-  </v-card>
+        </b-btn>
+      </b-form>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>

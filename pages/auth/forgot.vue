@@ -1,40 +1,34 @@
 <template>
-  <v-card
-    class="auth-form-card"
-    elevation="5"
+  <b-card
+    title="Forgot Password?"
+    class="mb-2"
   >
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Pikpac
-      </h1>
-    </v-responsive>
-
-    <v-card-text>
+    <b-card-body>
       Forgot password?
-      <v-form
+      <b-form
         class="register-form"
         @submit.prevent="requestToken"
       >
-        <v-text-field
+        <b-form-input
           v-model="email"
           :error="hasError"
           outline
           label="Email"
         />
 
-        <v-btn
+        <b-btn
           block
           color="success"
           type="submit"
         >
           Get reset token
-        </v-btn>
-      </v-form>
+        </b-btn>
+      </b-form>
       <nuxt-link to="/">
         Back
       </nuxt-link>
-    </v-card-text>
-  </v-card>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>

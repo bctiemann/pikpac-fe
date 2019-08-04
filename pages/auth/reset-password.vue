@@ -1,13 +1,9 @@
 <template>
-  <v-card class="auth-form-card" elevation="5">
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Pikpac
-      </h1>
-    </v-responsive>
-
-    <v-card-text>
-      Reset Password
+  <b-card
+    title="Reset Password"
+    class="mb-2"
+  >
+    <b-card-body>
       <div v-if="tokenResponsePending">
         Please wait...
       </div>
@@ -15,7 +11,7 @@
         Token not valid.
       </div>
       <div v-else>
-        <v-form class="register-form" @submit.prevent="resetPassword">
+        <b-form class="register-form" @submit.prevent="resetPassword">
           Choose a new password.
 
           <v-text-field
@@ -41,10 +37,10 @@
           <v-btn block color="success" type="submit" :disabled="!formValid">
             Set New Password
           </v-btn>
-        </v-form>
+        </b-form>
       </div>
-    </v-card-text>
-  </v-card>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>

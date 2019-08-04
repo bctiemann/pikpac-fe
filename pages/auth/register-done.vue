@@ -1,23 +1,17 @@
 <template>
-  <v-card
-    class="auth-form-card"
-    elevation="5"
+  <b-card
+    title="Register"
+    class="mb-2"
   >
-    <v-responsive>
-      <h1 class="display-2 text-uppercase font-weight-black">
-        Pikpac
-      </h1>
-    </v-responsive>
-
-    <v-card-text>
-      <p class="text-xs-center title grey--text text--darken-1">
+    <b-card-body>
+      <p class="text-xs-center grey--text text--darken-1">
         Registered. Check your email.
       </p>
       <nuxt-link to="/">
         Home
       </nuxt-link>
-    </v-card-text>
-  </v-card>
+    </b-card-body>
+  </b-card>
 </template>
 
 <script>

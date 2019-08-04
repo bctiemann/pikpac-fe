@@ -53,6 +53,14 @@
 export default {
   components: {
     // PrimarySnackbar
+  },
+
+  computed: {
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
   }
 };
 </script>
