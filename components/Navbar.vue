@@ -25,7 +25,10 @@
         </nuxt-link>
       </li>
       <li v-if="user" class="nav-item">
-        <a class="nav-link" href="#"><font-awesome-icon icon="shopping-basket" />{{ cart.length }}</a>
+        <nuxt-link class="nav-link" to="/cart">
+          <font-awesome-icon icon="shopping-basket" />
+          {{ cart.length }}
+        </nuxt-link>
       </li>
       <li v-if="user" class="nav-item">
         <nuxt-link class="nav-link" to="/auth/sign-out">
