@@ -40,7 +40,7 @@
           <b-button>
             Save
           </b-button>
-          <b-button @click="submitDesign">
+          <b-button @click="addToCart(project)">
             Add to cart &rarr;
           </b-button>
         </div>
@@ -118,7 +118,6 @@ export default {
   },
 
   async mounted () {
-    console.log(this.products);
     await this.getPatterns();
     await this.getPapers();
   },
@@ -133,8 +132,9 @@ export default {
       'getPapers'
     ]),
 
-    submitDesign () {
-    }
+    ...mapActions('cart', [
+      'addToCart'
+    ])
   }
 };
 </script>

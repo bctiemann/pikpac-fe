@@ -25,7 +25,7 @@
         </nuxt-link>
       </li>
       <li v-if="user" class="nav-item">
-        <a class="nav-link" href="#"><font-awesome-icon icon="shopping-basket" /></a>
+        <a class="nav-link" href="#"><font-awesome-icon icon="shopping-basket" />{{ cart.length }}</a>
       </li>
       <li v-if="user" class="nav-item">
         <nuxt-link class="nav-link" to="/auth/sign-out">
@@ -37,8 +37,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   computed: {
+    ...mapState('cart', [
+      'cart'
+    ]),
+
     user: {
       get () {
         return this.$auth.user;
