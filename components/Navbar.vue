@@ -20,7 +20,7 @@
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/account" data-toggle="pill">
+        <nuxt-link class="nav-link" to="/account/orders" data-toggle="pill">
           My account
         </nuxt-link>
       </li>
