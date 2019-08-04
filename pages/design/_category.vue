@@ -113,7 +113,15 @@
         <b-col />
       </b-row>
       <b-row>
-        <h2>Examples</h2>
+        <b-col sm="12">
+          <h2>Examples</h2>
+          <div class="parent">
+            <div class="div1" />
+            <div class="div2" />
+            <div class="div3" />
+            <div class="div4" />
+          </div>
+        </b-col>
       </b-row>
     </div>
     <b-row v-else>
@@ -133,6 +141,24 @@
 <style>
 .price-loading img {
   max-height: 20px;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  height: 1000px;
+}
+
+.div1 { grid-area: 1 / 1 / 7 / 8; background-image: url('~static/example01.png'); }
+.div2 { grid-area: 1 / 8 / 8 / 13; background-image: url('~static/example02.png'); }
+.div3 { grid-area: 8 / 7 / 13 / 13; background-image: url('~static/example03.png'); }
+.div4 { grid-area: 7 / 1 / 12 / 7; background-image: url('~static/example04.png'); }
+
+.parent div {
+  background-size: cover;
 }
 </style>
 
