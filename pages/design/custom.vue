@@ -8,6 +8,9 @@
       <b-button @click="started = true;">
         Start!
       </b-button>
+      <b-button @click="startDesignProcess">
+        Modal
+      </b-button>
       <b-row>
         <b-col />
         <b-col sm="5">
@@ -67,6 +70,7 @@
       </b-row>
       </b-row>
     </div>
+    <SignInModal />
   </div>
 </template>
 
@@ -102,9 +106,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import SignInModal from '~/components/SignInModal.vue';
 
 export default {
-  components: {},
+  components: {
+    SignInModal
+  },
 
   data: () => {
     return {
@@ -155,6 +162,10 @@ export default {
     ]),
 
     submitDesign () {
+    },
+
+    startDesignProcess () {
+      this.$bvModal.show('sign-in');
     }
   }
 };

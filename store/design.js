@@ -1,8 +1,5 @@
 export const state = () => ({
-  design: {
-    paper: null,
-    pattern: null
-  }
+  design: {}
 });
 
 export const mutations = {
