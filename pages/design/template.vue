@@ -1,101 +1,45 @@
 <template>
   <div class="container">
-    <div v-if="selectedPattern || selectedPaper">
-      <b-row class="designer">
-        <b-col sm="9">
-          <div class="h-100 d-flex flex-column">
-            <h3>Design editor</h3>
-            <b-row class="preview-pane h-100 mr-3 flex-grow-1">
-              Preview
-            </b-row>
-          </div>
-        </b-col>
-        <b-col sm="3" class="designer-tools">
-          <div class="h-100 d-flex flex-column">
-            <b-row class="designer-title">
-              <h2>{{ project.title }}</h2>
-            </b-row>
-            <b-row class="flex-grow-1">
-              <b-col sm="8" class="px-1">
-                <div class="h-100 d-flex flex-column">
-                  <ul class="nav nav-tabs nav-fill">
-                    <li class="nav-item">
-                      Choose pattern
-                    </li>
-                    <li class="nav-item">
-                      Choose paper
-                    </li>
-                  </ul>
-                  <div class="flex-grow-1">
-                    Palette
-                  </div>
-                </div>
-              </b-col>
-              <b-col sm="4">
-                Buttons
-              </b-col>
-            </b-row>
-          </div>
-        </b-col>
+    <h2>Choose a design or paper</h2>
+    <p class="page-blurb">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
+    </p>
+    <b-row v-if="isLoading">
+      <b-col />
+      <b-img src="~/static/loading_spinner.gif" />
+      <b-col />
+    </b-row>
+    <b-row v-else>
+      <h3>Pattern options</h3>
+      <b-row>
+        <div v-for="pattern in patterns" :key="pattern.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && pattern !== highlightedPattern }" @click="highlightPattern(pattern)">
+          <b-img :src="pattern.picture" fluid :alt="pattern.name" />
+          {{ pattern.name }}
+        </div>
+      </b-row>
+      <h3>Paper options</h3>
+      <b-row>
+        <div v-for="paper in papers" :key="paper.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && paper !== highlightedPaper }" @click="highlightPaper(paper)">
+          <b-img :src="paper.picture" fluid :alt="paper.name" />
+          {{ paper.name }}
+        </div>
       </b-row>
       <b-row class="d-flex w-100 justify-content-between">
         <div>
           <b-button to="/design">
-            Back
+            Choose another box
           </b-button>
         </div>
         <div>
           <b-button>
             Save
           </b-button>
-          <b-button to="/design/review">
-            Review order &rarr;
+          <b-button :disabled="!(highlightedPattern || highlightedPaper)" @click="selectPatternPaper">
+            Next &rarr;
           </b-button>
         </div>
       </b-row>
-    </div>
-    <div v-else>
-      <h2>Choose a design or paper</h2>
-      <p class="page-blurb">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
-      </p>
-      <b-row v-if="isLoading">
-        <b-col />
-        <b-img src="~/static/loading_spinner.gif" />
-        <b-col />
-      </b-row>
-      <b-row v-else>
-        <h3>Pattern options</h3>
-        <b-row>
-          <div v-for="pattern in patterns" :key="pattern.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && pattern !== highlightedPattern }" @click="highlightPattern(pattern)">
-            <b-img :src="pattern.picture" fluid :alt="pattern.name" />
-            {{ pattern.name }}
-          </div>
-        </b-row>
-        <h3>Paper options</h3>
-        <b-row>
-          <div v-for="paper in papers" :key="paper.sku" class="w-25 p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && paper !== highlightedPaper }" @click="highlightPaper(paper)">
-            <b-img :src="paper.picture" fluid :alt="paper.name" />
-            {{ paper.name }}
-          </div>
-        </b-row>
-        <b-row class="d-flex w-100 justify-content-between">
-          <div>
-            <b-button to="/design">
-              Choose another box
-            </b-button>
-          </div>
-          <div>
-            <b-button>
-              Save
-            </b-button>
-            <b-button :disabled="!(highlightedPattern || highlightedPaper)" @click="selectPatternPaper">
-              Next &rarr;
-            </b-button>
-          </div>
-        </b-row>
-      </b-row>
-    </div>
+    </b-row>
   </div>
 </template>
 
@@ -130,7 +74,7 @@
 </style>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {},
@@ -182,6 +126,13 @@ export default {
       'getPapers'
     ]),
 
+    ...mapActions('design', [
+      'setDesignProperty'
+    ]),
+
+    ...mapMutations('design', [
+    ]),
+
     highlightPattern (pattern) {
       this.highlightedPattern = pattern;
       this.highlightedPaper = null;
@@ -195,8 +146,11 @@ export default {
     },
 
     selectPatternPaper () {
-      this.selectedPattern = this.highlightedPattern;
-      this.selectedPaper = this.highlightedPaper;
+      // this.selectedPattern = this.highlightedPattern;
+      // this.selectedPaper = this.highlightedPaper;
+      this.setDesignProperty({ property: 'pattern', value: this.highlightedPattern });
+      this.setDesignProperty({ property: 'paper', value: this.highlightedPaper });
+      this.$router.push('/design/editor');
     }
   }
 };
