@@ -15,6 +15,9 @@ export const mutations = {
 };
 
 export const actions = {
+  resetDesign ({ commit }) {
+    commit('setDesign', {});
+  },
   setDesignProperty ({ commit }, payload) {
     commit('setDesignProperty', payload);
   }

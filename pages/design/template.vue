@@ -150,6 +150,7 @@ export default {
       // this.selectedPaper = this.highlightedPaper;
       this.setDesignProperty({ property: 'pattern', value: this.highlightedPattern });
       this.setDesignProperty({ property: 'paper', value: this.highlightedPaper });
+      this.setDesignProperty({ property: 'title', value: 'Project name' });
       this.$router.push('/design/editor');
     }
   }

@@ -15,7 +15,7 @@
           <b-img src="~/static/folding_1pc-folding.png" fluid-grow class="mb-5" />
         </b-col>
         <b-col sm="5">
-          <h3>Project name</h3>
+          <h3>{{ design.title }}</h3>
           <div class="project-data">
             00.00 cm x 00.00 cm x 00.00 cm
           </div>
@@ -40,7 +40,7 @@
           <b-button>
             Save
           </b-button>
-          <b-button @click="addToCart(project)">
+          <b-button @click="addToCart(design)">
             Add to cart &rarr;
           </b-button>
         </div>
