@@ -40,13 +40,14 @@
           <b-button>
             Save
           </b-button>
-          <b-button @click="addToCart(design)">
+          <b-button @click="loginAndAddToCart">
             Add to cart &rarr;
           </b-button>
         </div>
       </b-row>
       </b-row>
     </div>
+    <SignInModal />
   </div>
 </template>
 
@@ -82,9 +83,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import SignInModal from '~/components/SignInModal.vue';
 
 export default {
-  components: {},
+  components: {
+    SignInModal
+  },
 
   data: () => {
     return {
@@ -114,7 +118,13 @@ export default {
     ]),
 
     ...mapGetters('players', [
-    ])
+    ]),
+
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
   },
 
   async mounted () {
@@ -134,7 +144,17 @@ export default {
 
     ...mapActions('cart', [
       'addToCart'
-    ])
+    ]),
+
+    loginAndAddToCart () {
+      if (!this.user) {
+        this.$bvModal.show('sign-in');
+        // Pass in 'addToCart' callback; fetch design from store
+      } else {
+        console.log('adding to cart');
+        this.addToCart(this.design);
+      }
+    }
   }
 };
 </script>

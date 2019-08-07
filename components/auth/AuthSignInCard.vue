@@ -119,6 +119,7 @@ export default {
 
     closeModal () {
       console.log('closing modal');
+      this.$bvModal.hide('sign-in');
     },
 
     async login (callback) {

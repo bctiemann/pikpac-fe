@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <div v-if="!started">
+    <div v-if="!started || !user">
       <h1>Ready?</h1>
+      {{ user }}
+      {{ started }}
       <p class="page-blurb">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
       </p>
@@ -126,7 +128,8 @@ export default {
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
-      highlightedPaper: null
+      highlightedPaper: null,
+      loggedIn: false
     };
   },
 
@@ -142,7 +145,20 @@ export default {
     ]),
 
     ...mapGetters('players', [
-    ])
+    ]),
+
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    }
+  },
+
+  watch: {
+    loggedIn: function () {
+      console.log('watch');
+      return this.$auth.user;
+    }
   },
 
   async mounted () {
