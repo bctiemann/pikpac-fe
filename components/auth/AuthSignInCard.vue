@@ -2,7 +2,7 @@
   <b-container>
     <template>
       <b-container fluid>
-        <b-form class="sign-in-form" @submit.prevent="login(redirectToAccountPage)">
+        <b-form class="sign-in-form" @submit.prevent="login(closeModal)">
           <b-form-group
             id="email-formgroup"
             description="Enter email."
