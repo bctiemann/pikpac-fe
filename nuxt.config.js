@@ -88,7 +88,8 @@ module.exports = {
     },
 
     redirect: {
-      login: '/auth/sign-in'
+      login: '/auth/sign-in',
+      home: false
     }
   },
 

@@ -2,7 +2,7 @@
   <b-container>
     <template>
       <b-container fluid>
-        <b-form class="sign-in-form" @submit.prevent="login">
+        <b-form class="sign-in-form" @submit.prevent="login(redirectToAccountPage)">
           <b-form-group
             id="email-formgroup"
             description="Enter email."
@@ -112,8 +112,17 @@ export default {
   },
 
   methods: {
-    async login () {
-      console.log('foo1');
+    redirectToAccountPage () {
+      console.log('redirecting');
+      this.$router.push('/account/orders');
+    },
+
+    closeModal () {
+      console.log('closing modal');
+    },
+
+    async login (callback) {
+      console.log('foo1a');
       // const { username, password } = this;
       try {
         await this.$auth
@@ -128,7 +137,8 @@ export default {
             console.log(error.request);
             this.error = JSON.parse(error.request.response);
           });
-        this.$router.push('/account/orders');
+        callback();
+        // this.$router.push('/account/orders');
       } catch (e) {
         console.log('caught error');
         this.error = e.response.data[0];

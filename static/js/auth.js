@@ -16,7 +16,8 @@ const auth = {
           console.log(error.request);
           this.error = JSON.parse(error.request.response);
         });
-      this.$router.push('/account/orders');
+      console.log('auth.js');
+      // this.$router.push('/account/orders');
     } catch (e) {
       console.log('caught error');
       this.error = e.response.data[0];
