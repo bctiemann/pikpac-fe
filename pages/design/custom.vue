@@ -2,16 +2,11 @@
   <div class="container">
     <div v-if="!started || !user">
       <h1>Ready?</h1>
-      {{ user }}
-      {{ started }}
       <p class="page-blurb">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
       </p>
-      <b-button @click="started = true;">
-        Start!
-      </b-button>
       <b-button @click="startDesignProcess">
-        Modal
+        Start!
       </b-button>
       <b-row>
         <b-col />
@@ -188,9 +183,11 @@ export default {
 
     startDesignProcess () {
       this.started = true;
-      this.$bvModal.show('sign-in');
       this.resetDesign();
       this.setDesignProperty({ property: 'title', value: 'Project name' });
+      if (!this.user) {
+        this.$bvModal.show('sign-in');
+      }
     }
   }
 };
