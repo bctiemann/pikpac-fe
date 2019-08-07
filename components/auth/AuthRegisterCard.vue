@@ -1,21 +1,62 @@
 <template>
-  <b-card
-    title="Register"
-    class="mb-2"
-  >
-    <b-card-body>
-      <AuthRegisterCard />
-    </b-card-body>
-  </b-card>
+  <b-container>
+    {{ error }}
+    <b-form class="register-form" @submit.prevent="register">
+      <b-form-group
+        id="email-formgroup"
+        description="Enter email."
+        label="Enter your email"
+        label-for="email"
+        :invalid-feedback="invalidFeedback"
+        :valid-feedback="validFeedback"
+        :state="state"
+      >
+        <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+      </b-form-group>
+
+      <b-form-input
+        id="password"
+        v-model="password"
+        :state="null"
+        :error="hasError"
+        :error-count="errorMessages.length"
+        :error-messages="errorMessages"
+        outline
+        type="password"
+        label="Password"
+      />
+
+      <b-form-input
+        id="password2"
+        v-model="password2"
+        :state="null"
+        :error="hasError"
+        :error-count="errorMessages.length"
+        :error-messages="errorMessages"
+        outline
+        type="password"
+        label="Password"
+      />
+
+      <b-btn
+        block
+        color="success"
+        type="submit"
+        :disabled="!formValid"
+      >
+        Register
+      </b-btn>
+    </b-form>
+    <nuxt-link to="/">
+      Back
+    </nuxt-link>
+  </b-container>
 </template>
 
 <script>
-import AuthRegisterCard from '~/components/auth/AuthRegisterCard.vue';
-
 export default {
   layout: 'auth',
   components: {
-    AuthRegisterCard
   },
 
   data () {

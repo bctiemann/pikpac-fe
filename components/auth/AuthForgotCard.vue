@@ -1,21 +1,34 @@
 <template>
-  <b-card
-    title="Forgot Password?"
-    class="mb-2"
-  >
-    <b-card-body>
-      <AuthForgotCard />
-    </b-card-body>
-  </b-card>
+  <b-container>
+    <b-form
+      class="register-form"
+      @submit.prevent="requestToken"
+    >
+      <b-form-input
+        v-model="email"
+        :error="hasError"
+        outline
+        label="Email"
+      />
+
+      <b-btn
+        block
+        color="success"
+        type="submit"
+      >
+        Get reset token
+      </b-btn>
+    </b-form>
+    <nuxt-link to="/">
+      Back
+    </nuxt-link>
+  </b-container>
 </template>
 
 <script>
-import AuthForgotCard from '~/components/auth/AuthForgotCard.vue';
-
 export default {
   layout: 'auth',
   components: {
-    AuthForgotCard
   },
 
   data () {
