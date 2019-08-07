@@ -4,25 +4,23 @@
     class="mb-2"
   >
     <b-card-body>
-      <b-form class="sign-in-form" @submit.prevent="login">
-        <AuthSignInCard />
-        <b-container>
-          <b-row>
-            <b-col>
-              <nuxt-link to="/auth/register/">
-                Register
-              </nuxt-link>
-            </b-col>
-            <b-col>
-              <nuxt-link to="/auth/forgot/">
-                <p class="text-xs-right">
-                  Forgot password?
-                </p>
-              </nuxt-link>
-            </b-col>
-          </b-row>
-        </b-container>
-      </b-form>
+      <AuthSignInCard />
+      <b-container>
+        <b-row>
+          <b-col>
+            <nuxt-link to="/auth/register/">
+              Register
+            </nuxt-link>
+          </b-col>
+          <b-col>
+            <nuxt-link to="/auth/forgot/">
+              <p class="text-xs-right">
+                Forgot password?
+              </p>
+            </nuxt-link>
+          </b-col>
+        </b-row>
+      </b-container>
     </b-card-body>
   </b-card>
 </template>
@@ -40,6 +38,7 @@ export default {
   methods: {
     async login () {
       console.log('foo1');
+      console.log(this);
       // const { username, password } = this;
       try {
         await this.$auth

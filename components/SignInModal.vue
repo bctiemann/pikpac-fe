@@ -1,8 +1,6 @@
 <template>
   <b-modal id="sign-in" title="Sign In" @ok="handleOk">
-    <b-form class="sign-in-form" @submit.prevent="handleOk">
-      <AuthSignInCard />
-    </b-form>
+    <AuthSignInCard />
   </b-modal>
 </template>
 
@@ -28,9 +26,28 @@ export default {
   },
 
   methods: {
-    handleOk () {
-      // console.log(auth.login);
-      console.log('blah');
+    async handleOk () {
+      console.log('foo2');
+      console.log(this.email);
+      // const { username, password } = this;
+      try {
+        await this.$auth
+          .loginWith('local', {
+            data: {
+              email: this.email,
+              password: this.password
+            }
+          })
+          .catch((error) => {
+            console.log('error');
+            console.log(error.request);
+            this.error = JSON.parse(error.request.response);
+          });
+        // this.$router.push('/account/orders');
+      } catch (e) {
+        console.log('caught error');
+        this.error = e.response.data[0];
+      }
     }
   }
 };
