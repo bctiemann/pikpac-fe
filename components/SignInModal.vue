@@ -1,18 +1,82 @@
 <template>
-  <b-modal id="sign-in" title="Sign In" @ok="handleOk">
-    <AuthSignInCard />
+  <b-modal id="sign-in" title="Sign In" @ok.prevent="handleOk">
+    <b-container>
+      <template>
+        <b-container fluid>
+          <b-form class="sign-in-form" @submit.prevent="handleOk">
+            <b-form-group
+              id="email-formgroup"
+              description="Enter email."
+              label="Enter your email"
+              label-for="email"
+              :invalid-feedback="invalidFeedback"
+              :valid-feedback="validFeedback"
+              :state="state"
+            >
+              <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+            </b-form-group>
+            <!--
+            <b-row class="my-1">
+              <b-col sm="3">
+                <label for="email">Email:</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+              </b-col>
+            </b-row>
+            -->
+            <b-row class="my-1">
+              <b-col sm="3">
+                <label for="password">Password:</label>
+              </b-col>
+              <b-col sm="9">
+                <b-form-input
+                  id="password"
+                  v-model="password"
+                  :state="null"
+                  :error="hasError"
+                  :error-count="errorMessages.length"
+                  :error-messages="errorMessages"
+                  outline
+                  type="password"
+                  label="Password"
+                />
+              </b-col>
+              <b-button block color="success" type="submit">
+                Sign In
+              </b-button>
+            </b-row>
+            <b-form-checkbox
+              v-model="rememberMe"
+              class="remember-me-checkbox"
+            >
+              Remember me
+            </b-form-checkbox>
+          </b-form>
+        </b-container>
+      </template>
+    </b-container>
   </b-modal>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import AuthSignInCard from '~/components/auth/AuthSignInCard.vue';
+// import AuthSignInCard from '~/components/auth/AuthSignInCard.vue';
 // import auth from '~/static/js/auth';
 
 export default {
   components: {
-    AuthSignInCard
+    // AuthSignInCard
   },
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      error: null
+    };
+  },
+
   computed: {
     ...mapState('cart', [
       'cart'
@@ -22,6 +86,43 @@ export default {
       get () {
         return this.$auth.user;
       }
+    },
+
+    rememberMe: {
+      get() {
+        const authSetToRemember = this.$auth.$storage.getCookie('remember_me');
+        return /true/.test(authSetToRemember);
+      },
+      set(rememberMe) {
+        this.$auth.options.cookie.options.expires = rememberMe
+          ? 61 // Expire cookie in two calendar months;
+          : null;
+        this.$auth.$storage.setCookie('remember_me', rememberMe);
+      }
+    },
+
+    state() {
+      return this.email.length >= 4;
+    },
+
+    invalidFeedback() {
+      if (this.email.length > 4) {
+        return '';
+      } else if (this.email.length > 0) {
+        return 'Enter at least 4 characters';
+      } else {
+        return 'Please enter something';
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : '';
+    },
+
+    hasError() {
+      return !!this.error;
+    },
+    errorMessages() {
+      return this.error ? [this.error] : [];
     }
   },
 
