@@ -183,8 +183,8 @@ export default {
 
     startDesignProcess () {
       this.started = true;
-      this.resetDesign();
-      this.setDesignProperty({ property: 'title', value: 'Project name' });
+      // this.resetDesign();
+      // this.setDesignProperty({ property: 'title', value: 'Project name' });
       if (!this.user) {
         this.$bvModal.show('sign-in');
       }

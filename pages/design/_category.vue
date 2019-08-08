@@ -101,12 +101,12 @@
       <b-row>
         <b-col />
         <b-col>
-          <b-button @click="savePreliminaryDesign">
+          <b-button @click="savePreliminaryDesign('template')">
             Select from our preset designs
           </b-button>
         </b-col>
         <b-col>
-          <b-button to="/design/custom">
+          <b-button @click="savePreliminaryDesign('custom')">
             Upload your own design
           </b-button>
         </b-col>
@@ -173,6 +173,10 @@ export default {
 
   data: () => {
     return {
+      designTypes: {
+        template: 'Predefined Template',
+        custom: 'Custom Design'
+      },
       items: [
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
@@ -323,13 +327,18 @@ export default {
       // this.refreshPrice({ product: product, quantity: this.boxQuantity });
     },
 
-    savePreliminaryDesign () {
+    savePreliminaryDesign (designType) {
       const design = {
-        foo: 'bar'
+        product: this.selectedProduct,
+        title: 'Project name',
+        type: this.designTypes[designType],
+        quantity: this.boxQuantity,
+        calculatedUnitPrice: this.calculatedUnitPrice,
+        calculatedTotalPrice: this.calculatedTotalPrice
       };
       this.setDesign(design);
       this.$router.push({
-        path: '/design/template'
+        path: `/design/${designType}`
       });
     }
   }
