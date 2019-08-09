@@ -65,7 +65,6 @@
           </b-button>
         </div>
       </b-row>
-      </b-row>
     </div>
     <SignInModal :login-action="closeModal" />
   </div>
