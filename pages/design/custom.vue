@@ -67,7 +67,7 @@
       </b-row>
       </b-row>
     </div>
-    <SignInModal />
+    <SignInModal :login-action="closeModal" />
   </div>
 </template>
 
@@ -179,6 +179,11 @@ export default {
 
     submitDesign () {
       this.$router.push('/design/review');
+    },
+
+    closeModal () {
+      console.log('closing modal2');
+      this.$bvModal.hide('sign-in');
     },
 
     startDesignProcess () {

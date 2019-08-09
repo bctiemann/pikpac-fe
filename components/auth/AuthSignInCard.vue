@@ -2,7 +2,7 @@
   <b-container>
     <template>
       <b-container fluid>
-        <b-form class="sign-in-form" @submit.prevent="login(closeModal)">
+        <b-form class="sign-in-form" @submit.prevent="login(loginAction)">
           <b-form-group
             id="email-formgroup"
             description="Enter email."
@@ -64,6 +64,13 @@ export default {
   layout: 'auth',
   components: {},
 
+  props: {
+    loginAction: {
+      type: Function,
+      default: () => null
+    }
+  },
+
   data() {
     return {
       email: '',
@@ -112,15 +119,15 @@ export default {
   },
 
   methods: {
-    redirectToAccountPage () {
-      console.log('redirecting');
-      this.$router.push('/account/orders');
-    },
+    // redirectToAccountPage () {
+    //   console.log('redirecting');
+    //   this.$router.push('/account/orders');
+    // },
 
-    closeModal () {
-      console.log('closing modal');
-      this.$bvModal.hide('sign-in');
-    },
+    // closeModal () {
+    //   console.log('closing modal');
+    //   this.$bvModal.hide('sign-in');
+    // },
 
     async login (callback) {
       console.log('foo1a');

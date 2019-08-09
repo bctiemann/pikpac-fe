@@ -1,6 +1,6 @@
 <template>
   <b-modal id="sign-in" title="Sign In" @ok.prevent="handleOk">
-    <AuthSignInCard />
+    <AuthSignInCard :login-action="loginAction" />
   </b-modal>
 </template>
 
@@ -12,6 +12,13 @@ import AuthSignInCard from '~/components/auth/AuthSignInCard.vue';
 export default {
   components: {
     AuthSignInCard
+  },
+
+  props: {
+    loginAction: {
+      type: Function,
+      default: () => null
+    }
   },
 
   data() {

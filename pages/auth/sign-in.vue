@@ -4,7 +4,7 @@
     class="mb-2"
   >
     <b-card-body>
-      <AuthSignInCard />
+      <AuthSignInCard :login-action="redirectToAccountPage" />
     </b-card-body>
   </b-card>
 </template>
@@ -67,6 +67,11 @@ export default {
   },
 
   methods: {
+    redirectToAccountPage () {
+      console.log('redirecting1');
+      this.$router.push('/account/orders');
+    },
+
     async login1 () {
       console.log('foo1');
       // const { username, password } = this;

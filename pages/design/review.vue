@@ -47,7 +47,8 @@
       </b-row>
       </b-row>
     </div>
-    <SignInModal />
+    <SignInModal :login-action="showModalAndAddToCart" />
+    <AddedToCartModal />
   </div>
 </template>
 
@@ -84,10 +85,12 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import SignInModal from '~/components/SignInModal.vue';
+import AddedToCartModal from '~/components/AddedToCartModal.vue';
 
 export default {
   components: {
-    SignInModal
+    SignInModal,
+    AddedToCartModal
   },
 
   data: () => {
@@ -146,13 +149,18 @@ export default {
       'addToCart'
     ]),
 
+    showModalAndAddToCart () {
+      this.$bvModal.hide('sign-in');
+      this.$bvModal.show('added-to-cart');
+      this.addToCart(this.design);
+    },
+
     loginAndAddToCart () {
       if (!this.user) {
         this.$bvModal.show('sign-in');
-        // Pass in 'addToCart' callback; fetch design from store
       } else {
         console.log('adding to cart');
-        this.addToCart(this.design);
+        this.showModalAndAddToCart();
       }
     }
   }
