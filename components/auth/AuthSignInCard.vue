@@ -53,6 +53,20 @@
           </b-form-checkbox>
         </b-form>
       </b-container>
+      <b-row>
+        <b-col>
+          <nuxt-link to="/auth/register/">
+            Register
+          </nuxt-link>
+        </b-col>
+        <b-col>
+          <nuxt-link to="/auth/forgot/">
+            <p class="text-xs-right">
+              Forgot password?
+            </p>
+          </nuxt-link>
+        </b-col>
+      </b-row>
     </template>
   </b-container>
 </template>
