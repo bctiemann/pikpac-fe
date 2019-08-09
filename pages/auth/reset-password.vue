@@ -14,7 +14,7 @@
         <b-form class="register-form" @submit.prevent="resetPassword">
           Choose a new password.
 
-          <v-text-field
+          <b-form-input
             v-model="password"
             :error="hasError"
             error-count="1"
@@ -24,7 +24,7 @@
             label="Password"
           />
 
-          <v-text-field
+          <b-form-input
             v-model="password2"
             :error="hasError"
             error-count="1"
@@ -34,9 +34,9 @@
             label="Repeat Password"
           />
 
-          <v-btn block color="success" type="submit" :disabled="!formValid">
+          <b-btn block color="success" type="submit" :disabled="!formValid">
             Set New Password
-          </v-btn>
+          </b-btn>
         </b-form>
       </div>
     </b-card-body>
@@ -80,7 +80,7 @@ export default {
   created() {
     console.log(this.$nuxt._route.query);
     this.$axios
-      .post('password_reset/check/', {
+      .post('password_reset/validate_token/', {
         token: this.$nuxt._route.query.tk
       })
       .then((response) => {
