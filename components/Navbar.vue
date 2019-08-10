@@ -20,7 +20,7 @@
         </nuxt-link>
       </li>
       <li class="nav-item">
-        <nuxt-link class="nav-link" to="/account/orders" data-toggle="pill">
+        <nuxt-link class="nav-link" to="/account" data-toggle="pill">
           My account
         </nuxt-link>
       </li>
@@ -38,6 +38,22 @@
     </ul>
   </b-container>
 </template>
+
+<style>
+a {
+  color: #000;
+}
+/* nav-link nuxt-link-exact-active nuxt-link-active active show */
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link,
+.nav-link.nuxt-link-active,
+.nav-link.nuxt-link-exact-active {
+  color: #000;
+  background-color: rgba(0, 0, 0, 0);
+  font-weight: 400;
+}
+</style>
 
 <script>
 import { mapState } from 'vuex';

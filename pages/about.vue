@@ -6,7 +6,7 @@
         <b-img src="~/static/about.png" fluid-grow class="mb-5" />
       </b-col>
       <b-col sm="5">
-        <h3>How It Works</h3>
+        <h3>Who We Are</h3>
         <div class="page-blurb">
           Pikpac is a design driven, online platform for custom printed packaging with low order minimums.
           Dedicated to making custom packaging easy and accessible for everyone, we've created an intuitive,

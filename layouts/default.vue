@@ -11,6 +11,12 @@
     src: url('/fonts/Mermaid1001.ttf');
 }
 
+:root, body {
+  font-family: 'Source Sans Pro';
+  font-weight: 300;
+  background-color: rgb(248, 250, 245);
+}
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -62,6 +68,10 @@ html {
 h1, h2, h3, .logo {
   font-family: 'mermaid';
   font-weight: bold;
+}
+h1 {
+  text-align: center;
+  color: rgb(160, 165, 151);
 }
 
 .logo {

@@ -22,7 +22,7 @@ module.exports = {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
+          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Source+Sans+Pro:200,300,400|Material+Icons'
       }
     ],
     script: [
