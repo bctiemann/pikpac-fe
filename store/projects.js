@@ -19,5 +19,12 @@ export const actions = {
     const { data } = await this.$axios.get(`/projects/${projectId}/`);
     commit('setProject', data);
     commit('setIsLoading', false);
+  },
+  async createProject ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.post(`/projects/`, payload);
+    console.log(data);
+    commit('setProject', data);
+    commit('setIsLoading', false);
   }
 };

@@ -116,9 +116,6 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      project: {
-        title: 'Project name'
-      },
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
@@ -136,6 +133,10 @@ export default {
 
     ...mapState('design', [
       'design'
+    ]),
+
+    ...mapState('projects', [
+      'project'
     ]),
 
     ...mapGetters('players', [
@@ -176,13 +177,29 @@ export default {
       'setDesignProperty'
     ]),
 
+    ...mapActions('projects', [
+      'createProject'
+    ]),
+
     submitDesign () {
       this.$router.push('/design/review');
+    },
+
+    async createProjectAndPush () {
+      const project = {
+        title: 'Project Title',
+        product_id: this.design.product.id,
+        unit_price: this.design.unitPrice
+      };
+      await this.createProject(project);
+      console.log(this.project);
+      this.$router.push(`/design/custom/${this.project.id}`);
     },
 
     closeModal () {
       console.log('closing modal2');
       this.$bvModal.hide('sign-in');
+      this.createProjectAndPush();
     },
 
     startDesignProcess () {
@@ -191,6 +208,8 @@ export default {
       // this.setDesignProperty({ property: 'title', value: 'Project name' });
       if (!this.user) {
         this.$bvModal.show('sign-in');
+      } else {
+        this.createProjectAndPush();
       }
     }
   }

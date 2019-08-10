@@ -333,6 +333,7 @@ export default {
         title: 'Project name',
         type: this.designTypes[designType],
         quantity: this.boxQuantity,
+        unitPrice: this.boxPrice,
         calculatedUnitPrice: this.calculatedUnitPrice,
         calculatedTotalPrice: this.calculatedTotalPrice
       };
