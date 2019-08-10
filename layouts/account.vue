@@ -27,6 +27,10 @@
   background-color: rgba(0, 0, 0, 0);
   font-weight: 400;
 }
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  border-color: #dee2e6 #dee2e6 rgb(248, 250, 245);
+}
 </style>
 
 <script>
