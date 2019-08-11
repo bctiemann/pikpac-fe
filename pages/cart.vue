@@ -9,12 +9,12 @@
             <li>{{ item.title }}</li>
             <li>{{ item.type }}</li>
             <li>{{ item.unitPrice }}</li>
-            <li>{{ item.calculatedUnitPrice }} &times; {{ item.quantity }} = {{ item.calculatedTotalPrice }}</li>
+            <li>{{ calculatedPrice(item.unitPrice) }} &times; {{ item.quantity }} = {{ calculatedPrice(item.unitPrice * item.quantity) }}</li>
           </ul>
         </div>
       </div>
     </b-row>
-    {{ cartTotalPrice }}
+    Total: {{ calculatedPrice(cartTotalPrice) }}
   </div>
 </template>
 
@@ -61,6 +61,17 @@ export default {
   },
 
   methods: {
+    zeroPadPrice (value) {
+      if (!value) {
+        return 0;
+      }
+      return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+    },
+
+    calculatedPrice (price) {
+      return '$' + this.zeroPadPrice(price);
+    },
+
     refreshPrice (item) {
       console.log('foo');
     }

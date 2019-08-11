@@ -16,8 +16,6 @@ export const mutations = {
   setProject (state, project) {
     console.log(project);
     project.unitPrice = project.unitPrice || project.unit_price;
-    project.calculatedUnitPrice = project.calculatedUnitPrice || '$' + this.getters['projects/zeroPadPrice'](project.unit_price);
-    project.calculatedTotalPrice = project.calculatedTotalPrice || '$' + this.getters['projects/zeroPadPrice'](project.unit_price * project.quantity);
     state.project = project;
   },
   setIsLoading (state, isLoading) {

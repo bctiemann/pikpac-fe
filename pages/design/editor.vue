@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    {{ design }}
     <b-row class="designer">
       <b-col sm="9">
         <div class="h-100 d-flex flex-column">
