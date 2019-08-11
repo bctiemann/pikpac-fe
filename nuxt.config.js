@@ -66,7 +66,8 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/eslint-module',
     '@nuxtjs/auth',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    'nuxt-stripe-module'
   ],
   /*
    ** Axios module configuration
@@ -123,6 +124,12 @@ module.exports = {
     }
   },
   */
+
+  stripe: {
+    version: 'v3',
+    publishableKey: process.env.STRIPE_PUBLIC_KEY,
+  },
+
   /*
    ** Build configuration
    */
