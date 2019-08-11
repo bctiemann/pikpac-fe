@@ -99,9 +99,6 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      project: {
-        title: 'Project name'
-      },
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
@@ -118,6 +115,10 @@ export default {
 
     ...mapState('design', [
       'design'
+    ]),
+
+    ...mapState('projects', [
+      'project'
     ]),
 
     ...mapGetters('players', [
@@ -152,7 +153,7 @@ export default {
     showModalAndAddToCart () {
       this.$bvModal.hide('sign-in');
       this.$bvModal.show('added-to-cart');
-      this.addToCart(this.design);
+      this.addToCart(this.project);
     },
 
     loginAndAddToCart () {

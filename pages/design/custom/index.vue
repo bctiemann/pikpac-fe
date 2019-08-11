@@ -189,7 +189,8 @@ export default {
       const project = {
         title: 'Project Title',
         product_id: this.design.product.id,
-        unit_price: this.design.unitPrice
+        unit_price: this.design.unitPrice,
+        quantity: this.design.quantity
       };
       await this.createProject(project);
       console.log(this.project);

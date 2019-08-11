@@ -3,9 +3,21 @@ export const state = () => ({
   isLoading: false
 });
 
+export const getters = {
+  zeroPadPrice: state => (value) => {
+    if (!value) {
+      return 0;
+    }
+    return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+  }
+};
+
 export const mutations = {
   setProject (state, project) {
     console.log(project);
+    project.unitPrice = project.unitPrice || project.unit_price;
+    project.calculatedUnitPrice = project.calculatedUnitPrice || '$' + this.getters['projects/zeroPadPrice'](project.unit_price);
+    project.calculatedTotalPrice = project.calculatedTotalPrice || '$' + this.getters['projects/zeroPadPrice'](project.unit_price * project.quantity);
     state.project = project;
   },
   setIsLoading (state, isLoading) {
@@ -19,6 +31,9 @@ export const actions = {
     const { data } = await this.$axios.get(`/projects/${projectId}/`);
     commit('setProject', data);
     commit('setIsLoading', false);
+  },
+  storeProject ({ commit }, payload) {
+    commit('setProject', payload);
   },
   async createProject ({ commit }, payload) {
     commit('setIsLoading', true);

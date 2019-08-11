@@ -3,13 +3,13 @@ export const state = () => ({
 });
 
 export const mutations = {
-  addToCart (state, design) {
-    state.cart.push(design);
+  addToCart (state, project) {
+    state.cart.push(project);
   }
 };
 
 export const actions = {
-  addToCart ({ commit }, design) {
-    commit('addToCart', design);
+  addToCart ({ commit }, project) {
+    commit('addToCart', project);
   }
 };

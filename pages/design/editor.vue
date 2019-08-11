@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ design }}
     <b-row class="designer">
       <b-col sm="9">
         <div class="h-100 d-flex flex-column">
@@ -47,7 +48,7 @@
         <b-button>
           Save
         </b-button>
-        <b-button to="/design/review">
+        <b-button @click="createProjectAndPush">
           Review order &rarr;
         </b-button>
       </div>
@@ -97,9 +98,6 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      project: {
-        title: 'Project name'
-      },
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
@@ -138,6 +136,10 @@ export default {
       'getPapers'
     ]),
 
+    ...mapActions('projects', [
+      'storeProject'
+    ]),
+
     highlightPattern (pattern) {
       this.highlightedPattern = pattern;
       this.highlightedPaper = null;
@@ -153,6 +155,13 @@ export default {
     selectPatternPaper () {
       this.selectedPattern = this.highlightedPattern;
       this.selectedPaper = this.highlightedPaper;
+    },
+
+    createProjectAndPush () {
+      this.storeProject(this.design);
+      // await this.createProject(project);
+      console.log(this.project);
+      this.$router.push(`/design/review`);
     }
   }
 };

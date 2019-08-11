@@ -8,11 +8,13 @@
           <ul>
             <li>{{ item.title }}</li>
             <li>{{ item.type }}</li>
+            <li>{{ item.unitPrice }}</li>
             <li>{{ item.calculatedUnitPrice }} &times; {{ item.quantity }} = {{ item.calculatedTotalPrice }}</li>
           </ul>
         </div>
       </div>
     </b-row>
+    {{ cartTotalPrice }}
   </div>
 </template>
 
@@ -44,7 +46,18 @@ export default {
   computed: {
     ...mapState('cart', [
       'cart'
-    ])
+    ]),
+
+    cartTotalPrice: {
+      get () {
+        let total = 0;
+        for (const i in this.cart) {
+          console.log(this.cart[i].unitPrice);
+          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unitPrice) * 100) / 100;
+        };
+        return total;
+      }
+    }
   },
 
   methods: {
