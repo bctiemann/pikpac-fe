@@ -8,13 +8,16 @@
           <ul>
             <li>{{ item.title }}</li>
             <li>{{ item.type }}</li>
-            <li>{{ item.unitPrice }}</li>
-            <li>{{ calculatedPrice(item.unitPrice) }} &times; {{ item.quantity }} = {{ calculatedPrice(item.unitPrice * item.quantity) }}</li>
+            <li>{{ item.unit_price }}</li>
+            <li>{{ calculatedPrice(item.unit_price) }} &times; {{ item.quantity }} = {{ calculatedPrice(item.unit_price * item.quantity) }}</li>
           </ul>
         </div>
       </div>
     </b-row>
     Total: {{ calculatedPrice(cartTotalPrice) }}
+    <b-btn to="/cart/checkout">
+      Next
+    </b-btn>
   </div>
 </template>
 
@@ -52,8 +55,8 @@ export default {
       get () {
         let total = 0;
         for (const i in this.cart) {
-          console.log(this.cart[i].unitPrice);
-          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unitPrice) * 100) / 100;
+          console.log(this.cart[i].unit_price);
+          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unit_price) * 100) / 100;
         };
         return total;
       }

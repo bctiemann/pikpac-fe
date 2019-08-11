@@ -3,19 +3,8 @@ export const state = () => ({
   isLoading: false
 });
 
-export const getters = {
-  zeroPadPrice: state => (value) => {
-    if (!value) {
-      return 0;
-    }
-    return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
-  }
-};
-
 export const mutations = {
   setProject (state, project) {
-    console.log(project);
-    project.unitPrice = project.unitPrice || project.unit_price;
     state.project = project;
   },
   setIsLoading (state, isLoading) {

@@ -7,6 +7,7 @@
         <b-btn @click="showModalAndAddToCart(order.project)">
           Add to Cart
         </b-btn>
+        <p>{{ calculatedPrice(order.project.unit_price) }} &times; {{ order.project.quantity }} = {{ calculatedPrice(order.project.unit_price * order.project.quantity) }}</p>
         <p>{{ order.project.product.name }} {{ order.date_created }}</p>
         <b-img :src="order.project.product.picture" fluid :alt="order.project.product.name" />
       </li>
@@ -55,6 +56,17 @@ export default {
     ...mapActions('cart', [
       'addToCart'
     ]),
+
+    zeroPadPrice (value) {
+      if (!value) {
+        return 0;
+      }
+      return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+    },
+
+    calculatedPrice (price) {
+      return '$' + this.zeroPadPrice(price);
+    },
 
     showModalAndAddToCart (project) {
       this.$bvModal.show('added-to-cart');
