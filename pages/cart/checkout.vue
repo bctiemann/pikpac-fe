@@ -12,10 +12,133 @@
         </b-tab>
         <b-tab title="Billing">
           <b-card-body>
-            Tab Contents 2
-            <b-btn @click="tabIndex = 2">
-              Next
-            </b-btn>
+            <b-row>
+              <b-col sm="6">
+                <h3>Billing information</h3>
+                <b-form>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="fullname-formgroup"
+                        label="Full name*"
+                        label-for="full-name"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="full-name" v-model="fullName" :state="null" :error="hasError" label="Full name" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      Card number*
+                      <card-number
+                        ref="cardNumber"
+                        class="stripe-element card-number"
+                        :stripe="stripePublicKey"
+                        :options="options"
+                        @change="number = $event.complete"
+                      />
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      Expiration date*
+                      <card-expiry
+                        ref="cardExpiry"
+                        class="stripe-element card-expiry"
+                        :stripe="stripePublicKey"
+                        :options="options"
+                        @change="expiry = $event.complete"
+                      />
+                    </b-col>
+                    <b-col>
+                      Security code*
+                      <card-cvc
+                        ref="cardCvc"
+                        class="stripe-element card-cvc"
+                        :stripe="stripePublicKey"
+                        :options="options"
+                        @change="cvc = $event.complete"
+                      />
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="billingAddress-formgroup"
+                        label="Billing address*"
+                        label-for="billing-address"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="billing-address" v-model="billingAddress" :state="null" :error="hasError" label="Billing address" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="city-formgroup"
+                        label="City*"
+                        label-for="city"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="city" v-model="city" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col>
+                      <b-form-group
+                        id="zipCode-formgroup"
+                        label="Zip code*"
+                        label-for="zip-code"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="zip-code" v-model="zipCode" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="country-formgroup"
+                        label="Country*"
+                        label-for="country"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="country" v-model="country" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col>
+                      <b-form-group
+                        id="phone-formgroup"
+                        label="Local phone number"
+                        label-for="phone"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="phone" v-model="phone" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                </b-form>
+                <b-btn @click="tabIndex = 2">
+                  Next
+                </b-btn>
+              </b-col>
+              <b-col sm="6">
+                sidebar
+              </b-col>
+            </b-row>
           </b-card-body>
         </b-tab>
         <b-tab title="Review">
@@ -23,10 +146,12 @@
             Tab Contents 3
             <form autocomplete="off" @submit.stop.prevent="handleSubmit">
               <div id="card-element-bak" />
+              <!--
               <Card
                 class="form-control"
                 :stripe="stripePublicKey"
               />
+              -->
               <b-btn type="submit" class="btn btn-primary btn-block mt-3">
                 Place Order
               </b-btn>
@@ -51,11 +176,14 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { Card, createToken } from 'vue-stripe-elements-plus';
+import { CardNumber, CardExpiry, CardCvc, createToken } from 'vue-stripe-elements-plus';
 
 export default {
   components: {
-    Card
+    // Card,
+    CardNumber,
+    CardExpiry,
+    CardCvc
   },
 
   data: () => {
@@ -65,7 +193,22 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      stripePublicKey: process.env.NUXT_ENV_STRIPE_PUBLIC_KEY
+      stripePublicKey: process.env.NUXT_ENV_STRIPE_PUBLIC_KEY,
+      fullName: '',
+      billingAddress: '',
+      city: '',
+      zipCode: '',
+      country: '',
+      phone: '',
+      complete: false,
+      number: false,
+      expiry: false,
+      cvc: false,
+      options: {},
+      hasError: false,
+      validFeedback: null,
+      invalidFeedback: null,
+      state: null
     };
   },
 
