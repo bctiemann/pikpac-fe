@@ -4,7 +4,125 @@
       <b-tabs v-model="tabIndex" card justified>
         <b-tab title="Shipping" active>
           <b-card-body>
-            Tab Contents 1
+            <b-row>
+              <b-col sm="6">
+                <h3>Shipping address</h3>
+                <b-form>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="fullName-formgroup"
+                        label="Full name*"
+                        label-for="full-name"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="full-name" v-model="shippingAddress.full_name" :state="null" :error="hasError" label="Full name" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="country-formgroup"
+                        label="Country*"
+                        label-for="country"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="country" v-model="shippingAddress.country" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="address1-formgroup"
+                        label="Address line 1*"
+                        label-for="shipping-address-1"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="shipping-address-1" v-model="shippingAddress.address_1" :state="null" :error="hasError" label="Billing address" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="address2-formgroup"
+                        label="Address line 2"
+                        label-for="shipping-address-2"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="shipping-address-2" v-model="shippingAddress.address_2" :state="null" :error="hasError" label="Billing address" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="city-formgroup"
+                        label="City*"
+                        label-for="city"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="city" v-model="shippingAddress.city" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col>
+                      <b-form-group
+                        id="city-formgroup"
+                        label="State*"
+                        label-for="state"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="state" v-model="shippingAddress.state" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col>
+                      <b-form-group
+                        id="zip-formgroup"
+                        label="Zip code*"
+                        label-for="zip"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="zip" v-model="shippingAddress.zip" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                    <b-col>
+                      <b-form-group
+                        id="phone-formgroup"
+                        label="Local phone number"
+                        label-for="phone"
+                        :invalid-feedback="invalidFeedback"
+                        :valid-feedback="validFeedback"
+                        :state="state"
+                      >
+                        <b-form-input id="phone" v-model="shippingAddress.phone" :state="null" :error="hasError" label="City" />
+                      </b-form-group>
+                    </b-col>
+                  </b-row>
+                </b-form>
+              </b-col>
+              <b-col sm="2" />
+              <b-col sm="4">
+                sidebar
+              </b-col>
+            </b-row>
             <b-btn @click="tabIndex = 1">
               Next
             </b-btn>
@@ -135,7 +253,8 @@
                   Next
                 </b-btn>
               </b-col>
-              <b-col sm="6">
+              <b-col sm="2" />
+              <b-col sm="4">
                 sidebar
               </b-col>
             </b-row>
@@ -143,7 +262,35 @@
         </b-tab>
         <b-tab title="Review">
           <b-card-body>
-            Tab Contents 3
+            <b-row>
+              <b-col sm="6">
+                <h3>Shipping address</h3>
+                <ul class="address-summary">
+                  <li>{{ shippingAddress.full_name }}</li>
+                  <li>{{ shippingAddress.address_1 }}</li>
+                  <li v-if="shippingAddress.address_2">
+                    {{ shippingAddress.address_2 }}
+                  </li>
+                  <li>{{ shippingAddress.city }}, {{ shippingAddress.state }} {{ shippingAddress.zip }}</li>
+                  <li>{{ shippingAddress.country }}</li>
+                </ul>
+
+                <h3>Billing information</h3>
+                <ul class="address-summary">
+                  <li>{{ billingAddress.full_name }}</li>
+                  <li v-if="user.default_card">
+                    {{ user.default_card.brand }} {{ user.default_card.last_4 }} {{ user.default_card.exp_month }}/{{ user.default_card.exp_year }}
+                  </li>
+                </ul>
+
+                <h3>Choose your shipping option</h3>
+                <h3>Order review</h3>
+              </b-col>
+              <b-col sm="2" />
+              <b-col sm="4">
+                sidebar
+              </b-col>
+            </b-row>
             <form autocomplete="off" @submit.stop.prevent="handleSubmit">
               <div id="card-element-bak" />
               <!--
