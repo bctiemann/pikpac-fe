@@ -285,7 +285,6 @@ export default {
       if (!(isEqual(this.billingAddress, this.user.billing_address))) {
         await this.createAddress({ address: this.billingAddress, type: 'billing' });
       }
-      /*
       let token;
       try {
         const response = await createToken();
@@ -295,9 +294,8 @@ export default {
         alert('An error occurred.');
         console.log(err);
         this.loading = false;
-        return;
+        // return;
       }
-      */
     },
 
     async handleSubmit() {
