@@ -328,7 +328,7 @@ export default {
         this.loading = false;
         // return;
       }
-      // await this.createCard({ token: token });
+      await this.createCard(token);
     },
 
     async handleSubmit() {
