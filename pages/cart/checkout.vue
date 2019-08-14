@@ -177,6 +177,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import { CardNumber, CardExpiry, CardCvc, createToken } from 'vue-stripe-elements-plus';
+import { isEqual } from 'lodash';
 
 export default {
   components: {
@@ -281,7 +282,9 @@ export default {
 
     async submitBillingInfo () {
       console.log(this.billingAddress);
-      await this.createAddress({ address: this.billingAddress, type: 'billing' });
+      if (!(isEqual(this.billingAddress, this.user.billing_address))) {
+        await this.createAddress({ address: this.billingAddress, type: 'billing' });
+      }
       /*
       let token;
       try {
