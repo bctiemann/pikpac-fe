@@ -218,6 +218,7 @@ export default {
       expiry: false,
       cvc: false,
       options: {},
+      cardCvcVal: '123',
       hasError: false,
       validFeedback: null,
       invalidFeedback: null,
@@ -248,6 +249,12 @@ export default {
     }
   },
 
+  watch: {
+    number () { this.update(); },
+    expiry () { this.update(); },
+    cvc () { this.update(); }
+  },
+
   mounted () {
     // const elements = this.$stripe.import().elements();
     // const card = elements.create('card');
@@ -263,6 +270,7 @@ export default {
     ...mapActions('cart', [
       'chargeCard',
       'createAddress',
+      'getToken',
       'createCard'
     ]),
 
@@ -281,6 +289,27 @@ export default {
       console.log('foo');
     },
 
+    update () {
+      this.complete = this.number && this.expiry && this.cvc;
+
+      // field completed, find field to focus next
+      if (this.number) {
+        if (!this.expiry) {
+          this.$refs.cardExpiry.focus();
+        } else if (!this.cvc) {
+          this.$refs.cardCvc.focus();
+        }
+      } else if (this.expiry) {
+        if (!this.cvc) {
+          this.$refs.cardCvc.focus();
+        } else if (!this.number) {
+          this.$refs.cardNumber.focus();
+        }
+      }
+      // no focus magic for the CVC field as it gets complete with three
+      // numbers, but can also have four
+    },
+
     async submitBillingInfo () {
       console.log(this.billingAddress);
       if (!(isEqual(this.billingAddress, this.user.billing_address))) {
@@ -289,15 +318,17 @@ export default {
       let token;
       try {
         const response = await createToken();
-        token = response.token.id;
+        token = response;
         console.log(token);
+        const tokenData = await this.getToken(token);
+        console.log(tokenData);
       } catch (err) {
         alert('An error occurred.');
         console.log(err);
         this.loading = false;
         // return;
       }
-      await this.createCard({ token: token });
+      // await this.createCard({ token: token });
     },
 
     async handleSubmit() {
@@ -334,6 +365,5 @@ export default {
       }
     }
   }
-
 };
 </script>
