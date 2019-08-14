@@ -25,6 +25,12 @@ export const actions = {
     console.log(data);
     commit('setIsLoading', false);
   },
+  async createCard ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.post(`/cards/add/`, payload);
+    console.log(data);
+    commit('setIsLoading', false);
+  },
   async chargeCard ({ commit }, payload) {
     commit('setIsLoading', true);
     const { data } = await this.$axios.post(`/charge/`, payload);

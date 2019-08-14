@@ -262,7 +262,8 @@ export default {
   methods: {
     ...mapActions('cart', [
       'chargeCard',
-      'createAddress'
+      'createAddress',
+      'createCard'
     ]),
 
     zeroPadPrice (value) {
@@ -296,6 +297,7 @@ export default {
         this.loading = false;
         // return;
       }
+      await this.createCard({ token: token });
     },
 
     async handleSubmit() {
