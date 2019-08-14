@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    {{ user }}
     <b-card no-body>
       <b-tabs v-model="tabIndex" card justified>
         <b-tab title="Shipping" active>
@@ -331,14 +330,14 @@ export default {
         // return;
       }
       if (!this.user.default_card || this.user.default_card.fingerprint !== tokenData.card.fingerprint) {
-      // let existingCard = this.user.cards.find(x => x.id === '45').foo;
         console.log('Creating new card');
         await this.createCard(token);
+        // Refresh /me data with new card set as default
+        this.$auth.fetchUser();
       } else {
         console.log('Using existing card');
       }
-      // Re-fetch /me
-      this.$auth.fetchUser();
+      // Now push to review page, and user action runs charge using this.user.default_card
     },
 
     async handleSubmit() {
