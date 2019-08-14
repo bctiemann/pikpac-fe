@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ user }}
     <b-card no-body>
       <b-tabs v-model="tabIndex" card justified>
         <b-tab title="Shipping" active>
@@ -316,11 +317,12 @@ export default {
         await this.createAddress({ address: this.billingAddress, type: 'billing' });
       }
       let token;
+      let tokenData;
       try {
         const response = await createToken();
         token = response;
         console.log(token);
-        const tokenData = await this.getToken(token);
+        tokenData = await this.getToken(token);
         console.log(tokenData);
       } catch (err) {
         alert('An error occurred.');
@@ -328,7 +330,15 @@ export default {
         this.loading = false;
         // return;
       }
-      await this.createCard(token);
+      if (!this.user.default_card || this.user.default_card.fingerprint !== tokenData.card.fingerprint) {
+      // let existingCard = this.user.cards.find(x => x.id === '45').foo;
+        console.log('Creating new card');
+        await this.createCard(token);
+      } else {
+        console.log('Using existing card');
+      }
+      // Re-fetch /me
+      this.$auth.fetchUser();
     },
 
     async handleSubmit() {

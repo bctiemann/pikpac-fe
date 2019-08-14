@@ -30,6 +30,7 @@ export const actions = {
     const { data } = await this.$axios.get(`/cards/get_token/?token=${payload.token.id}`);
     console.log(data);
     commit('setIsLoading', false);
+    return data;
   },
   async createCard ({ commit }, payload) {
     commit('setIsLoading', true);
