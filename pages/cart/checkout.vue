@@ -249,7 +249,7 @@
                     </b-col>
                   </b-row>
                 </b-form>
-                <b-btn @click="submitBillingInfo">
+                <b-btn :disabled="!formComplete" @click="submitBillingInfo">
                   Next
                 </b-btn>
               </b-col>
@@ -360,7 +360,7 @@ export default {
         country: '',
         phone: ''
       },
-      complete: false,
+      formComplete: false,
       number: false,
       expiry: false,
       cvc: false,
@@ -399,7 +399,12 @@ export default {
   watch: {
     number () { this.update(); },
     expiry () { this.update(); },
-    cvc () { this.update(); }
+    cvc () { this.update(); },
+    'billingAddress.full_name' () { this.update(); },
+    'billingAddress.address_1' () { this.update(); },
+    'billingAddress.city' () { this.update(); },
+    'billingAddress.zip' () { this.update(); },
+    'billingAddress.country' () { this.update(); }
   },
 
   mounted () {
@@ -437,7 +442,18 @@ export default {
     },
 
     update () {
-      this.complete = this.number && this.expiry && this.cvc;
+      if (this.tabIndex === 1) {
+        this.formComplete = this.number &&
+          this.expiry &&
+          this.cvc &&
+          this.billingAddress.full_name &&
+          this.billingAddress.address_1 &&
+          this.billingAddress.city &&
+          this.billingAddress.zip &&
+          this.billingAddress.country;
+      } else {
+        this.formComplete = false;
+      }
 
       // field completed, find field to focus next
       if (this.number) {
@@ -485,6 +501,7 @@ export default {
         console.log('Using existing card');
       }
       // Now push to review page, and user action runs charge using this.user.default_card
+      this.tabIndex = 2;
     },
 
     async handleSubmit() {
