@@ -150,36 +150,51 @@
                   </b-row>
                   <b-row>
                     <b-col>
-                      Card number*
-                      <card-number
-                        ref="cardNumber"
-                        class="stripe-element card-number"
-                        :stripe="stripePublicKey"
-                        :options="options"
-                        @change="number = $event.complete"
-                      />
+                      <b-form-group
+                        id="cardNumber-formgroup"
+                        label="Card number*"
+                        label-for="cardNumber"
+                      >
+                        <card-number
+                          ref="cardNumber"
+                          class="stripe-element card-number"
+                          :stripe="stripePublicKey"
+                          :options="options"
+                          @change="number = $event.complete"
+                        />
+                      </b-form-group>
                     </b-col>
                   </b-row>
                   <b-row>
                     <b-col>
-                      Expiration date*
-                      <card-expiry
-                        ref="cardExpiry"
-                        class="stripe-element card-expiry"
-                        :stripe="stripePublicKey"
-                        :options="options"
-                        @change="expiry = $event.complete"
-                      />
+                      <b-form-group
+                        id="cardExpiry-formgroup"
+                        label="Expiration date*"
+                        label-for="cardExpiry"
+                      >
+                        <card-expiry
+                          ref="cardExpiry"
+                          class="stripe-element card-expiry"
+                          :stripe="stripePublicKey"
+                          :options="options"
+                          @change="expiry = $event.complete"
+                        />
+                      </b-form-group>
                     </b-col>
                     <b-col>
-                      Security code*
-                      <card-cvc
-                        ref="cardCvc"
-                        class="stripe-element card-cvc"
-                        :stripe="stripePublicKey"
-                        :options="options"
-                        @change="cvc = $event.complete"
-                      />
+                      <b-form-group
+                        id="cardCvc-formgroup"
+                        label="Security code*"
+                        label-for="cardCvc"
+                      >
+                        <card-cvc
+                          ref="cardCvc"
+                          class="stripe-element card-cvc"
+                          :stripe="stripePublicKey"
+                          :options="options"
+                          @change="cvc = $event.complete"
+                        />
+                      </b-form-group>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -319,6 +334,10 @@
 .cart-item-info {
   float: left;
 }
+
+.stripe-element .form-control {
+  padding-top: 10px;
+}
 </style>
 
 <script>
@@ -364,7 +383,17 @@ export default {
       number: false,
       expiry: false,
       cvc: false,
-      options: {},
+      options: {
+        style: {
+          base: {
+            // lineHeight: 10,
+            fontFamily: 'Helvetica Neue, Helvetica'
+          }
+        },
+        classes: {
+          base: 'form-control'
+        }
+      },
       cardCvcVal: '123',
       hasError: false,
       validFeedback: null,
