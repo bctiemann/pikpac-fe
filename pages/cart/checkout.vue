@@ -19,14 +19,14 @@
                   <b-row>
                     <b-col>
                       <b-form-group
-                        id="fullname-formgroup"
+                        id="fullName-formgroup"
                         label="Full name*"
                         label-for="full-name"
                         :invalid-feedback="invalidFeedback"
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="full-name" v-model="fullName" :state="null" :error="hasError" label="Full name" />
+                        <b-form-input id="full-name" v-model="billingAddress.full_name" :state="null" :error="hasError" label="Full name" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -74,7 +74,7 @@
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="billing-address" v-model="billingAddress" :state="null" :error="hasError" label="Billing address" />
+                        <b-form-input id="billing-address" v-model="billingAddress.address_1" :state="null" :error="hasError" label="Billing address" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -88,19 +88,19 @@
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="city" v-model="city" :state="null" :error="hasError" label="City" />
+                        <b-form-input id="city" v-model="billingAddress.city" :state="null" :error="hasError" label="City" />
                       </b-form-group>
                     </b-col>
                     <b-col>
                       <b-form-group
-                        id="zipCode-formgroup"
+                        id="zip-formgroup"
                         label="Zip code*"
-                        label-for="zip-code"
+                        label-for="zip"
                         :invalid-feedback="invalidFeedback"
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="zip-code" v-model="zipCode" :state="null" :error="hasError" label="City" />
+                        <b-form-input id="zip" v-model="billingAddress.zip" :state="null" :error="hasError" label="City" />
                       </b-form-group>
                     </b-col>
                   </b-row>
@@ -114,7 +114,7 @@
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="country" v-model="country" :state="null" :error="hasError" label="City" />
+                        <b-form-input id="country" v-model="billingAddress.country" :state="null" :error="hasError" label="City" />
                       </b-form-group>
                     </b-col>
                     <b-col>
@@ -126,12 +126,12 @@
                         :valid-feedback="validFeedback"
                         :state="state"
                       >
-                        <b-form-input id="phone" v-model="phone" :state="null" :error="hasError" label="City" />
+                        <b-form-input id="phone" v-model="billingAddress.phone" :state="null" :error="hasError" label="City" />
                       </b-form-group>
                     </b-col>
                   </b-row>
                 </b-form>
-                <b-btn @click="tabIndex = 2">
+                <b-btn @click="submitBillingInfo">
                   Next
                 </b-btn>
               </b-col>
@@ -194,12 +194,24 @@ export default {
         { text: 'Bar', value: 2 }
       ],
       stripePublicKey: process.env.NUXT_ENV_STRIPE_PUBLIC_KEY,
-      fullName: '',
-      billingAddress: '',
-      city: '',
-      zipCode: '',
-      country: '',
-      phone: '',
+      loading: false,
+      shippingAddress: {
+        full_name: '',
+        address_1: '',
+        address_2: '',
+        city: '',
+        zip: '',
+        country: '',
+        phone: ''
+      },
+      billingAddress: {
+        full_name: '',
+        address_1: '',
+        city: '',
+        zip: '',
+        country: '',
+        phone: ''
+      },
       complete: false,
       number: false,
       expiry: false,
@@ -217,6 +229,12 @@ export default {
       'cart'
     ]),
 
+    user: {
+      get () {
+        return this.$auth.user;
+      }
+    },
+
     cartTotalPrice: {
       get () {
         let total = 0;
@@ -230,17 +248,20 @@ export default {
   },
 
   mounted () {
-    console.log(process.env.NUXT_ENV_API_ROOT);
-    console.log(process.env.NUXT_ENV_STRIPE_PUBLIC_KEY);
     // const elements = this.$stripe.import().elements();
     // const card = elements.create('card');
     // Add an instance of the card Element into the `card-element` <div>
     // card.mount('#card-element');
+
+    if (this.user.billing_address) {
+      Object.assign(this.billingAddress, this.user.billing_address);
+    }
   },
 
   methods: {
     ...mapActions('cart', [
-      'chargeCard'
+      'chargeCard',
+      'createAddress'
     ]),
 
     zeroPadPrice (value) {
@@ -256,6 +277,24 @@ export default {
 
     refreshPrice (item) {
       console.log('foo');
+    },
+
+    async submitBillingInfo () {
+      console.log(this.billingAddress);
+      await this.createAddress({ address: this.billingAddress, type: 'billing' });
+      /*
+      let token;
+      try {
+        const response = await createToken();
+        token = response.token.id;
+        console.log(token);
+      } catch (err) {
+        alert('An error occurred.');
+        console.log(err);
+        this.loading = false;
+        return;
+      }
+      */
     },
 
     async handleSubmit() {
