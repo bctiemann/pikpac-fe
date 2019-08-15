@@ -387,7 +387,12 @@ export default {
         style: {
           base: {
             // lineHeight: 10,
-            fontFamily: 'Helvetica Neue, Helvetica'
+            fontFamily: 'Helvetica Neue, Helvetica',
+            fontWeight: 400,
+            color: '#495057',
+            '::placeholder': {
+              color: 'rgb(200, 200, 200)'
+            }
           }
         },
         classes: {
