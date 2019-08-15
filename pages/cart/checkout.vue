@@ -123,7 +123,7 @@
                 sidebar
               </b-col>
             </b-row>
-            <b-btn @click="tabIndex = 1">
+            <b-btn :disabled="!formComplete" @click="submitShippingInfo">
               Next
             </b-btn>
           </b-card-body>
@@ -434,6 +434,12 @@ export default {
     number () { this.update(); },
     expiry () { this.update(); },
     cvc () { this.update(); },
+    'shippingAddress.full_name' () { this.update(); },
+    'shippingAddress.country' () { this.update(); },
+    'shippingAddress.address_1' () { this.update(); },
+    'shippingAddress.city' () { this.update(); },
+    'shippingAddress.state' () { this.update(); },
+    'shippingAddress.zip' () { this.update(); },
     'billingAddress.full_name' () { this.update(); },
     'billingAddress.address_1' () { this.update(); },
     'billingAddress.city' () { this.update(); },
@@ -476,8 +482,17 @@ export default {
     },
 
     update () {
-      if (this.tabIndex === 1) {
-        this.formComplete = this.number &&
+      if (this.tabIndex === 0) {
+        this.formComplete =
+          this.shippingAddress.full_name &&
+          this.shippingAddress.country &&
+          this.shippingAddress.address_1 &&
+          this.shippingAddress.city &&
+          this.shippingAddress.state &&
+          this.shippingAddress.zip;
+      } else if (this.tabIndex === 1) {
+        this.formComplete =
+          this.number &&
           this.expiry &&
           this.cvc &&
           this.billingAddress.full_name &&
@@ -507,25 +522,41 @@ export default {
       // numbers, but can also have four
     },
 
+    submitShippingInfo () {
+      this.tabIndex = 1;
+    },
+
     async submitBillingInfo () {
       console.log(this.billingAddress);
       if (!(isEqual(this.billingAddress, this.user.billing_address))) {
         await this.createAddress({ address: this.billingAddress, type: 'billing' });
       }
+
       let token;
-      let tokenData;
       try {
         const response = await createToken();
         token = response;
         console.log(token);
-        tokenData = await this.getToken(token);
-        console.log(tokenData);
+        if (token.error) {
+          alert('An error occurred.\n' + token.error.message);
+          this.loading = false;
+          return;
+        }
       } catch (err) {
-        alert('An error occurred.');
-        console.log(err);
+        alert('An error occurred. 2');
         this.loading = false;
-        // return;
+        return;
       }
+
+      let tokenData;
+      try {
+        tokenData = await this.getToken(token);
+      } catch (err) {
+        alert('An error occurred. 3');
+        this.loading = false;
+        return;
+      }
+
       if (!this.user.default_card || this.user.default_card.fingerprint !== tokenData.card.fingerprint) {
         console.log('Creating new card');
         await this.createCard(token);
