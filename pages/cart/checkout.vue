@@ -121,7 +121,7 @@
               <b-col sm="2" />
               <b-col sm="4">
                 <OrderSummary
-                  :subtotal="orderSummary.subtotal"
+                  :subtotal="cartTotalPrice"
                   :shipping="orderSummary.shipping"
                   :tax="orderSummary.tax"
                   :total="orderSummary.total"
@@ -276,7 +276,7 @@
               <b-col sm="2" />
               <b-col sm="4">
                 <OrderSummary
-                  :subtotal="orderSummary.subtotal"
+                  :subtotal="cartTotalPrice"
                   :shipping="orderSummary.shipping"
                   :tax="orderSummary.tax"
                   :total="orderSummary.total"
@@ -314,7 +314,7 @@
               <b-col sm="2" />
               <b-col sm="4">
                 <OrderSummary
-                  :subtotal="orderSummary.subtotal"
+                  :subtotal="cartTotalPrice"
                   :shipping="orderSummary.shipping"
                   :tax="orderSummary.tax"
                   :total="orderSummary.total"
