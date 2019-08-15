@@ -120,7 +120,12 @@
               </b-col>
               <b-col sm="2" />
               <b-col sm="4">
-                sidebar
+                <OrderSummary
+                  :subtotal="orderSummary.subtotal"
+                  :shipping="orderSummary.shipping"
+                  :tax="orderSummary.tax"
+                  :total="orderSummary.total"
+                />
               </b-col>
             </b-row>
             <b-btn :disabled="!formComplete" @click="submitShippingInfo">
@@ -270,7 +275,12 @@
               </b-col>
               <b-col sm="2" />
               <b-col sm="4">
-                sidebar
+                <OrderSummary
+                  :subtotal="orderSummary.subtotal"
+                  :shipping="orderSummary.shipping"
+                  :tax="orderSummary.tax"
+                  :total="orderSummary.total"
+                />
               </b-col>
             </b-row>
           </b-card-body>
@@ -303,7 +313,12 @@
               </b-col>
               <b-col sm="2" />
               <b-col sm="4">
-                sidebar
+                <OrderSummary
+                  :subtotal="orderSummary.subtotal"
+                  :shipping="orderSummary.shipping"
+                  :tax="orderSummary.tax"
+                  :total="orderSummary.total"
+                />
               </b-col>
             </b-row>
             <form autocomplete="off" @submit.stop.prevent="handleSubmit">
@@ -344,13 +359,15 @@
 import { mapState, mapActions } from 'vuex';
 import { CardNumber, CardExpiry, CardCvc, createToken } from 'vue-stripe-elements-plus';
 import { isEqual } from 'lodash';
+import OrderSummary from '~/components/OrderSummary.vue';
 
 export default {
   components: {
     // Card,
     CardNumber,
     CardExpiry,
-    CardCvc
+    CardCvc,
+    OrderSummary
   },
 
   data: () => {
@@ -403,7 +420,13 @@ export default {
       hasError: false,
       validFeedback: null,
       invalidFeedback: null,
-      state: null
+      state: null,
+      orderSummary: {
+        subtotal: 0,
+        shipping: 0,
+        tax: 0,
+        total: 0
+      }
     };
   },
 
