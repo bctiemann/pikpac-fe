@@ -25,6 +25,12 @@ export const actions = {
     console.log(data);
     commit('setIsLoading', false);
   },
+  async getTaxRate ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.get(`/tax_rate/${payload.postalCode}/`);
+    commit('setIsLoading', false);
+    return data;
+  },
   async getToken ({ commit }, payload) {
     commit('setIsLoading', true);
     const { data } = await this.$axios.get(`/cards/get_token/?token=${payload.token.id}`);

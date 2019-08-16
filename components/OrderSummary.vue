@@ -7,19 +7,19 @@
     </b-row>
     <b-row>
       <b-col>Subtotal</b-col>
-      <b-col>${{ subtotal }}</b-col>
+      <b-col>{{ subtotal | currency }}</b-col>
     </b-row>
     <b-row>
       <b-col>Shipping</b-col>
-      <b-col>${{ shipping }}</b-col>
+      <b-col>{{ shipping | currency }}</b-col>
     </b-row>
     <b-row>
       <b-col>Tax</b-col>
-      <b-col>${{ tax }}</b-col>
+      <b-col>{{ tax | currency }}</b-col>
     </b-row>
     <b-row>
       <b-col>Total</b-col>
-      <b-col>${{ total }}</b-col>
+      <b-col>{{ total | currency }}</b-col>
     </b-row>
   </div>
 </template>

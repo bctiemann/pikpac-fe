@@ -67,7 +67,15 @@ module.exports = {
     '@nuxtjs/eslint-module',
     '@nuxtjs/auth',
     'nuxt-fontawesome',
-    'nuxt-stripe-module'
+    'nuxt-stripe-module',
+    ['vue-currency-filter/nuxt', {
+      symbol: '$',
+      thousandsSeparator: ',',
+      fractionCount: 2,
+      fractionSeparator: '.',
+      symbolPosition: 'front',
+      symbolSpacing: false
+    }],
   ],
   /*
    ** Axios module configuration

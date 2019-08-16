@@ -122,9 +122,9 @@
               <b-col sm="4">
                 <OrderSummary
                   :subtotal="cartTotalPrice"
-                  :shipping="orderSummary.shipping"
-                  :tax="orderSummary.tax"
-                  :total="orderSummary.total"
+                  :shipping="shipping"
+                  :tax="tax"
+                  :total="orderTotal"
                 />
               </b-col>
             </b-row>
@@ -277,9 +277,9 @@
               <b-col sm="4">
                 <OrderSummary
                   :subtotal="cartTotalPrice"
-                  :shipping="orderSummary.shipping"
-                  :tax="orderSummary.tax"
-                  :total="orderSummary.total"
+                  :shipping="shipping"
+                  :tax="tax"
+                  :total="orderTotal"
                 />
               </b-col>
             </b-row>
@@ -315,9 +315,9 @@
               <b-col sm="4">
                 <OrderSummary
                   :subtotal="cartTotalPrice"
-                  :shipping="orderSummary.shipping"
-                  :tax="orderSummary.tax"
-                  :total="orderSummary.total"
+                  :shipping="shipping"
+                  :tax="tax"
+                  :total="orderTotal"
                 />
               </b-col>
             </b-row>
@@ -426,7 +426,9 @@ export default {
         shipping: 0,
         tax: 0,
         total: 0
-      }
+      },
+      taxRate: 0,
+      shipping: 0
     };
   },
 
@@ -449,6 +451,18 @@ export default {
           total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unit_price) * 100) / 100;
         };
         return total;
+      }
+    },
+
+    tax: {
+      get () {
+        return this.cartTotalPrice * this.taxRate;
+      }
+    },
+
+    orderTotal: {
+      get () {
+        return this.cartTotalPrice + this.tax + this.shipping;
       }
     }
   },
@@ -486,7 +500,8 @@ export default {
       'chargeCard',
       'createAddress',
       'getToken',
-      'createCard'
+      'createCard',
+      'getTaxRate'
     ]),
 
     zeroPadPrice (value) {
@@ -545,7 +560,9 @@ export default {
       // numbers, but can also have four
     },
 
-    submitShippingInfo () {
+    async submitShippingInfo () {
+      const taxRateData = await this.getTaxRate({ postalCode: this.shippingAddress.zip });
+      this.taxRate = taxRateData.total_rate;
       this.tabIndex = 1;
     },
 
