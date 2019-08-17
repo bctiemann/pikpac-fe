@@ -310,8 +310,21 @@
 
                 <h3>Choose your shipping option</h3>
                 <ul class="shipping-options">
-                  <li v-for="shippingOption in shippingOptions" :key="shippingOption.id">
-                    {{ shippingOption }}
+                  <li
+                    v-for="shippingOption in shippingOptions"
+                    :key="shippingOption.id"
+                    :class="{ 'selected': selectedShippingOption && shippingOption.id == selectedShippingOption.id }"
+                    @click="selectedShippingOption = shippingOption"
+                  >
+                    <b-row>
+                      <b-col>
+                        {{ shippingOption.name }}<br>
+                        {{ shippingOption.business_days }} business days
+                      </b-col>
+                      <b-col>
+                        {{ shippingOption.price | currency }}
+                      </b-col>
+                    </b-row>
                   </li>
                 </ul>
 
@@ -354,6 +367,10 @@
 }
 .cart-item-info {
   float: left;
+}
+
+.shipping-options .selected {
+  background-color: #ffe;
 }
 
 .stripe-element .form-control {
@@ -434,7 +451,7 @@ export default {
         total: 0
       },
       taxRate: 0,
-      shipping: 0
+      selectedShippingOption: null
     };
   },
 
@@ -461,15 +478,21 @@ export default {
       }
     },
 
+    shipping: {
+      get () {
+        return this.selectedShippingOption ? parseFloat(this.selectedShippingOption.price) : 0;
+      }
+    },
+
     tax: {
       get () {
-        return this.cartTotalPrice * this.taxRate;
+        return (this.cartTotalPrice + this.shipping) * this.taxRate;
       }
     },
 
     orderTotal: {
       get () {
-        return this.cartTotalPrice + this.tax + this.shipping;
+        return this.cartTotalPrice + this.shipping + this.tax;
       }
     }
   },
