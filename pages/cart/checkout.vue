@@ -309,6 +309,12 @@
                 </ul>
 
                 <h3>Choose your shipping option</h3>
+                <ul class="shipping-options">
+                  <li v-for="shippingOption in shippingOptions" :key="shippingOption.id">
+                    {{ shippingOption }}
+                  </li>
+                </ul>
+
                 <h3>Order review</h3>
               </b-col>
               <b-col sm="2" />
@@ -434,7 +440,8 @@ export default {
 
   computed: {
     ...mapState('cart', [
-      'cart'
+      'cart',
+      'shippingOptions'
     ]),
 
     user: {
@@ -484,7 +491,7 @@ export default {
     'billingAddress.country' () { this.update(); }
   },
 
-  mounted () {
+  async mounted () {
     // const elements = this.$stripe.import().elements();
     // const card = elements.create('card');
     // Add an instance of the card Element into the `card-element` <div>
@@ -493,6 +500,7 @@ export default {
     if (this.user.billing_address) {
       Object.assign(this.billingAddress, this.user.billing_address);
     }
+    await this.getShippingOptions();
   },
 
   methods: {
@@ -501,6 +509,7 @@ export default {
       'createAddress',
       'getToken',
       'createCard',
+      'getShippingOptions',
       'getTaxRate'
     ]),
 
