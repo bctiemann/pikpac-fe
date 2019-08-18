@@ -16,7 +16,8 @@
             id="email-formgroup"
             label="Email"
             label-for="email"
-            :state="state"
+            :state="emailState"
+            :invalid-feedback="invalidFeedbackEmail"
           >
             <b-form-input
               id="email"
@@ -88,7 +89,8 @@ export default {
     return {
       email: '',
       password: '',
-      error: null
+      error: null,
+      emailRegex: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     };
   },
 
@@ -106,13 +108,15 @@ export default {
       }
     },
 
-    state() {
-      return this.email.length >= 4;
+    emailState() {
+      return this.email.length >= 4 && this.email.match(this.emailRegex) !== null;
     },
 
     invalidFeedbackEmail() {
-      if (this.email.length > 4) {
+      if (this.email.length < 4) {
         return '';
+      } else if (!this.email.match(this.emailRegex)) {
+        return 'Invalid email';
       } else if (this.email.length > 0) {
         return 'Enter at least 4 characters';
       } else {
@@ -144,7 +148,7 @@ export default {
     },
 
     formValid () {
-      return !this.invalidFeedbackEmail && !this.invalidFeedbackPassword;
+      return this.emailState && !this.invalidFeedbackPassword;
     }
   },
 
