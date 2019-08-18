@@ -22,24 +22,19 @@
             <b-form-input
               id="email"
               v-model="email"
-              :state="null"
-              :error="hasError"
-              label="Email"
+              type="email"
             />
           </b-form-group>
           <b-form-group
             id="password-formgroup"
             label="Password"
             label-for="password"
-            :state="state"
+            :state="passwordState"
           >
             <b-form-input
               id="password"
               v-model="password"
-              :state="null"
-              :error="hasError"
               type="password"
-              label="Password"
             />
           </b-form-group>
           <b-button :disabled="!formValid" block color="success" type="submit">
@@ -108,11 +103,15 @@ export default {
       }
     },
 
-    emailState() {
+    emailState () {
       return this.email.length >= 4 && this.email.match(this.emailRegex) !== null;
     },
 
-    invalidFeedbackEmail() {
+    passwordState () {
+      return true;
+    },
+
+    invalidFeedbackEmail () {
       if (this.email.length < 4) {
         return '';
       } else if (!this.email.match(this.emailRegex)) {

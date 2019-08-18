@@ -12,7 +12,6 @@
         <b-form-input
           id="email"
           v-model="email"
-          label="Email"
           type="email"
         />
       </b-form-group>
@@ -26,13 +25,7 @@
         <b-form-input
           id="password"
           v-model="password"
-          :state="null"
-          :error="hasError"
-          :error-count="errorMessages.length"
-          :error-messages="errorMessages"
-          outline
           type="password"
-          label="Password"
         />
       </b-form-group>
 
@@ -45,13 +38,7 @@
         <b-form-input
           id="password2"
           v-model="password2"
-          :state="null"
-          :error="hasError"
-          :error-count="errorMessages.length"
-          :error-messages="errorMessages"
-          outline
           type="password"
-          label="Password"
         />
       </b-form-group>
 

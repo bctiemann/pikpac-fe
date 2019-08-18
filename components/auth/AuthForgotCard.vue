@@ -12,10 +12,9 @@
         :invalid-feedback="invalidFeedbackEmail"
       >
         <b-form-input
+          id="email"
           v-model="email"
-          :error="hasError"
-          outline
-          label="Email"
+          type="email"
         />
       </b-form-group>
 

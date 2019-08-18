@@ -3,7 +3,9 @@
     My Orders
     <ul>
       <li v-for="order in orders" :key="order.id">
-        <p>{{ order.project.title }}</p>
+        <p @click="goToProject(order.project.id)">
+          {{ order.project.title }}
+        </p>
         <b-btn @click="showModalAndAddToCart(order.project)">
           Add to Cart
         </b-btn>
@@ -71,6 +73,10 @@ export default {
     showModalAndAddToCart (project) {
       this.$bvModal.show('added-to-cart');
       this.addToCart(project);
+    },
+
+    goToProject (projectId) {
+      this.$router.push(`/design/custom/${projectId}`);
     },
 
     refreshPrice (item) {

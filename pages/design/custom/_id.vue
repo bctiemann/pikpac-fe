@@ -1,9 +1,7 @@
 <template>
   <div class="container">
+    designFile: {{ designFile }}
     <h2>Download template</h2>
-    <p class="page-blurb">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
-    </p>
     <b-row v-if="isLoading">
       <b-col />
       <b-img src="~/static/loading_spinner.gif" />
@@ -27,6 +25,12 @@
         <div class="project-data">
           0000 pcs
         </div>
+        <b-btn>
+          Download template
+        </b-btn>
+        <b-btn @click="showUploadFileModal">
+          Upload design file
+        </b-btn>
       </b-col>
     </b-row>
     <b-row class="d-flex w-100 justify-content-between">
@@ -45,6 +49,7 @@
       </div>
     </b-row>
     <SignInModal :login-action="closeModal" />
+    <UploadFileModal :handle-ok-action="submitDesignFile" />
   </div>
 </template>
 
@@ -81,10 +86,14 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import SignInModal from '~/components/SignInModal.vue';
+import UploadFileModal from '~/components/UploadFileModal.vue';
 
 export default {
+  middleware: 'auth',
+
   components: {
-    SignInModal
+    SignInModal,
+    UploadFileModal
   },
 
   data: () => {
@@ -110,7 +119,8 @@ export default {
     ]),
 
     ...mapState('design', [
-      'design'
+      'design',
+      'designFile'
     ]),
 
     ...mapState('projects', [
@@ -153,12 +163,26 @@ export default {
 
     ...mapActions('design', [
       'resetDesign',
-      'setDesignProperty'
+      'setDesignProperty',
+      'uploadDesignFile'
     ]),
 
     ...mapActions('projects', [
       'getProject'
     ]),
+
+    showUploadFileModal () {
+      this.$bvModal.show('upload-file');
+    },
+
+    async submitDesignFile () {
+      const formData = new FormData();
+      formData.append('design_file', this.designFile, this.designFile.name);
+      formData.append('project_id', this.project.id);
+      await this.uploadDesignFile(formData);
+      this.$bvModal.hide('upload-file');
+      this.$router.push('/design/review');
+    },
 
     submitDesign () {
       this.$router.push('/design/review');
