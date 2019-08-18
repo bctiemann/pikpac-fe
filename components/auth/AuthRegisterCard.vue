@@ -4,39 +4,56 @@
     <b-form class="register-form" @submit.prevent="register">
       <b-form-group
         id="email-formgroup"
-        description="Enter email."
         label="Enter your email"
         label-for="email"
-        :invalid-feedback="invalidFeedback"
-        :valid-feedback="validFeedback"
         :state="state"
       >
-        <b-form-input id="email" v-model="email" :state="null" :error="hasError" label="Email" />
+        <b-form-input
+          id="email"
+          v-model="email"
+          :state="null"
+          :error="hasError"
+          label="Email"
+        />
       </b-form-group>
 
-      <b-form-input
-        id="password"
-        v-model="password"
-        :state="null"
-        :error="hasError"
-        :error-count="errorMessages.length"
-        :error-messages="errorMessages"
-        outline
-        type="password"
+      <b-form-group
+        id="password-formgroup"
         label="Password"
-      />
+        label-for="password"
+        :state="state"
+      >
+        <b-form-input
+          id="password"
+          v-model="password"
+          :state="null"
+          :error="hasError"
+          :error-count="errorMessages.length"
+          :error-messages="errorMessages"
+          outline
+          type="password"
+          label="Password"
+        />
+      </b-form-group>
 
-      <b-form-input
-        id="password2"
-        v-model="password2"
-        :state="null"
-        :error="hasError"
-        :error-count="errorMessages.length"
-        :error-messages="errorMessages"
-        outline
-        type="password"
-        label="Password"
-      />
+      <b-form-group
+        id="password2-formgroup"
+        label="Password (repeat)"
+        label-for="password2"
+        :state="state"
+      >
+        <b-form-input
+          id="password2"
+          v-model="password2"
+          :state="null"
+          :error="hasError"
+          :error-count="errorMessages.length"
+          :error-messages="errorMessages"
+          outline
+          type="password"
+          label="Password"
+        />
+      </b-form-group>
 
       <b-btn
         block
@@ -47,7 +64,7 @@
         Register
       </b-btn>
     </b-form>
-    <nuxt-link to="/">
+    <nuxt-link to="/auth/sign-in">
       Back
     </nuxt-link>
   </b-container>
@@ -72,7 +89,7 @@ export default {
     state() {
       return this.email.length >= 4;
     },
-    invalidFeedback() {
+    invalidFeedbackEmail() {
       if (this.email.length > 4) {
         return '';
       } else if (this.email.length > 0) {
@@ -81,7 +98,7 @@ export default {
         return 'Please enter something';
       }
     },
-    validFeedback() {
+    validFeedbackEmail() {
       return this.state === true ? 'Thank you' : '';
     },
 
@@ -95,7 +112,7 @@ export default {
       return (this.password === this.password2 || !this.password2) ? '' : 'Passwords must match.';
     },
     formValid () {
-      return this.passwordsMatchError.length === 0 && this.password2.length > 0;
+      return !this.invalidFeedbackEmail && this.passwordsMatchError.length === 0 && this.password2.length > 0;
     }
   },
 

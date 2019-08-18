@@ -4,14 +4,22 @@
       class="register-form"
       @submit.prevent="requestToken"
     >
-      <b-form-input
-        v-model="email"
-        :error="hasError"
-        outline
+      <b-form-group
+        id="email-formgroup"
         label="Email"
-      />
+        label-for="email"
+        :state="state"
+      >
+        <b-form-input
+          v-model="email"
+          :error="hasError"
+          outline
+          label="Email"
+        />
+      </b-form-group>
 
       <b-btn
+        :disabled="!formValid"
         block
         color="success"
         type="submit"
@@ -19,7 +27,7 @@
         Get reset token
       </b-btn>
     </b-form>
-    <nuxt-link to="/">
+    <nuxt-link to="/auth/sign-in">
       Back
     </nuxt-link>
   </b-container>
@@ -45,6 +53,27 @@ export default {
     errorMessages () { return this.error ? [this.error] : []; },
     passwordsMatchError () {
       return (this.password === this.password2 || !this.password2) ? '' : 'Passwords must match.';
+    },
+
+    state() {
+      return this.email.length >= 4;
+    },
+
+    invalidFeedbackEmail() {
+      if (this.email.length > 4) {
+        return '';
+      } else if (this.email.length > 0) {
+        return 'Enter at least 4 characters';
+      } else {
+        return 'Please enter something';
+      }
+    },
+    validFeedbackEmail() {
+      return this.state === true ? 'Thank you' : '';
+    },
+
+    formValid () {
+      return !this.invalidFeedbackEmail;
     }
   },
 
