@@ -5,6 +5,9 @@ export const state = () => ({
 
 export const mutations = {
   setOrders (state, orders) {
+    for (const i in orders) {
+      orders[i].project.unitPrice = orders[i].project.unit_price;
+    };
     state.orders = orders;
   },
   setIsLoading (state, isLoading) {
