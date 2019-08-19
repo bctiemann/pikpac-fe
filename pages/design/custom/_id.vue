@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    designFile: {{ designFile }}
     <h2>Download template</h2>
     <b-row v-if="isLoading">
       <b-col />
@@ -23,7 +22,7 @@
           Clear varnish / exterior of the box
         </div>
         <div class="project-data">
-          0000 pcs
+          {{ project.quantity }} pcs
         </div>
         <b-btn>
           Download template

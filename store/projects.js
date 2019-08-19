@@ -5,7 +5,13 @@ export const state = () => ({
 
 export const mutations = {
   setProject (state, project) {
+    console.log('setProject');
     state.project = project;
+  },
+  setProjectProperty (state, { property, value }) {
+    const mutatedProject = state.project;
+    mutatedProject[property] = value;
+    state.project = mutatedProject;
   },
   setIsLoading (state, isLoading) {
     state.isLoading = isLoading;
@@ -16,11 +22,12 @@ export const actions = {
   async getProject ({ commit }, projectId) {
     commit('setIsLoading', true);
     const { data } = await this.$axios.get(`/projects/${projectId}/`);
-    commit('setProject', data);
+    const project = {};
+    Object.assign(project, data);
+    project.unitPrice = project.unit_price;
+    project.type = 'Custom design';
+    commit('setProject', project);
     commit('setIsLoading', false);
-  },
-  storeProject ({ commit }, payload) {
-    commit('setProject', payload);
   },
   async createProject ({ commit }, payload) {
     commit('setIsLoading', true);

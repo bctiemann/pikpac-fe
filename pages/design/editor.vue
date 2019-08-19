@@ -12,7 +12,7 @@
       <b-col sm="3" class="designer-tools">
         <div class="h-100 d-flex flex-column">
           <b-row class="designer-title">
-            <h2>{{ design.title }}</h2>
+            <h2>{{ project.title }}</h2>
           </b-row>
           <b-row class="flex-grow-1">
             <b-col sm="8" class="px-1">
@@ -86,7 +86,7 @@
 </style>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {},
@@ -109,6 +109,10 @@ export default {
       'patterns',
       'papers',
       'isLoading'
+    ]),
+
+    ...mapState('projects', [
+      'project'
     ]),
 
     ...mapState('design', [
@@ -135,8 +139,8 @@ export default {
       'getPapers'
     ]),
 
-    ...mapActions('projects', [
-      'storeProject'
+    ...mapMutations('projects', [
+      'setProject'
     ]),
 
     highlightPattern (pattern) {
@@ -157,7 +161,14 @@ export default {
     },
 
     createProjectAndPush () {
-      this.storeProject(this.design);
+      /*
+      const project = {
+        title: this.product.name,
+        product: this.product,
+        design: this.design
+      };
+      */
+      // this.setProject(this.project);
       // await this.createProject(project);
       console.log(this.project);
       this.$router.push(`/design/review`);

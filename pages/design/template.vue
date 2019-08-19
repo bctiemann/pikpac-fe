@@ -85,9 +85,6 @@ export default {
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
       ],
-      project: {
-        title: 'Project name'
-      },
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
@@ -104,6 +101,10 @@ export default {
 
     ...mapState('design', [
       'design'
+    ]),
+
+    ...mapState('projects', [
+      'project'
     ]),
 
     ...mapGetters('players', [
@@ -126,8 +127,8 @@ export default {
       'getPapers'
     ]),
 
-    ...mapActions('design', [
-      'setDesignProperty'
+    ...mapMutations('projects', [
+      'setProjectProperty'
     ]),
 
     ...mapMutations('design', [
@@ -148,9 +149,8 @@ export default {
     selectPatternPaper () {
       // this.selectedPattern = this.highlightedPattern;
       // this.selectedPaper = this.highlightedPaper;
-      this.setDesignProperty({ property: 'pattern', value: this.highlightedPattern });
-      this.setDesignProperty({ property: 'paper', value: this.highlightedPaper });
-      this.setDesignProperty({ property: 'title', value: 'Project name' });
+      this.setProjectProperty({ property: 'pattern', value: this.highlightedPattern });
+      this.setProjectProperty({ property: 'paper', value: this.highlightedPaper });
       this.$router.push('/design/editor');
     }
   }

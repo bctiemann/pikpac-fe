@@ -187,10 +187,11 @@ export default {
 
     async createProjectAndPush () {
       const project = {
-        title: this.design.product.name,
-        product_id: this.design.product.id,
-        unit_price: this.design.unitPrice,
-        quantity: this.design.quantity
+        type: 'custom',
+        title: this.project.product.name,
+        product_id: this.project.product.id,
+        unit_price: this.project.unitPrice,
+        quantity: this.project.quantity
       };
       await this.createProject(project);
       console.log(this.project);

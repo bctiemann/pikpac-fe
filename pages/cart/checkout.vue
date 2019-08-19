@@ -471,8 +471,7 @@ export default {
       get () {
         let total = 0;
         for (const i in this.cart) {
-          console.log(this.cart[i].unit_price);
-          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unit_price) * 100) / 100;
+          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unitPrice) * 100) / 100;
         };
         return total;
       }

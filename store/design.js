@@ -9,11 +9,6 @@ export const mutations = {
     console.log(design);
     state.design = design;
   },
-  setDesignProperty (state, { property, value }) {
-    const mutatedDesign = state.design;
-    mutatedDesign[property] = value;
-    state.design = mutatedDesign;
-  },
   setDesignFile (state, payload) {
     state.designFile = payload;
   },

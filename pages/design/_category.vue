@@ -101,12 +101,12 @@
       <b-row>
         <b-col />
         <b-col>
-          <b-button @click="savePreliminaryDesign('template')">
+          <b-button @click="savePreliminaryProject('template')">
             Select from our preset designs
           </b-button>
         </b-col>
         <b-col>
-          <b-button @click="savePreliminaryDesign('custom')">
+          <b-button @click="savePreliminaryProject('custom')">
             Upload your own design
           </b-button>
         </b-col>
@@ -173,7 +173,7 @@ export default {
 
   data: () => {
     return {
-      designTypes: {
+      projectTypes: {
         template: 'Predefined Template',
         custom: 'Custom Design'
       },
@@ -289,6 +289,10 @@ export default {
       'setDesign'
     ]),
 
+    ...mapMutations('projects', [
+      'setProject'
+    ]),
+
     zeroPadPrice (value) {
       if (!value) {
         return 0;
@@ -327,19 +331,19 @@ export default {
       // this.refreshPrice({ product: product, quantity: this.boxQuantity });
     },
 
-    savePreliminaryDesign (designType) {
-      const design = {
+    savePreliminaryProject (projectType) {
+      const project = {
         product: this.selectedProduct,
-        title: 'Project name',
-        type: this.designTypes[designType],
+        title: this.selectedProduct.name,
+        type: this.projectTypes[projectType],
         quantity: this.boxQuantity,
         unitPrice: this.boxPrice,
         calculatedUnitPrice: this.calculatedUnitPrice,
         calculatedTotalPrice: this.calculatedTotalPrice
       };
-      this.setDesign(design);
+      this.setProject(project);
       this.$router.push({
-        path: `/design/${designType}`
+        path: `/design/${projectType}`
       });
     }
   }
