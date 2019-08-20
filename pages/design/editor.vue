@@ -77,7 +77,7 @@
 }
 
 .designer-title {
-  height: 60px;
+  padding: 5px;
 }
 
 .designer-tools .nav {
