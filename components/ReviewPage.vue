@@ -134,6 +134,7 @@ export default {
   async mounted () {
     await this.getPatterns();
     await this.getPapers();
+    console.log(this.$route.params.id);
   },
 
   created () {
