@@ -12,7 +12,7 @@
       <b-col sm="3" class="designer-tools">
         <div class="h-100 d-flex flex-column">
           <b-row class="designer-title">
-            <h2>{{ project.title }}</h2>
+            <EditableTitle :content="project.title" @update="text = $event" />
           </b-row>
           <b-row class="flex-grow-1">
             <b-col sm="8" class="px-1">
@@ -87,9 +87,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
+import EditableTitle from '~/components/EditableTitle.vue';
 
 export default {
-  components: {},
+  components: {
+    EditableTitle
+  },
 
   data: () => {
     return {

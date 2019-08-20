@@ -11,7 +11,7 @@
         <b-img src="~/static/folding_1pc-folding.png" fluid-grow class="mb-5" />
       </b-col>
       <b-col sm="5">
-        <EditableTitle @update="text = $event" />
+        <EditableTitle :watch-load="true" @update="text = $event" />
         <div class="project-data">
           00.00 cm x 00.00 cm x 00.00 cm
         </div>

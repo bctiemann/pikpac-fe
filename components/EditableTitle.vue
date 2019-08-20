@@ -10,6 +10,14 @@ import { mapMutations } from 'vuex';
 
 export default {
   props: {
+    content: {
+      type: String,
+      default: ''
+    },
+    watchLoad: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data: () => {
@@ -28,11 +36,17 @@ export default {
 
   watch: {
     projectTitle () {
-      if (!this.initialValueSet) {
+      if (this.watchLoad && !this.initialValueSet) {
+        console.log('resetting');
         this.$el.innerText = this.$store.state.projects.project.title;
         this.initialValueSet = true;
       }
     }
+  },
+
+  mounted () {
+    console.log(this.content);
+    this.$el.innerText = this.content;
   },
 
   methods: {
