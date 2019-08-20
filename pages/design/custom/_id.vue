@@ -11,7 +11,7 @@
         <b-img src="~/static/folding_1pc-folding.png" fluid-grow class="mb-5" />
       </b-col>
       <b-col sm="5">
-        <h3>{{ project.title }}</h3>
+        <EditableTitle :content="project.title" @update="text = $event" />
         <div class="project-data">
           00.00 cm x 00.00 cm x 00.00 cm
         </div>
@@ -86,13 +86,15 @@
 import { mapState, mapGetters, mapActions } from 'vuex';
 import SignInModal from '~/components/SignInModal.vue';
 import UploadFileModal from '~/components/UploadFileModal.vue';
+import EditableTitle from '~/components/EditableTitle.vue';
 
 export default {
   middleware: 'auth',
 
   components: {
     SignInModal,
-    UploadFileModal
+    UploadFileModal,
+    EditableTitle
   },
 
   data: () => {
