@@ -20,7 +20,7 @@
         id="password-formgroup"
         label="Password"
         label-for="password"
-        :state="state"
+        :state="passwordState"
       >
         <b-form-input
           id="password"
@@ -33,7 +33,7 @@
         id="password2-formgroup"
         label="Password (repeat)"
         label-for="password2"
-        :state="state"
+        :state="passwordState"
       >
         <b-form-input
           id="password2"
@@ -90,6 +90,10 @@ export default {
     },
     validFeedbackEmail() {
       return this.emailState === true ? 'Thank you' : '';
+    },
+
+    passwordState () {
+      return true;
     },
 
     hasError() {
