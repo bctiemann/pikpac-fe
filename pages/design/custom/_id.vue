@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="projectIsLoaded && isValidProject" class="container">
     <h2>Download template</h2>
     <b-row v-if="isLoading">
       <b-col />
@@ -50,6 +50,13 @@
     <SignInModal :login-action="closeModal" />
     <UploadFileModal :handle-ok-action="submitDesignFile" />
   </div>
+  <div v-else-if="!projectIsLoaded" class="container">
+    Loading...
+  </div>
+  <div v-else-if="!isValidProject" class="container">
+    Invalid project
+  </div>
+  <div v-else />
 </template>
 
 <style>
@@ -125,7 +132,9 @@ export default {
     ]),
 
     ...mapState('projects', [
-      'project'
+      'project',
+      'projectIsLoaded',
+      'isValidProject'
     ]),
 
     ...mapGetters('players', [
@@ -149,7 +158,7 @@ export default {
     console.log(this.products);
     await this.getPatterns();
     await this.getPapers();
-    this.getProject(this.$route.params.id);
+    await this.getProject(this.$route.params.id);
   },
 
   created () {
