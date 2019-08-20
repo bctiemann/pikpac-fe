@@ -10,10 +10,6 @@ import { mapMutations } from 'vuex';
 
 export default {
   props: {
-    content: {
-      type: String,
-      default: ''
-    }
   },
 
   data: () => {
