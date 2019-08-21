@@ -11,11 +11,17 @@
             <b-col>
               <h4>{{ order.project.title }}</h4>
               <p>{{ calculatedPrice(order.project.unit_price) }} &times; {{ order.project.quantity }} = {{ calculatedPrice(order.project.unit_price * order.project.quantity) }}</p>
-              <p>{{ order.project.product.name }} {{ order.date_created }}</p>
+              <p>{{ order.project.product.name }}</p>
+              <p>Type: {{ order.project.type }}</p>
+              <p>Created: {{ order.date_created }}</p>
+              <p>Status: {{ order.status }}</p>
             </b-col>
             <b-col sm="2">
               <b-btn @click.stop="showModalAndAddToCart(order.project)">
                 Add to Cart
+              </b-btn>
+              <b-btn @click.stop="cancelOrder(order.id)">
+                Cancel Order
               </b-btn>
             </b-col>
           </b-row>
@@ -36,6 +42,9 @@
   margin: 10px;
   padding: 10px;
   border-radius: 5px;
+}
+.orders p {
+  margin: 3px;
 }
 
 /*
@@ -83,7 +92,8 @@ export default {
 
   methods: {
     ...mapActions('orders', [
-      'getOrders'
+      'getOrders',
+      'cancelOrder'
     ]),
 
     ...mapActions('cart', [

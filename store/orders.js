@@ -21,5 +21,12 @@ export const actions = {
     const { data } = await this.$axios.get(`/orders/`);
     commit('setOrders', data);
     commit('setIsLoading', false);
+  },
+  async cancelOrder ({ commit, dispatch }, orderId) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.post(`/orders/${orderId}/cancel/`);
+    console.log(data);
+    dispatch('getOrders');
+    commit('setIsLoading', false);
   }
 };
