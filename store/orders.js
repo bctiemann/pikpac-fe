@@ -17,6 +17,8 @@ export const mutations = {
 
 export const actions = {
   async getOrders ({ commit }, includeCancelled = false) {
+    console.log('getting');
+    console.log(includeCancelled);
     commit('setIsLoading', true);
     const { data } = await this.$axios.get(`/orders/${includeCancelled ? '?include_cancelled=true' : ''}`);
     commit('setOrders', data);

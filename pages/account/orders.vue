@@ -1,6 +1,13 @@
 <template>
   <div class="container">
     My Orders
+    <b-button
+      :pressed.sync="includeCancelled"
+      variant="primary"
+      @click="getOrders(includeCancelled)"
+    >
+      Include cancelled
+    </b-button>
     <ul class="orders">
       <li v-for="order in orders" :key="order.id" @click="goToProject(order.project.id)">
         <div class="container">
@@ -20,7 +27,7 @@
               <b-btn @click.stop="showModalAndAddToCart(order.project)">
                 Add to Cart
               </b-btn>
-              <b-btn @click.stop="cancelOrder(order.id)">
+              <b-btn @click.stop="confirmAndCancelOrder(order.id)">
                 Cancel Order
               </b-btn>
             </b-col>
@@ -72,6 +79,7 @@ export default {
 
   data: () => {
     return {
+      includeCancelled: false,
       items: [
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
@@ -87,8 +95,7 @@ export default {
   },
 
   created () {
-    this.getOrders();
-    // this.getOrders({ includeCancelled: true });
+    this.getOrders(this.includeCancelled);
   },
 
   methods: {
@@ -110,6 +117,12 @@ export default {
 
     calculatedPrice (price) {
       return '$' + this.zeroPadPrice(price);
+    },
+
+    confirmAndCancelOrder (orderId) {
+      if (confirm('Are you sure?')) {
+        this.cancelOrder(orderId);
+      }
     },
 
     showModalAndAddToCart (project) {
