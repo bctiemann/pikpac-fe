@@ -16,9 +16,9 @@ export const mutations = {
 };
 
 export const actions = {
-  async getOrders ({ commit }) {
+  async getOrders ({ commit }, includeCancelled = false) {
     commit('setIsLoading', true);
-    const { data } = await this.$axios.get(`/orders/`);
+    const { data } = await this.$axios.get(`/orders/${includeCancelled ? '?include_cancelled=true' : ''}`);
     commit('setOrders', data);
     commit('setIsLoading', false);
   },
