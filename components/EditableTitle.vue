@@ -51,6 +51,9 @@ export default {
   mounted () {
     console.log(this.content);
     this.$el.innerText = this.content;
+    if (this.content) {
+      this.initialValueSet = true;
+    };
   },
 
   methods: {

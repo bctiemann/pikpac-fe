@@ -1,5 +1,5 @@
 <template>
-  <div v-if="true || (projectIsLoaded && isValidProject)" class="container">
+  <div v-if="projectIsLoaded && isValidProject" class="container">
     <h2>Download template</h2>
     <b-row v-if="isLoading">
       <b-col />
@@ -11,7 +11,7 @@
         <b-img src="~/static/folding_1pc-folding.png" fluid-grow class="mb-5" />
       </b-col>
       <b-col sm="5">
-        <EditableTitle :watch-load="true" @update="text = $event" />
+        <EditableTitle :watch-load="true" :content="project.title" @update="text = $event" />
         <div class="project-data">
           00.00 cm x 00.00 cm x 00.00 cm
         </div>
