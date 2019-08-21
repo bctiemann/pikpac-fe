@@ -50,5 +50,12 @@ export const actions = {
     console.log(data);
     commit('setProject', data);
     commit('setIsLoading', false);
+  },
+  async updateProject ({ commit }, payload) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.patch(`/projects/${payload.projectId}/`, payload.project);
+    console.log(data);
+    commit('setProject', data);
+    commit('setIsLoading', false);
   }
 };

@@ -39,7 +39,7 @@
         </b-button>
       </div>
       <div>
-        <b-button>
+        <b-button @click="updateProject({ projectId: project.id, project: project})">
           Save
         </b-button>
         <b-button @click="submitDesign">
@@ -178,7 +178,8 @@ export default {
     ]),
 
     ...mapActions('projects', [
-      'getProject'
+      'getProject',
+      'updateProject'
     ]),
 
     loadProject () {
