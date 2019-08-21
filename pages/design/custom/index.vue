@@ -126,10 +126,10 @@ export default {
     }
   },
 
-  async mounted () {
+  mounted () {
     console.log(this.products);
-    await this.getPatterns();
-    await this.getPapers();
+    // await this.getPatterns();
+    // await this.getPapers();
   },
 
   created () {

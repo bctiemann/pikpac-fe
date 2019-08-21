@@ -126,8 +126,8 @@ export default {
 
   async mounted () {
     console.log(this.products);
-    await this.getPatterns();
-    await this.getPapers();
+    // await this.getPatterns();
+    // await this.getPapers();
     await this.getProject(this.$route.params.id);
   },
 
