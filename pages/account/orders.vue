@@ -24,10 +24,10 @@
               <p>Status: {{ order.status }}</p>
             </b-col>
             <b-col sm="2">
-              <b-btn @click.stop="showModalAndAddToCart(order.project)">
+              <b-btn v-if="!order.is_cancelled" @click.stop="showModalAndAddToCart(order.project)">
                 Add to Cart
               </b-btn>
-              <b-btn @click.stop="confirmAndCancelOrder(order.id)">
+              <b-btn v-if="!order.is_cancelled" @click.stop="confirmAndCancelOrder(order.id)">
                 Cancel Order
               </b-btn>
             </b-col>
@@ -121,7 +121,7 @@ export default {
 
     confirmAndCancelOrder (orderId) {
       if (confirm('Are you sure?')) {
-        this.cancelOrder(orderId);
+        this.cancelOrder({ orderId: orderId, includeCancelled: this.includeCancelled });
       }
     },
 
