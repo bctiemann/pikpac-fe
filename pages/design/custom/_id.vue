@@ -1,5 +1,6 @@
 <template>
   <div v-if="projectIsLoaded && isValidProject" class="container">
+    {{ project.title }}
     <h2>Download template</h2>
     <b-row v-if="isLoading">
       <b-col />
@@ -180,6 +181,10 @@ export default {
     ...mapActions('projects', [
       'getProject'
     ]),
+
+    loadProject () {
+      this.getProject(this.$route.params.id);
+    },
 
     showUploadFileModal () {
       this.$bvModal.show('upload-file');

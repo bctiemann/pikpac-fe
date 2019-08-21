@@ -1,12 +1,21 @@
 <template>
+  <!--
   <h3
     contenteditable="true"
     @input="update"
   />
+  -->
+  <!--<div>-->
+  <!--title: {{ projectTitle }}-->
+  <h3
+    contenteditable="true"
+    @input="update"
+  />
+  <!--</div>-->
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   props: {
@@ -27,15 +36,25 @@ export default {
   },
 
   computed: {
+    ...mapState('projects', [
+      // 'project'
+    ]),
+
     projectTitle: {
       get () {
-        return this.$store.state.projects.project.title;
+        console.log('getter');
+        console.log(this.$store.state.projects.projectTitle);
+        return this.$store.state.projects.projectTitle;
+      },
+      set (value) {
+        console.log('setter');
       }
     }
   },
 
   watch: {
     projectTitle () {
+      console.log('hi');
       if (this.watchLoad && !this.initialValueSet) {
         console.log('resetting');
         this.$el.innerText = this.$store.state.projects.project.title;
@@ -55,6 +74,7 @@ export default {
     ]),
 
     update () {
+      console.log('update');
       this.setProjectProperty({ property: 'title', value: event.target.innerText });
       this.$emit('update', event.target.innerText);
     }
