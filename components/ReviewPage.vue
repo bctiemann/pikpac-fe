@@ -52,36 +52,6 @@
   </div>
 </template>
 
-<style>
-.faded {
-  filter: opacity(60%);
-  transition: .3s;
-}
-
-.designer {
-  height: 80vh;
-}
-
-.preview-pane {
-  background-color: #e0e4df;
-}
-
-.designer-tools {
-}
-
-.designer-tools div {
-  background-color: #e0e4df;
-}
-
-.designer-title {
-  height: 60px;
-}
-
-.designer-tools .nav {
-  font-size: 10px;
-}
-</style>
-
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
 import SignInModal from '~/components/SignInModal.vue';
