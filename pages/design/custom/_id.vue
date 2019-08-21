@@ -1,6 +1,5 @@
 <template>
-  <div v-if="projectIsLoaded && isValidProject" class="container">
-    {{ project.title }}
+  <div v-if="true || (projectIsLoaded && isValidProject)" class="container">
     <h2>Download template</h2>
     <b-row v-if="isLoading">
       <b-col />

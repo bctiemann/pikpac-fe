@@ -1,17 +1,8 @@
 <template>
-  <!--
   <h3
     contenteditable="true"
     @input="update"
   />
-  -->
-  <!--<div>-->
-  <!--title: {{ projectTitle }}-->
-  <h3
-    contenteditable="true"
-    @input="update"
-  />
-  <!--</div>-->
 </template>
 
 <script>
@@ -42,19 +33,13 @@ export default {
 
     projectTitle: {
       get () {
-        console.log('getter');
-        console.log(this.$store.state.projects.projectTitle);
-        return this.$store.state.projects.projectTitle;
-      },
-      set (value) {
-        console.log('setter');
+        return this.$store.state.projects.project.title;
       }
     }
   },
 
   watch: {
     projectTitle () {
-      console.log('hi');
       if (this.watchLoad && !this.initialValueSet) {
         console.log('resetting');
         this.$el.innerText = this.$store.state.projects.project.title;

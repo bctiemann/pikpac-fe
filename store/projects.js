@@ -1,6 +1,5 @@
 export const state = () => ({
   project: {},
-  projectTitle: null,
   isValidProject: false,
   projectIsLoaded: false,
   isLoading: false
@@ -10,7 +9,6 @@ export const mutations = {
   setProject (state, project) {
     console.log('setProject');
     state.project = project;
-    state.projectTitle = project.title;
   },
   setProjectProperty (state, { property, value }) {
     const mutatedProject = state.project;
@@ -37,7 +35,6 @@ export const actions = {
       Object.assign(project, data);
       project.unitPrice = project.unit_price;
       project.type = 'Custom design';
-      console.log(project);
       commit('setProject', project);
       commit('setIsValidProject', true);
     } catch (err) {
