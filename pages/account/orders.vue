@@ -9,7 +9,7 @@
       Include cancelled
     </b-button>
     <ul class="orders">
-      <li v-for="order in orders" :key="order.id" @click="goToProject(order.project.id)">
+      <li v-for="order in orders" :key="order.id" @click="goToProject(order.project)">
         <div class="container">
           <b-row>
             <b-col sm="3">
@@ -66,7 +66,7 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import AddedToCartModal from '~/components/AddedToCartModal.vue';
 
 export default {
@@ -108,6 +108,14 @@ export default {
       'addToCart'
     ]),
 
+    ...mapActions('projects', [
+      'getProject'
+    ]),
+
+    ...mapMutations('projects', [
+      'setProject'
+    ]),
+
     zeroPadPrice (value) {
       if (!value) {
         return 0;
@@ -130,8 +138,9 @@ export default {
       this.addToCart(project);
     },
 
-    goToProject (projectId) {
-      this.$router.push(`/design/custom/${projectId}`);
+    goToProject (project) {
+      this.setProject(project);
+      this.$router.push(`/design/custom/${project.id}`);
     },
 
     refreshPrice (item) {
