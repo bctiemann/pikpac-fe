@@ -88,6 +88,8 @@ h1 {
 // import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 // import { validationRules, validationParams } from '~/mixins/Validation';
 import Navbar from '~/components/Navbar.vue';
+import { getData, setData } from 'nuxt-storage/local-storage';
+import { uuid } from 'vue-uuid';
 
 export default {
   components: {
@@ -124,6 +126,15 @@ export default {
         return this.$auth.user;
       }
     }
+  },
+
+  mounted () {
+    let clientFingerprint = getData('clientFingerprint');
+    if (!clientFingerprint) {
+      clientFingerprint = uuid.v4();
+      setData('clientFingerprint', clientFingerprint, '365', 'd');
+    }
+    this.$axios.defaults.headers.common['Client-Fingerprint'] = clientFingerprint;
   }
 };
 </script>
