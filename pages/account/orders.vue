@@ -19,7 +19,7 @@
               <h4>{{ order.project.title }}</h4>
               <p>{{ calculatedPrice(order.project.unit_price) }} &times; {{ order.project.quantity }} = {{ calculatedPrice(order.project.unit_price * order.project.quantity) }}</p>
               <p>{{ order.project.product.name }}</p>
-              <p>Type: {{ order.project.type }}</p>
+              <p>Type: {{ order.project.type_display }}</p>
               <p>Created: {{ order.date_created }}</p>
               <p>Status: {{ order.status }}</p>
             </b-col>

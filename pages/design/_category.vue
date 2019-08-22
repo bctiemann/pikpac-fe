@@ -238,6 +238,10 @@ export default {
       'design'
     ]),
 
+    ...mapState('projects', [
+      'project'
+    ]),
+
     ...mapGetters('players', [
     ]),
 
@@ -293,6 +297,10 @@ export default {
       'setProject'
     ]),
 
+    ...mapActions('projects', [
+      'createProject'
+    ]),
+
     zeroPadPrice (value) {
       if (!value) {
         return 0;
@@ -331,6 +339,19 @@ export default {
       // this.refreshPrice({ product: product, quantity: this.boxQuantity });
     },
 
+    async createProjectAndPush () {
+      const project = {
+        type: 'template',
+        title: this.project.product.name,
+        product_id: this.project.product.id,
+        unit_price: this.project.unitPrice,
+        quantity: this.project.quantity
+      };
+      await this.createProject(project);
+      console.log(this.project);
+      this.$router.push(`/design/template/${this.project.id}`);
+    },
+
     savePreliminaryProject (projectType) {
       const project = {
         product: this.selectedProduct,
@@ -342,9 +363,13 @@ export default {
         calculatedTotalPrice: this.calculatedTotalPrice
       };
       this.setProject(project);
-      this.$router.push({
-        path: `/design/${projectType}`
-      });
+      if (projectType === 'template') {
+        this.createProjectAndPush();
+      } else {
+        this.$router.push({
+          path: `/design/${projectType}`
+        });
+      }
     }
   }
 
