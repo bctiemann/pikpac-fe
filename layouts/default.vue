@@ -65,7 +65,7 @@ html {
   background-color: #35495e;
 }
 
-h1, h2, h3, .logo {
+h1, h2, h3, .logo, .navbar-brand {
   font-family: 'mermaid';
   font-weight: bold;
 }
