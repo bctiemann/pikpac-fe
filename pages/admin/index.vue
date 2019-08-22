@@ -35,7 +35,7 @@ export default {
   },
 
   mounted () {
-    this.getOrders({ includeCancelled: false });
+    this.getOrders(false);
   },
 
   methods: {

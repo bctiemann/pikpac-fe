@@ -5,7 +5,7 @@
     <b-navbar-brand>pikpac</b-navbar-brand>
 
     <b-collapse id="nav-text-collapse" is-nav>
-      <b-navbar-nav v-if="user.is_admin">
+      <b-navbar-nav v-if="user && user.is_admin">
         <b-nav-text>Administration</b-nav-text>
         <b-nav-item-dropdown text="Lang" right>
           <b-dropdown-item href="#">
