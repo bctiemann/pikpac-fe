@@ -34,7 +34,7 @@ export const actions = {
       const project = {};
       Object.assign(project, data);
       project.unitPrice = project.unit_price;
-      project.type = 'Custom design';
+      // project.type = 'Custom design';
       commit('setProject', project);
       commit('setIsValidProject', true);
     } catch (err) {
