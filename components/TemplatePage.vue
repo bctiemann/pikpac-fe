@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="projectIsLoaded && isValidProject" class="container">
     <h2>Choose a design or paper</h2>
     <p class="page-blurb">
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam mattis pharetra ultrices. Sed tempor pharetra eros, a lacinia sapien pellentesque.
@@ -31,7 +31,7 @@
           </b-button>
         </div>
         <div>
-          <b-button>
+          <b-button @click="updateProject({ projectId: project.id, project: project})">
             Save
           </b-button>
           <b-button :disabled="!(highlightedPattern || highlightedPaper)" @click="selectPatternPaper">
@@ -40,6 +40,12 @@
         </div>
       </b-row>
     </b-row>
+  </div>
+  <div v-else-if="!projectIsLoaded" class="container">
+    Loading...
+  </div>
+  <div v-else-if="!isValidProject" class="container">
+    Invalid project
   </div>
 </template>
 
@@ -81,7 +87,9 @@ export default {
     ]),
 
     ...mapState('projects', [
-      'project'
+      'project',
+      'projectIsLoaded',
+      'isValidProject'
     ]),
 
     ...mapGetters('players', [
@@ -92,6 +100,7 @@ export default {
     console.log(this.products);
     await this.getPatterns();
     await this.getPapers();
+    await this.getProject(this.$route.params.id);
   },
 
   created () {
@@ -102,6 +111,11 @@ export default {
     ...mapActions('products', [
       'getPatterns',
       'getPapers'
+    ]),
+
+    ...mapActions('projects', [
+      'getProject',
+      'updateProject'
     ]),
 
     ...mapMutations('projects', [
@@ -128,7 +142,7 @@ export default {
       // this.selectedPaper = this.highlightedPaper;
       this.setProjectProperty({ property: 'pattern', value: this.highlightedPattern });
       this.setProjectProperty({ property: 'paper', value: this.highlightedPaper });
-      this.$router.push('/design/editor');
+      this.$router.push(`/design/editor/${this.project.id}`);
     }
   }
 };

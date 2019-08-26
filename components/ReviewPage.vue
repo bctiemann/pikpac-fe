@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="projectIsLoaded && isValidProject" class="container">
     <div>
       <h2>Review your design</h2>
       <p class="page-blurb">
@@ -37,7 +37,7 @@
           </b-button>
         </div>
         <div>
-          <b-button>
+          <b-button @click="updateProject({ projectId: project.id, project: project})">
             Save
           </b-button>
           <b-button @click="loginAndAddToCart">
@@ -49,6 +49,12 @@
     </div>
     <SignInModal :login-action="showModalAndAddToCart" />
     <AddedToCartModal />
+  </div>
+  <div v-else-if="!projectIsLoaded" class="container">
+    Loading...
+  </div>
+  <div v-else-if="!isValidProject" class="container">
+    Invalid project
   </div>
 </template>
 
@@ -88,7 +94,9 @@ export default {
     ]),
 
     ...mapState('projects', [
-      'project'
+      'project',
+      'projectIsLoaded',
+      'isValidProject'
     ]),
 
     ...mapGetters('players', [
@@ -102,9 +110,10 @@ export default {
   },
 
   async mounted () {
-    await this.getPatterns();
-    await this.getPapers();
-    console.log(this.$route.params.id);
+    // await this.getPatterns();
+    // await this.getPapers();
+    // console.log(this.$route.params.id);
+    await this.getProject(this.$route.params.id);
   },
 
   created () {
@@ -115,6 +124,11 @@ export default {
     ...mapActions('products', [
       'getPatterns',
       'getPapers'
+    ]),
+
+    ...mapActions('projects', [
+      'getProject',
+      'updateProject'
     ]),
 
     ...mapActions('cart', [

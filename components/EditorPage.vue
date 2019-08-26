@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="projectIsLoaded && isValidProject" class="container">
     <b-row class="designer">
       <b-col sm="9">
         <div class="h-100 d-flex flex-column">
@@ -44,7 +44,7 @@
         </b-button>
       </div>
       <div>
-        <b-button>
+        <b-button @click="updateProject({ projectId: project.id, project: project})">
           Save
         </b-button>
         <b-button @click="createProjectAndPush">
@@ -52,6 +52,12 @@
         </b-button>
       </div>
     </b-row>
+  </div>
+  <div v-else-if="!projectIsLoaded" class="container">
+    Loading...
+  </div>
+  <div v-else-if="!isValidProject" class="container">
+    Invalid project
   </div>
 </template>
 
@@ -115,7 +121,9 @@ export default {
     ]),
 
     ...mapState('projects', [
-      'project'
+      'project',
+      'projectIsLoaded',
+      'isValidProject'
     ]),
 
     ...mapState('design', [
@@ -128,8 +136,9 @@ export default {
 
   async mounted () {
     console.log(this.products);
-    await this.getPatterns();
-    await this.getPapers();
+    // await this.getPatterns();
+    // await this.getPapers();
+    await this.getProject(this.$route.params.id);
   },
 
   created () {
@@ -140,6 +149,11 @@ export default {
     ...mapActions('products', [
       'getPatterns',
       'getPapers'
+    ]),
+
+    ...mapActions('projects', [
+      'getProject',
+      'updateProject'
     ]),
 
     ...mapMutations('projects', [
@@ -174,7 +188,7 @@ export default {
       // this.setProject(this.project);
       // await this.createProject(project);
       console.log(this.project);
-      this.$router.push(`/design/review`);
+      this.$router.push(`/design/review/${this.project.id}`);
     }
   }
 };
