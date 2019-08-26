@@ -166,11 +166,11 @@ export default {
       formData.append('project_id', this.project.id);
       await this.uploadDesignFile(formData);
       this.$bvModal.hide('upload-file');
-      this.$router.push('/design/review');
+      this.$router.push(`/design/review/${this.project.id}`);
     },
 
     submitDesign () {
-      this.$router.push('/design/review');
+      this.$router.push(`/design/review/${this.project.id}`);
     },
 
     closeModal () {
