@@ -140,7 +140,11 @@ export default {
 
     goToProject (project) {
       this.setProject(project);
-      this.$router.push(`/design/custom/${project.id}`);
+      if (project.type === 'custom') {
+        this.$router.push(`/design/custom/${project.id}`);
+      } else if (project.type === 'template') {
+        this.$router.push(`/design/editor/${project.id}`);
+      }
     },
 
     refreshPrice (item) {
