@@ -20,7 +20,7 @@
               <p>{{ calculatedPrice(order.project.unit_price) }} &times; {{ order.project.quantity }} = {{ calculatedPrice(order.project.unit_price * order.project.quantity) }}</p>
               <p>{{ order.project.product.name }}</p>
               <p>Type: {{ order.project.type_display }}</p>
-              <p>Created: {{ order.date_created }}</p>
+              <p>Created: {{ order.date_created | moment('MMM D, YYYY, H:mm a') }}</p>
               <p>Status: {{ order.status }}</p>
             </b-col>
             <b-col sm="2">
