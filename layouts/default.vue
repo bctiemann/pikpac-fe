@@ -128,7 +128,7 @@ export default {
     }
   },
 
-  mounted () {
+  created () {
     let clientFingerprint = getData('clientFingerprint');
     if (!clientFingerprint) {
       clientFingerprint = uuid.v4();
