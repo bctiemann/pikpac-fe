@@ -24,7 +24,7 @@
         <div class="project-data">
           {{ project.quantity }} pcs
         </div>
-        <b-btn>
+        <b-btn @click="downloadTemplate">
           Download template
         </b-btn>
         <b-btn @click="showUploadFileModal">
@@ -154,6 +154,27 @@ export default {
 
     loadProject () {
       this.getProject(this.$route.params.id);
+    },
+
+    forceFileDownload (response) {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', this.project.product.default_template.template_file_filename); // or any other extension
+      document.body.appendChild(link);
+      link.click();
+    },
+
+    downloadTemplate () {
+      this.$axios({
+        method: 'get',
+        url: this.project.product.default_template.template_file,
+        responseType: 'arraybuffer'
+      })
+        .then((response) => {
+          this.forceFileDownload(response);
+        })
+        .catch(() => console.log('error occured'));
     },
 
     showUploadFileModal () {
