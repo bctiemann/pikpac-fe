@@ -497,6 +497,7 @@ export default {
   },
 
   watch: {
+    tabIndex () { this.update(); },
     number () { this.update(); },
     expiry () { this.update(); },
     cvc () { this.update(); },
