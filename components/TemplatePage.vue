@@ -100,7 +100,7 @@ export default {
     console.log(this.products);
     await this.getPatterns();
     await this.getPapers();
-    await this.getProject({ projectId: this.$route.params.id, type: 'template' });
+    await this.getProject({ projectId: this.$route.params.id, queryParams: { type: 'template' } });
   },
 
   created () {

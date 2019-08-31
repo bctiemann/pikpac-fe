@@ -128,7 +128,7 @@ export default {
     console.log(this.products);
     // await this.getPatterns();
     // await this.getPapers();
-    await this.getProject({ projectId: this.$route.params.id, type: 'custom' });
+    await this.getProject({ projectId: this.$route.params.id, queryParams: { type: 'custom' } });
   },
 
   created () {
