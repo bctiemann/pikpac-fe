@@ -240,24 +240,29 @@ export default {
     ]),
 
     ...mapMutations('projects', [
-      'setProject'
+      'setProject',
+      'setProjectProperty'
     ]),
 
     highlightPattern (pattern) {
       this.highlightedPattern = pattern;
       this.highlightedPaper = null;
       console.log(pattern);
+      this.selectPatternPaper();
     },
 
     highlightPaper (paper) {
       this.highlightedPattern = null;
       this.highlightedPaper = paper;
       console.log(paper);
+      this.selectPatternPaper();
     },
 
     selectPatternPaper () {
       this.selectedPattern = this.highlightedPattern;
       this.selectedPaper = this.highlightedPaper;
+      this.$store.commit('projects/setProjectProperty', { property: 'pattern', value: this.selectedPattern });
+      this.$store.commit('projects/setProjectProperty', { property: 'paper', value: this.selectedPaper });
     },
 
     selectPalette (target) {

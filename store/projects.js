@@ -11,7 +11,8 @@ export const mutations = {
     state.project = project;
   },
   setProjectProperty (state, { property, value }) {
-    const mutatedProject = state.project;
+    const mutatedProject = {};
+    Object.assign(mutatedProject, state.project);
     mutatedProject[property] = value;
     state.project = mutatedProject;
   },
