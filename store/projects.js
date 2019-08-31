@@ -29,10 +29,10 @@ export const mutations = {
 
 export const actions = {
   async getProject ({ commit }, payload) {
-    console.log(payload);
     commit('setIsLoading', true);
     try {
-      const { data } = await this.$axios.get(`/projects/${payload.projectId}/?type=${payload.type}`);
+      const typeFilter = payload.type ? `?type=${payload.type}` : '';
+      const { data } = await this.$axios.get(`/projects/${payload.projectId}/${typeFilter}`);
       const project = {};
       Object.assign(project, data);
       project.unitPrice = project.unit_price;

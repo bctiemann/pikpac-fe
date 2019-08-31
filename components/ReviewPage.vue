@@ -116,7 +116,7 @@ export default {
     // await this.getPatterns();
     // await this.getPapers();
     // console.log(this.$route.params.id);
-    await this.getProject(this.$route.params.id);
+    await this.getProject({ projectId: this.$route.params.id });
   },
 
   created () {
