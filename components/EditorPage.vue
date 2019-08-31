@@ -83,7 +83,7 @@
         </b-button>
       </div>
       <div>
-        <b-button @click="updateProject({ projectId: project.id, project: project})">
+        <b-button @click="updateProject({ projectId: project.id, project: project })">
           Save
         </b-button>
         <b-button @click="createProjectAndPush">

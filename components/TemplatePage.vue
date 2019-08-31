@@ -31,7 +31,7 @@
           </b-button>
         </div>
         <div>
-          <b-button @click="updateProject({ projectId: project.id, project: project})">
+          <b-button @click="updateProject({ projectId: project.id, project: project })">
             Save
           </b-button>
           <b-button :disabled="!(highlightedPattern || highlightedPaper)" @click="selectPatternPaper">
@@ -137,11 +137,15 @@ export default {
       console.log(paper);
     },
 
-    selectPatternPaper () {
-      // this.selectedPattern = this.highlightedPattern;
-      // this.selectedPaper = this.highlightedPaper;
-      this.setProjectProperty({ property: 'pattern', value: this.highlightedPattern });
-      this.setProjectProperty({ property: 'paper', value: this.highlightedPaper });
+    async selectPatternPaper () {
+      this.selectedPattern = this.highlightedPattern;
+      this.selectedPaper = this.highlightedPaper;
+      const updatedDesign = {};
+      Object.assign(updatedDesign, this.project.design);
+      updatedDesign.pattern = this.selectedPattern;
+      updatedDesign.paper = this.selectedPaper;
+      this.$store.commit('projects/setProjectProperty', { property: 'design', value: updatedDesign });
+      await this.updateProject({ projectId: this.project.id, project: this.project });
       this.$router.push(`/design/editor/${this.project.id}`);
     }
   }
