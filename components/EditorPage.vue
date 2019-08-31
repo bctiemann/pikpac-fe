@@ -1,37 +1,69 @@
 <template>
   <div v-if="projectIsLoaded && isValidProject" class="container">
     <b-row class="designer">
-      <b-col sm="9">
+      <b-col sm="8">
         <div class="h-100 d-flex flex-column">
           <h3>Design editor</h3>
-          <b-row class="preview-pane h-100 mr-3 flex-grow-1">
+          <b-row class="preview-pane h-100 mr-3 flex-grow-1 colored-box">
             Preview
           </b-row>
         </div>
       </b-col>
-      <b-col sm="3" class="designer-tools">
+      <b-col sm="4" class="designer-tools pl-1">
         <div class="h-100 d-flex flex-column">
-          <b-row class="designer-title">
+          <b-row class="designer-title colored-box mb-1 p-4">
             <EditableTitle :content="project.title" @update="text = $event" />
           </b-row>
           <b-row class="flex-grow-1">
-            <b-col sm="8" class="px-1">
-              <div class="h-100 d-flex flex-column">
-                <ul class="nav nav-tabs nav-fill">
-                  <li class="nav-item">
-                    Choose pattern
-                  </li>
-                  <li class="nav-item">
-                    Choose paper
-                  </li>
-                </ul>
-                <div class="flex-grow-1">
-                  Palette
+            <b-col sm="9" class="px-0">
+              <div class="h-100 d-flex flex-column pl-0">
+                <div class="h-100 colored-box pr-0 mr-1">
+                  <b-tabs content-class="mt-3" fill>
+                    <b-tab title="Choose pattern" to="/account/orders" :active="$nuxt.$route.path == '/account/orders'">
+                      Choose pattern
+                    </b-tab>
+                    <b-tab title="Choose paper" to="/account/history" :active="$nuxt.$route.path == '/account/history'">
+                      Choose paper
+                    </b-tab>
+                  </b-tabs>
                 </div>
               </div>
             </b-col>
-            <b-col sm="4">
-              Buttons
+            <b-col sm="3" class="pl-0 pr-0">
+              <ul class="palette-buttons">
+                <li>Size</li>
+                <li>Style</li>
+                <li>Text</li>
+                <li>Add images</li>
+                <li>Reset</li>
+              </ul>
+              <!--
+              <b-row class="m-0 mb-1">
+                <b-col class="colored-box py-3">
+                  Size
+                </b-col>
+              </b-row>
+              <b-row class="m-0 mb-1">
+                <b-col class="colored-box py-3">
+                  Style
+                </b-col>
+              </b-row>
+              <b-row class="m-0 mb-1">
+                <b-col class="colored-box py-3">
+                  Text
+                </b-col>
+              </b-row>
+              <b-row class="m-0 mb-1">
+                <b-col class="colored-box py-3">
+                  Add images
+                </b-col>
+              </b-row>
+              <b-row class="m-0 mb-1">
+                <b-col class="colored-box py-3">
+                  Reset
+                </b-col>
+              </b-row>
+              -->
             </b-col>
           </b-row>
         </div>
@@ -71,23 +103,40 @@
   height: 80vh;
 }
 
-.preview-pane {
+.colored-box {
   background-color: #e0e4df;
+}
+
+.preview-pane {
 }
 
 .designer-tools {
 }
 
 .designer-tools div {
-  background-color: #e0e4df;
 }
 
 .designer-title {
   padding: 5px;
+  margin-bottom: 10px;
 }
 
 .designer-tools .nav {
-  font-size: 10px;
+  font-size: 12px;
+}
+
+.palette-buttons {
+  list-style-type: none;
+  padding: 0px;
+}
+
+.palette-buttons li {
+  margin-bottom: 4px;
+  background-color: #e0e4df;
+  padding: 15px 5px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
 }
 </style>
 

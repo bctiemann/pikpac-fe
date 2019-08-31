@@ -1,6 +1,7 @@
 <template>
   <h3
     contenteditable="true"
+    class="mb-0"
     @input="update"
   />
 </template>
