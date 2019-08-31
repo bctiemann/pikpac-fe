@@ -28,6 +28,9 @@
           <div class="project-data">
             0000 pcs
           </div>
+          <b-btn @click="editDesign">
+            Edit Design
+          </b-btn>
         </b-col>
       </b-row>
       <b-row class="d-flex w-100 justify-content-between">
@@ -134,6 +137,14 @@ export default {
     ...mapActions('cart', [
       'addToCart'
     ]),
+
+    editDesign () {
+      if (this.project.type === 'template') {
+        this.$router.push(`/design/editor/${this.$route.params.id}`);
+      } else if (this.project.type === 'custom') {
+        this.$router.push(`/design/custom/${this.$route.params.id}`);
+      }
+    },
 
     showModalAndAddToCart () {
       this.$bvModal.hide('sign-in');
