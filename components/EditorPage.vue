@@ -18,12 +18,33 @@
             <b-col sm="9" class="px-0">
               <div class="h-100 d-flex flex-column pl-0">
                 <div class="h-100 colored-box pr-0 mr-1">
-                  <b-tabs content-class="mt-3" fill>
-                    <b-tab title="Choose pattern" to="/account/orders" :active="$nuxt.$route.path == '/account/orders'">
-                      Choose pattern
+                  <b-tabs v-if="selectedPalette === 'size'" content-class="mt-3" fill>
+                    <b-tab title="Choose size">
+                      Sizes
                     </b-tab>
-                    <b-tab title="Choose paper" to="/account/history" :active="$nuxt.$route.path == '/account/history'">
-                      Choose paper
+                  </b-tabs>
+                  <b-tabs v-else-if="selectedPalette === 'style'" content-class="mt-3" fill>
+                    <b-tab title="Choose pattern">
+                      Patterns
+                    </b-tab>
+                    <b-tab title="Choose paper">
+                      Papers
+                    </b-tab>
+                  </b-tabs>
+                  <b-tabs v-else-if="selectedPalette === 'text'" content-class="mt-3" fill>
+                    <b-tab title="Formatting">
+                      Formatting
+                    </b-tab>
+                    <b-tab title="Typefaces">
+                      Typefaces
+                    </b-tab>
+                    <b-tab title="Colors">
+                      Colors
+                    </b-tab>
+                  </b-tabs>
+                  <b-tabs v-else-if="selectedPalette === 'images'" content-class="mt-3" fill>
+                    <b-tab title="Images">
+                      Images
                     </b-tab>
                   </b-tabs>
                 </div>
@@ -31,39 +52,15 @@
             </b-col>
             <b-col sm="3" class="pl-0 pr-0">
               <ul class="palette-buttons">
-                <li>Size</li>
-                <li>Style</li>
-                <li>Text</li>
-                <li>Add images</li>
-                <li>Reset</li>
+                <li
+                  v-for="button in paletteButtons"
+                  :key="button.target"
+                  :class="{ 'selected': selectedPalette === button.target }"
+                  @click="selectPalette(button.target)"
+                >
+                  {{ button.label }}
+                </li>
               </ul>
-              <!--
-              <b-row class="m-0 mb-1">
-                <b-col class="colored-box py-3">
-                  Size
-                </b-col>
-              </b-row>
-              <b-row class="m-0 mb-1">
-                <b-col class="colored-box py-3">
-                  Style
-                </b-col>
-              </b-row>
-              <b-row class="m-0 mb-1">
-                <b-col class="colored-box py-3">
-                  Text
-                </b-col>
-              </b-row>
-              <b-row class="m-0 mb-1">
-                <b-col class="colored-box py-3">
-                  Add images
-                </b-col>
-              </b-row>
-              <b-row class="m-0 mb-1">
-                <b-col class="colored-box py-3">
-                  Reset
-                </b-col>
-              </b-row>
-              -->
             </b-col>
           </b-row>
         </div>
@@ -104,7 +101,7 @@
 }
 
 .colored-box {
-  background-color: #e0e4df;
+  background-color: rgb(239, 239, 239);
 }
 
 .preview-pane {
@@ -132,11 +129,16 @@
 
 .palette-buttons li {
   margin-bottom: 4px;
-  background-color: #e0e4df;
+  background-color: rgb(239, 239, 239);
   padding: 15px 5px;
   text-align: center;
   font-size: 12px;
+  font-weight: 400;
   cursor: pointer;
+}
+.palette-buttons li.selected {
+  background-color: rgb(160, 165, 151);
+  color: #fff;
 }
 </style>
 
@@ -158,7 +160,15 @@ export default {
       selectedPattern: null,
       selectedPaper: null,
       highlightedPattern: null,
-      highlightedPaper: null
+      highlightedPaper: null,
+      paletteButtons: [
+        { label: 'Size', target: 'size' },
+        { label: 'Style', target: 'style' },
+        { label: 'Text', target: 'text' },
+        { label: 'Add images', target: 'images' },
+        { label: 'Reset', target: 'reset' }
+      ],
+      selectedPalette: 'style'
     };
   },
 
@@ -224,6 +234,16 @@ export default {
     selectPatternPaper () {
       this.selectedPattern = this.highlightedPattern;
       this.selectedPaper = this.highlightedPaper;
+    },
+
+    selectPalette (target) {
+      if (target === 'reset') {
+        if (confirm('Are you sure you want to reset your changes?')) {
+          this.selectedPalette = 'style';
+        }
+      } else {
+        this.selectedPalette = target;
+      }
     },
 
     createProjectAndPush () {
