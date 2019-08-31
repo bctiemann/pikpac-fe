@@ -261,8 +261,11 @@ export default {
     selectPatternPaper () {
       this.selectedPattern = this.highlightedPattern;
       this.selectedPaper = this.highlightedPaper;
-      this.$store.commit('projects/setProjectProperty', { property: 'pattern', value: this.selectedPattern });
-      this.$store.commit('projects/setProjectProperty', { property: 'paper', value: this.selectedPaper });
+      const updatedDesign = {};
+      Object.assign(updatedDesign, this.project.design);
+      updatedDesign.pattern = this.selectedPattern;
+      updatedDesign.paper = this.selectedPaper;
+      this.$store.commit('projects/setProjectProperty', { property: 'design', value: updatedDesign });
     },
 
     selectPalette (target) {
