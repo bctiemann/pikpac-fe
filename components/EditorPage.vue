@@ -25,10 +25,20 @@
                   </b-tabs>
                   <b-tabs v-else-if="selectedPalette === 'style'" content-class="mt-3" fill>
                     <b-tab title="Choose pattern">
-                      Patterns
+                      <div class="scrolling-container">
+                        <div v-for="pattern in patterns" :key="pattern.sku" class="p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && pattern !== highlightedPattern }" @click="highlightPattern(pattern)">
+                          <b-img :src="pattern.picture" fluid :alt="pattern.name" />
+                          {{ pattern.name }}
+                        </div>
+                      </div>
                     </b-tab>
                     <b-tab title="Choose paper">
-                      Papers
+                      <div class="scrolling-container">
+                        <div v-for="paper in papers" :key="paper.sku" class="p-3" :class="{ faded: (highlightedPattern || highlightedPaper) && paper !== highlightedPaper }" @click="highlightPaper(paper)">
+                          <b-img :src="paper.picture" fluid :alt="paper.name" />
+                          {{ paper.name }}
+                        </div>
+                      </div>
                     </b-tab>
                   </b-tabs>
                   <b-tabs v-else-if="selectedPalette === 'text'" content-class="mt-3" fill>
@@ -122,6 +132,20 @@
   font-size: 12px;
 }
 
+.scrolling-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40px;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+}
+
+.scrolling-container div {
+  flex-grow: 1;
+}
+
 .palette-buttons {
   list-style-type: none;
   padding: 0px;
@@ -195,8 +219,8 @@ export default {
 
   async mounted () {
     console.log(this.products);
-    // await this.getPatterns();
-    // await this.getPapers();
+    await this.getPatterns();
+    await this.getPapers();
     await this.getProject(this.$route.params.id);
   },
 
