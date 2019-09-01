@@ -61,38 +61,34 @@
       <b-row class="">
         <b-col>
           <h2>Specifications</h2>
-          <b-row>
-            <div class="specification-header">
-              Material
-            </div>
-            <p>
-              {{ material }}
-            </p>
-          </b-row>
-          <b-row>
-            <div class="specification-header">
-              Material Color
-            </div>
-            <p>
-              {{ materialColor }}
-            </p>
-          </b-row>
-          <b-row>
-            <div class="specification-header">
-              Lamination
-            </div>
-            <p>
-              {{ lamination }}
-            </p>
-          </b-row>
-          <b-row>
-            <div class="specification-header">
-              Custom Printing
-            </div>
-            <p>
-              {{ customPrinting }}
-            </p>
-          </b-row>
+
+          <div class="project-data text-right">
+            Material
+          </div>
+          <p class="under-divider text-right">
+            {{ material }}
+          </p>
+
+          <div class="project-data text-right">
+            Material Color
+          </div>
+          <p class="under-divider text-right">
+            {{ materialColor }}
+          </p>
+
+          <div class="project-data text-right">
+            Lamination
+          </div>
+          <p class="under-divider text-right">
+            {{ lamination }}
+          </p>
+
+          <div class="project-data text-right">
+            Custom Printing
+          </div>
+          <p class="under-divider text-right">
+            {{ customPrinting }}
+          </p>
         </b-col>
         <b-col sm="7">
           <b-img :src="selectedProduct.picture" fluid :alt="selectedProduct.name" class="mb-5" />

@@ -90,6 +90,15 @@ h1 {
   font-size: 14px;
   font-weight: 400;
 }
+.under-divider {
+  margin-top: -30px;
+  font-size: 14px;
+}
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 </style>
 
 <script>
