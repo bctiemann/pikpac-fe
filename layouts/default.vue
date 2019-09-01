@@ -82,6 +82,14 @@ h1 {
   text-decoration: none;
   color: #000;
 }
+
+.project-data {
+  border-bottom: 1px solid rgb(232, 219, 194);
+  margin-bottom: 10px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  font-weight: 400;
+}
 </style>
 
 <script>
