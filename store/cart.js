@@ -11,6 +11,11 @@ export const state = () => ({
 });
 
 export const mutations = {
+  emptyCart (state) {
+    state.cart = [];
+    state.taxRate = 0;
+    state.shippingOption = null;
+  },
   addToCart (state, project) {
     state.cart.push(project);
   },

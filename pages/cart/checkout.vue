@@ -692,6 +692,8 @@ export default {
         if (this.chargeResult.error) {
           alert(this.chargeResult.error.message);
         } else {
+          // Empty cart
+          this.$store.commit('cart/emptyCart');
           // Push to success page
           this.$router.push('/cart/success');
         }
