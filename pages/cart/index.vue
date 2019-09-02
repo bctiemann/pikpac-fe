@@ -11,6 +11,9 @@
             <li>{{ item.unitPrice }}</li>
             <li>{{ calculatedPrice(item.unitPrice) }} &times; {{ item.quantity }} = {{ calculatedPrice(item.unitPrice * item.quantity) }}</li>
           </ul>
+          <b-btn @click="removeFromCart(item.id)">
+            Remove
+          </b-btn>
         </div>
       </div>
     </b-row>
@@ -32,7 +35,7 @@
 </style>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   components: {},
@@ -63,6 +66,10 @@ export default {
   },
 
   methods: {
+    ...mapActions('cart', [
+      'removeFromCart'
+    ]),
+
     zeroPadPrice (value) {
       if (!value) {
         return 0;

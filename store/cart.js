@@ -11,6 +11,15 @@ export const mutations = {
   addToCart (state, project) {
     state.cart.push(project);
   },
+  removeFromCart (state, projectId) {
+    const newCart = [];
+    for (const i in state.cart) {
+      if (state.cart[i].id !== projectId) {
+        newCart.push(state.cart[i]);
+      }
+    }
+    state.cart = newCart;
+  },
   setShippingOptions (state, shippingOptions) {
     state.shippingOptions = shippingOptions;
   },
@@ -22,6 +31,9 @@ export const mutations = {
 export const actions = {
   addToCart ({ commit }, project) {
     commit('addToCart', project);
+  },
+  removeFromCart ({ commit }, projectId) {
+    commit('removeFromCart', projectId);
   },
   async createAddress ({ commit }, payload) {
     commit('setIsLoading', true);
