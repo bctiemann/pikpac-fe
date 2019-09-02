@@ -24,7 +24,13 @@
               <p>Status: {{ order.status }}</p>
             </b-col>
             <b-col sm="2">
-              <b-btn v-if="!order.is_cancelled" @click.stop="showModalAndAddToCart(order.project)">
+              <div
+                v-if="projectInCart(order.project.id)"
+                class="in-cart"
+              >
+                In cart
+              </div>
+              <b-btn v-if="!order.is_cancelled && !projectInCart(order.project.id)" @click.stop="showModalAndAddToCart(order.project)">
                 Add to Cart
               </b-btn>
               <b-btn v-if="!order.is_cancelled" @click.stop="confirmAndCancelOrder(order.id)">
@@ -66,7 +72,7 @@
 </style>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import AddedToCartModal from '~/components/AddedToCartModal.vue';
 
 export default {
@@ -91,6 +97,14 @@ export default {
     ...mapState('orders', [
       'orders',
       'isLoading'
+    ]),
+
+    ...mapState('cart', [
+      'cart'
+    ]),
+
+    ...mapGetters('cart', [
+      'projectIdsInCart'
     ])
   },
 
@@ -121,6 +135,10 @@ export default {
         return 0;
       }
       return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+    },
+
+    projectInCart (projectId) {
+      return this.projectIdsInCart.indexOf(projectId) > -1;
     },
 
     calculatedPrice (price) {

@@ -28,6 +28,16 @@ export const mutations = {
   }
 };
 
+export const getters = {
+  projectIdsInCart (state) {
+    const ids = [];
+    for (const i in state.cart) {
+      ids.push(state.cart[i].id);
+    }
+    return ids;
+  }
+};
+
 export const actions = {
   addToCart ({ commit }, project) {
     commit('addToCart', project);
