@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    {{ cart }}
     <b-card no-body>
       <b-tabs v-model="tabIndex" card justified>
         <b-tab title="Shipping" active>
