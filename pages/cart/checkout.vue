@@ -663,11 +663,17 @@ export default {
       }
       */
       try {
-        await this.chargeCard({
+        const chargeResult = await this.chargeCard({
           // token: token,
           total: this.orderTotal,
           cart: this.cart
         });
+
+        if (chargeResult.error) {
+          alert(chargeResult.error.message);
+        } else {
+          // Push to success page
+        }
 
         /*
         await strapi.createEntry('orders', {

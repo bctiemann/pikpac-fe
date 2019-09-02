@@ -61,5 +61,6 @@ export const actions = {
     const { data } = await this.$axios.post(`/charge/`, payload);
     console.log(data);
     commit('setIsLoading', false);
+    return data;
   }
 };
