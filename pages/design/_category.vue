@@ -97,12 +97,12 @@
       <b-row>
         <b-col />
         <b-col>
-          <b-button @click="savePreliminaryProject('template')">
+          <b-button :disabled="!formValid" @click="savePreliminaryProject('template')">
             Select from our preset designs
           </b-button>
         </b-col>
         <b-col>
-          <b-button @click="savePreliminaryProject('custom')">
+          <b-button :disabled="!formValid" @click="savePreliminaryProject('custom')">
             Upload your own design
           </b-button>
         </b-col>
@@ -256,6 +256,12 @@ export default {
     productBreadcrumbs1: {
       get () {
         return [];
+      }
+    },
+
+    formValid: {
+      get () {
+        return this.boxQuantity > 0;
       }
     }
   },
