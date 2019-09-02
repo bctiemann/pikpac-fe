@@ -1,9 +1,12 @@
 export const state = () => ({
   cart: [],
+  shippingOption: null,
+  taxRate: 0,
   defaultShippingAddress: {},
   defaultBillingAddress: {},
   defaultCard: {},
   shippingOptions: [],
+  chargeResult: null,
   isLoading: false
 });
 
@@ -23,6 +26,15 @@ export const mutations = {
   setShippingOptions (state, shippingOptions) {
     state.shippingOptions = shippingOptions;
   },
+  setTaxRate (state, taxRate) {
+    state.taxRate = taxRate;
+  },
+  setShippingOption (state, shippingOption) {
+    state.shippingOption = shippingOption;
+  },
+  setChargeResult (state, data) {
+    state.chargeResult = data;
+  },
   setIsLoading (state, isLoading) {
     state.isLoading = isLoading;
   }
@@ -35,6 +47,22 @@ export const getters = {
       ids.push(state.cart[i].id);
     }
     return ids;
+  },
+  cartTotalPrice (state) {
+    let total = 0;
+    for (const i in state.cart) {
+      total += state.cart[i].quantity * Math.round(parseFloat(state.cart[i].unitPrice) * 100) / 100;
+    };
+    return total;
+  },
+  tax (state, getters) {
+    return Math.round((getters.cartTotalPrice + getters.shipping) * state.taxRate * 100) / 100;
+  },
+  shipping (state, getters) {
+    return state.shippingOption ? parseFloat(state.shippingOption.price) : 0;
+  },
+  orderTotal (state, getters) {
+    return getters.cartTotalPrice + getters.shipping + getters.tax;
   }
 };
 
@@ -83,6 +111,6 @@ export const actions = {
     const { data } = await this.$axios.post(`/charge/`, payload);
     console.log(data);
     commit('setIsLoading', false);
-    return data;
+    commit('setChargeResult', data);
   }
 };

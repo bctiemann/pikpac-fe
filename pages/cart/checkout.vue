@@ -314,7 +314,7 @@
                     v-for="shippingOption in shippingOptions"
                     :key="shippingOption.id"
                     :class="{ 'selected': selectedShippingOption && shippingOption.id == selectedShippingOption.id }"
-                    @click="selectedShippingOption = shippingOption"
+                    @click="setShippingOption(shippingOption)"
                   >
                     <b-row>
                       <b-col>
@@ -379,7 +379,7 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import { CardNumber, CardExpiry, CardCvc, createToken } from 'vue-stripe-elements-plus';
 import { isEqual } from 'lodash';
 import OrderSummary from '~/components/OrderSummary.vue';
@@ -458,16 +458,25 @@ export default {
   computed: {
     ...mapState('cart', [
       'cart',
-      'shippingOptions'
+      'shippingOptions',
+      'chargeResult'
+    ]),
+
+    ...mapGetters('cart', [
+      'cartTotalPrice',
+      'tax',
+      'shipping',
+      'orderTotal'
     ]),
 
     user: {
       get () {
         return this.$auth.user;
       }
-    },
+    }
 
-    cartTotalPrice: {
+    /*
+    cartTotalPrice1: {
       get () {
         let total = 0;
         for (const i in this.cart) {
@@ -477,23 +486,24 @@ export default {
       }
     },
 
-    shipping: {
+    shipping1: {
       get () {
         return this.selectedShippingOption ? parseFloat(this.selectedShippingOption.price) : 0;
       }
     },
 
-    tax: {
+    tax1: {
       get () {
         return (this.cartTotalPrice + this.shipping) * this.taxRate;
       }
     },
 
-    orderTotal: {
+    orderTotal1: {
       get () {
         return this.cartTotalPrice + this.shipping + this.tax;
       }
     }
+    */
   },
 
   watch: {
@@ -534,6 +544,11 @@ export default {
       'createCard',
       'getShippingOptions',
       'getTaxRate'
+    ]),
+
+    ...mapMutations('cart', [
+      'setTaxRate',
+      'setShippingOption'
     ]),
 
     zeroPadPrice (value) {
@@ -592,9 +607,15 @@ export default {
       // numbers, but can also have four
     },
 
+    setShippingOption (shippingOption) {
+      this.selectedShippingOption = shippingOption;
+      this.$store.commit('cart/setShippingOption', shippingOption);
+    },
+
     async submitShippingInfo () {
       const taxRateData = await this.getTaxRate({ postalCode: this.shippingAddress.zip });
       this.taxRate = taxRateData.total_rate;
+      this.$store.commit('cart/setTaxRate', taxRateData.total_rate);
       this.tabIndex = 1;
     },
 
@@ -662,16 +683,17 @@ export default {
       }
       */
       try {
-        const chargeResult = await this.chargeCard({
+        await this.chargeCard({
           // token: token,
           total: this.orderTotal,
           cart: this.cart
         });
 
-        if (chargeResult.error) {
-          alert(chargeResult.error.message);
+        if (this.chargeResult.error) {
+          alert(this.chargeResult.error.message);
         } else {
           // Push to success page
+          this.$router.push('/cart/success');
         }
 
         /*

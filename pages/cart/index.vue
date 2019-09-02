@@ -8,8 +8,8 @@
           <ul>
             <li>{{ item.title }}</li>
             <li>{{ item.type }}</li>
-            <li>{{ item.unitPrice }}</li>
-            <li>{{ calculatedPrice(item.unitPrice) }} &times; {{ item.quantity }} = {{ calculatedPrice(item.unitPrice * item.quantity) }}</li>
+            <li>{{ item.unitPrice | currency }}</li>
+            <li>{{ item.unitPrice | currency }} &times; {{ item.quantity }} = {{ item.unitPrice * item.quantity | currency }}</li>
           </ul>
           <b-btn @click="removeFromCart(item.id)">
             Remove
@@ -17,8 +17,8 @@
         </div>
       </div>
     </b-row>
-    Total: {{ calculatedPrice(cartTotalPrice) }}
-    <b-btn to="/cart/checkout">
+    Total: {{ cartTotalPrice | currency }}
+    <b-btn @click="startCheckout">
       Next
     </b-btn>
   </div>
@@ -35,7 +35,7 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {},
@@ -54,15 +54,9 @@ export default {
       'cart'
     ]),
 
-    cartTotalPrice: {
-      get () {
-        let total = 0;
-        for (const i in this.cart) {
-          total += this.cart[i].quantity * Math.round(parseFloat(this.cart[i].unitPrice) * 100) / 100;
-        };
-        return total;
-      }
-    }
+    ...mapGetters('cart', [
+      'cartTotalPrice'
+    ])
   },
 
   methods: {
@@ -70,19 +64,15 @@ export default {
       'removeFromCart'
     ]),
 
-    zeroPadPrice (value) {
-      if (!value) {
-        return 0;
-      }
-      return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
-    },
+    ...mapMutations('cart', [
+      'setTaxRate',
+      'setShippingOption'
+    ]),
 
-    calculatedPrice (price) {
-      return '$' + this.zeroPadPrice(price);
-    },
-
-    refreshPrice (item) {
-      console.log('foo');
+    startCheckout () {
+      this.$store.commit('cart/setTaxRate', 0);
+      this.$store.commit('cart/setShippingOption', null);
+      this.$router.push('/cart/checkout');
     }
   }
 
