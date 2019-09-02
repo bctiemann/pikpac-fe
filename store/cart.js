@@ -7,6 +7,7 @@ export const state = () => ({
   defaultCard: {},
   shippingOptions: [],
   chargeResult: null,
+  orderSummary: {},
   isLoading: false
 });
 
@@ -15,6 +16,9 @@ export const mutations = {
     state.cart = [];
     state.taxRate = 0;
     state.shippingOption = null;
+  },
+  setOrderSummary (state, orderSummary) {
+    state.orderSummary = orderSummary;
   },
   addToCart (state, project) {
     state.cart.push(project);

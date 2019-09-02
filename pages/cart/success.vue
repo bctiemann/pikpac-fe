@@ -3,7 +3,7 @@
     <h1>Checkout complete</h1>
     <b-row>
       <b-col sm="6">
-        <b-row v-for="item in cart" :key="item.id">
+        <b-row v-for="item in chargeResult.cart_details" :key="item.id">
           <div class="cart-item">
             <b-img :src="item.product.picture" />
             <div class="cart-item-info">
@@ -21,10 +21,10 @@
       <b-col sm="2" />
       <b-col sm="4">
         <OrderSummary
-          :subtotal="cartTotalPrice"
-          :shipping="shipping"
-          :tax="tax"
-          :total="orderTotal"
+          :subtotal="orderSummary.cartTotalPrice"
+          :shipping="orderSummary.shipping"
+          :tax="orderSummary.tax"
+          :total="orderSummary.orderTotal"
         />
       </b-col>
     </b-row>
@@ -65,7 +65,8 @@ export default {
   computed: {
     ...mapState('cart', [
       'cart',
-      'chargeResult'
+      'chargeResult',
+      'orderSummary'
     ]),
 
     ...mapGetters('cart', [

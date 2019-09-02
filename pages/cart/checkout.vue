@@ -692,8 +692,18 @@ export default {
         if (this.chargeResult.error) {
           alert(this.chargeResult.error.message);
         } else {
+          // Save order summary for display
+          const orderSummary = {
+            cartTotalPrice: this.cartTotalPrice,
+            tax: this.tax,
+            shipping: this.shipping,
+            orderTotal: this.orderTotal
+          };
+          this.$store.commit('cart/setOrderSummary', orderSummary);
+
           // Empty cart
           this.$store.commit('cart/emptyCart');
+
           // Push to success page
           this.$router.push('/cart/success');
         }
