@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    {{ cart }}
     <b-card no-body>
       <b-tabs v-model="tabIndex" card justified>
         <b-tab title="Shipping" active>
@@ -631,18 +632,24 @@ export default {
 
       if (!this.user.default_card || this.user.default_card.fingerprint !== tokenData.card.fingerprint) {
         console.log('Creating new card');
-        await this.createCard(token);
+        const cardResult = await this.createCard(token);
+        if (cardResult.status === 'error') {
+          alert('This card is invalid.');
+          return;
+        }
         // Refresh /me data with new card set as default
         this.$auth.fetchUser();
       } else {
         console.log('Using existing card');
       }
+
       // Now push to review page, and user action runs charge using this.user.default_card
       this.tabIndex = 2;
     },
 
     async handleSubmit() {
       this.loading = true;
+      /*
       let token;
       try {
         const response = await createToken();
@@ -654,8 +661,14 @@ export default {
         this.loading = false;
         return;
       }
+      */
       try {
-        this.chargeCard({ token: token });
+        await this.chargeCard({
+          // token: token,
+          total: this.orderTotal,
+          cart: this.cart
+        });
+
         /*
         await strapi.createEntry('orders', {
           amount: this.$store.getters['cart/price'],
