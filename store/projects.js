@@ -1,5 +1,6 @@
 export const state = () => ({
   project: {},
+  savedProjects: [],
   isValidProject: false,
   projectIsLoaded: false,
   isLoading: false
@@ -9,6 +10,9 @@ export const mutations = {
   setProject (state, project) {
     console.log('setProject');
     state.project = project;
+  },
+  setSavedProjects (state, savedProjects) {
+    state.savedProjects = savedProjects;
   },
   setProjectProperty (state, { property, value }) {
     const mutatedProject = {};
@@ -43,6 +47,13 @@ export const actions = {
       commit('setIsValidProject', false);
     }
     commit('setProjectIsLoaded', true);
+    commit('setIsLoading', false);
+  },
+  async getSavedProjects ({ commit }) {
+    commit('setIsLoading', true);
+    const { data } = await this.$axios.get(`/projects/`);
+    console.log(data);
+    commit('setSavedProjects', data);
     commit('setIsLoading', false);
   },
   async createProject ({ commit }, payload) {

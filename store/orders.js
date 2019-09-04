@@ -16,11 +16,23 @@ export const mutations = {
 };
 
 export const actions = {
-  async getOrders ({ commit }, includeCancelled = false) {
+  async getOrders ({ commit }, payload) {
     console.log('getting');
-    console.log(includeCancelled);
+    // console.log(includeCancelled);
     commit('setIsLoading', true);
-    const { data } = await this.$axios.get(`/orders/${includeCancelled ? '?include_cancelled=true' : ''}`);
+    let queryStr = '';
+    for (const key in payload.queryParams) {
+      if (payload.queryParams[key].toString().indexOf(',') > -1) {
+        const vals = payload.queryParams[key].split(',');
+        for (const v in vals) {
+          queryStr += '&' + key + '=' + vals[v];
+        };
+      } else {
+        queryStr += '&' + key + '=' + payload.queryParams[key];
+      }
+    };
+    console.log(queryStr);
+    const { data } = await this.$axios.get(`/orders/?${queryStr}`);
     commit('setOrders', data);
     commit('setIsLoading', false);
   },

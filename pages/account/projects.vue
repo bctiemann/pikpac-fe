@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    My Orders
+    <!--
     <b-button
       :pressed.sync="includeCancelled"
       variant="primary"
@@ -8,40 +8,13 @@
     >
       Include cancelled
     </b-button>
-    <ul class="orders">
-      <li v-for="order in orders" :key="order.id" @click="goToProject(order.project)">
-        <div class="container">
-          <b-row>
-            <b-col sm="3">
-              <b-img :src="order.project.product.picture" fluid :alt="order.project.product.name" />
-            </b-col>
-            <b-col>
-              <h4>{{ order.project.title }}</h4>
-              <p>{{ calculatedPrice(order.project.unit_price) }} &times; {{ order.project.quantity }} = {{ calculatedPrice(order.project.unit_price * order.project.quantity) }}</p>
-              <p>{{ order.project.product.name }}</p>
-              <p>Type: {{ order.project.type_display }}</p>
-              <p>Created: {{ order.date_created | moment('MMM D, YYYY, H:mm a') }}</p>
-              <p>Status: {{ order.status }}</p>
-            </b-col>
-            <b-col sm="2">
-              <div
-                v-if="projectInCart(order.project.id)"
-                class="in-cart"
-              >
-                In cart
-              </div>
-              <b-btn v-if="!order.is_cancelled && !projectInCart(order.project.id)" @click.stop="showModalAndAddToCart(order.project)">
-                Add to Cart
-              </b-btn>
-              <b-btn v-if="!order.is_cancelled" @click.stop="confirmAndCancelOrder(order.id)">
-                Cancel Order
-              </b-btn>
-            </b-col>
-          </b-row>
-        </div>
-      </li>
-    </ul>
-    <AddedToCartModal />
+    -->
+    <b-row>
+      <div v-for="order in orders" :key="order.project.id" class="w-25 p-3" @click="goToProject(order.project)">
+        <b-img :src="order.project.product.picture" fluid :alt="order.project.title" />
+        {{ order.project.title }}
+      </div>
+    </b-row>
   </div>
 </template>
 
@@ -73,14 +46,12 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
-import AddedToCartModal from '~/components/AddedToCartModal.vue';
 
 export default {
   layout: 'account',
   middleware: 'auth',
 
   components: {
-    AddedToCartModal
   },
 
   data: () => {
