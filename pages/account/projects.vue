@@ -80,7 +80,7 @@ export default {
   },
 
   created () {
-    this.getOrders(this.includeCancelled);
+    this.getOrders({ statuses: ['open'] });
   },
 
   methods: {
