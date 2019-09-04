@@ -17,19 +17,11 @@ export const mutations = {
 
 export const actions = {
   async getOrders ({ commit }, payload) {
-    console.log('getting');
-    // console.log(includeCancelled);
+    commit('setOrders', []);
     commit('setIsLoading', true);
     let queryStr = '';
-    for (const key in payload.queryParams) {
-      if (payload.queryParams[key].toString().indexOf(',') > -1) {
-        const vals = payload.queryParams[key].split(',');
-        for (const v in vals) {
-          queryStr += '&' + key + '=' + vals[v];
-        };
-      } else {
-        queryStr += '&' + key + '=' + payload.queryParams[key];
-      }
+    for (const s in payload.statuses) {
+      queryStr += '&status=' + payload.statuses[s];
     };
     console.log(queryStr);
     const { data } = await this.$axios.get(`/orders/?${queryStr}`);

@@ -3,7 +3,7 @@
     <b-button
       :pressed.sync="includeCancelled"
       variant="primary"
-      @click="getOrders({ includeCancelled: includeCancelled })"
+      @click="refreshOrders"
     >
       Include cancelled
     </b-button>
@@ -95,6 +95,10 @@ export default {
       items: [
         { text: 'Foo', value: 1 },
         { text: 'Bar', value: 2 }
+      ],
+      statuses: [
+        'shipped',
+        'production'
       ]
     };
   },
@@ -115,10 +119,7 @@ export default {
   },
 
   created () {
-    this.getOrders({ queryParams: {
-      includeCancelled: this.includeCancelled,
-      status: 'shipped,production'
-    } });
+    this.refreshOrders();
   },
 
   methods: {
@@ -144,6 +145,15 @@ export default {
         return 0;
       }
       return value.toLocaleString('en', { minimumIntegerDigits: 1, minimumFractionDigits: 2, useGrouping: false });
+    },
+
+    refreshOrders () {
+      const statuses = [];
+      Object.assign(statuses, this.statuses);
+      if (this.includeCancelled) {
+        statuses.push('cancelled');
+      }
+      this.getOrders({ statuses: statuses });
     },
 
     projectInCart (projectId) {
