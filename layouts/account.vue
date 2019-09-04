@@ -1,10 +1,11 @@
 <template>
   <b-container>
     <Navbar />
+    <h1>My Account</h1>
     <b-container>
-      <b-nav tabs fill>
-        <b-nav-item to="/account/orders" :active="$nuxt.$route.path == '/account/orders'">
-          My Orders
+      <b-nav pills fill class="accounts-nav">
+        <b-nav-item to="/account/projects" :active="$nuxt.$route.path == '/account/projects'">
+          Saved Projects
         </b-nav-item>
         <b-nav-item to="/account/history" :active="$nuxt.$route.path == '/account/history'">
           Order History
@@ -19,17 +20,32 @@
 </template>
 
 <style>
-.nav-tabs .nav-link.active,
-.nav-tabs .show > .nav-link,
-.nav-link.nuxt-link-active,
-.nav-link.nuxt-link-exact-active {
-  color: #000;
-  background-color: rgba(0, 0, 0, 0);
+.accounts-nav {
+  justify-content: space-around;
+  margin: 50px auto;
+}
+
+.accounts-nav .nav-item {
+  flex: 0 1 auto;
+}
+
+.accounts-nav .nav-link {
+  padding: 0.25rem 4rem;
+}
+
+.accounts-nav.nav-pills .nav-link {
+  background-color: rgb(204, 204, 204);
+  color: rgb(255, 255, 255);
+  font-size: 18px;
   font-weight: 400;
 }
 
-.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-  border-color: #dee2e6 #dee2e6 rgb(248, 250, 245);
+.accounts-nav.nav-pills .nav-link.active,
+.accounts-nav.nav-pills .show > .nav-link,
+.accounts-nav .nav-link.nuxt-link-active,
+.accounts-nav .nav-link.nuxt-link-exact-active {
+  background-color: rgb(232, 219, 194);
+  color: rgb(114, 106, 97);
 }
 </style>
 

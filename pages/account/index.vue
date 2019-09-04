@@ -5,7 +5,7 @@
 <script>
 export default {
   created () {
-    this.$router.push('/account/orders');
+    this.$router.push('/account/projects');
   }
 };
 </script>

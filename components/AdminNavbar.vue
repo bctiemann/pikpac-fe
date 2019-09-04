@@ -46,15 +46,6 @@ a {
   color: #000;
 }
 /* nav-link nuxt-link-exact-active nuxt-link-active active show */
-
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link,
-.nav-link.nuxt-link-active,
-.nav-link.nuxt-link-exact-active {
-  color: #000;
-  background-color: rgba(0, 0, 0, 0);
-  font-weight: 400;
-}
 </style>
 
 <script>
