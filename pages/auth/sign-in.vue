@@ -69,7 +69,7 @@ export default {
   methods: {
     redirectToAccountPage () {
       console.log('redirecting1');
-      this.$router.push('/account/orders');
+      this.$router.push('/account/projects');
     },
 
     async login1 () {
@@ -88,7 +88,7 @@ export default {
             console.log(error.request);
             this.error = JSON.parse(error.request.response);
           });
-        // this.$router.push('/account/orders');
+        // this.$router.push('/account/projects');
       } catch (e) {
         console.log('caught error');
         this.error = e.response.data[0];
