@@ -80,7 +80,7 @@ body {
 .footer-links {
   list-style-type: none;
   padding: 0px;
-  margin-top: 48px;
+  margin-top: 24px;
 }
 
 .footer-links li {
