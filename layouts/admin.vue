@@ -4,6 +4,7 @@
     <b-container>
       <nuxt />
     </b-container>
+    <Footer />
   </div>
 </template>
 
@@ -14,10 +15,12 @@
 // import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 // import { validationRules, validationParams } from '~/mixins/Validation';
 import AdminNavbar from '~/components/AdminNavbar.vue';
+import Footer from '~/components/Footer.vue';
 
 export default {
   components: {
-    AdminNavbar
+    AdminNavbar,
+    Footer
   },
 
   data () {

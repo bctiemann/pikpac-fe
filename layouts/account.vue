@@ -1,22 +1,25 @@
 <template>
-  <b-container>
-    <Navbar />
-    <h1>My Account</h1>
+  <div>
     <b-container>
-      <b-nav pills fill class="accounts-nav">
-        <b-nav-item to="/account/projects" :active="$nuxt.$route.path == '/account/projects'">
-          Saved Projects
-        </b-nav-item>
-        <b-nav-item to="/account/history" :active="$nuxt.$route.path == '/account/history'">
-          Order History
-        </b-nav-item>
-        <b-nav-item to="/account/info" :active="$nuxt.$route.path == '/account/info'">
-          Account Information
-        </b-nav-item>
-      </b-nav>
-      <nuxt />
+      <Navbar />
+      <h1>My Account</h1>
+      <b-container>
+        <b-nav pills fill class="accounts-nav">
+          <b-nav-item to="/account/projects" :active="$nuxt.$route.path == '/account/projects'">
+            Saved Projects
+          </b-nav-item>
+          <b-nav-item to="/account/history" :active="$nuxt.$route.path == '/account/history'">
+            Order History
+          </b-nav-item>
+          <b-nav-item to="/account/info" :active="$nuxt.$route.path == '/account/info'">
+            Account Information
+          </b-nav-item>
+        </b-nav>
+        <nuxt />
+      </b-container>
     </b-container>
-  </b-container>
+    <Footer />
+  </div>
 </template>
 
 <style>
@@ -53,10 +56,12 @@
 // import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 // import { validationRules, validationParams } from '~/mixins/Validation';
 import Navbar from '~/components/Navbar.vue';
+import Footer from '~/components/Footer.vue';
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
 
   data () {
