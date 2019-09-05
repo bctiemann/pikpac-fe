@@ -49,17 +49,31 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+  /* position: relative;*/
+  /* min-height: 100%;*/
 }
 body {
-  margin-bottom: 240px; /* Margin bottom by footer height */
+  /*margin-bottom: 240px;*/ /* Margin bottom by footer height */
 }
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;    /* same as flex-grow: 1; */
+}
+
 .footer {
+  margin-top: 100px;
+  /*
   position: absolute;
   bottom: 0;
+  */
+  /*height: 180px;*/ /* Set the fixed height of the footer here */
   width: 100%;
-  height: 180px; /* Set the fixed height of the footer here */
   background-color: #f5f5f5;
 }
 

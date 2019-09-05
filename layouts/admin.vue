@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <AdminNavbar />
     <b-container>
       <nuxt />
