@@ -90,7 +90,7 @@ body {
 }
 
 .copyright {
-  margin-top: 114px;
+  margin-top: 92px;
   font-size: 12px;
   font-weight: 400;
 }
