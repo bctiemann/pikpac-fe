@@ -126,10 +126,20 @@
         <b-img src="~/static/loading_spinner.gif" />
         <b-col />
       </div>
-      <div v-for="product in products" v-else :key="product.sku" class="w-50 p-3" @click="selectProduct(product)">
-        <b-img :src="product.picture" fluid :alt="product.name" />
-        {{ product.name }}
-      </div>
+      <b-card
+        v-for="product in products"
+        v-else
+        :key="product.sku"
+        :img-src="product.picture"
+        :img-alt="product.name"
+        class="w-50 p-3 product-card"
+        @click="selectProduct(product)"
+      >
+        <!--<b-img :src="product.picture" fluid :alt="product.name" />-->
+        <b-card-text>
+          {{ product.name }}
+        </b-card-text>
+      </b-card>
     </b-row>
   </div>
 </template>
@@ -155,6 +165,17 @@
 
 .parent div {
   background-size: cover;
+}
+
+.product-card {
+  border: none;
+  background-color: inherit;
+}
+
+.card-img {
+    width: 100%;
+    height: 30vw;
+    object-fit: cover;
 }
 </style>
 
