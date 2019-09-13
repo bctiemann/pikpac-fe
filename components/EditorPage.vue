@@ -5,7 +5,7 @@
         <div class="h-100 d-flex flex-column">
           <h3>Design editor</h3>
           <b-row class="preview-pane h-100 mr-3 flex-grow-1 colored-box">
-            Preview
+            <canvas id="canvas" height="400" width="600" />
           </b-row>
         </div>
       </b-col>
@@ -168,6 +168,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
+import { fabric } from 'fabric';
 import EditableTitle from '~/components/EditableTitle.vue';
 
 export default {
@@ -222,6 +223,22 @@ export default {
     await this.getPatterns();
     await this.getPapers();
     await this.getProject({ projectId: this.$route.params.id, queryParams: { type: 'template' } });
+
+    console.log('Component created!');
+    const canvas = new fabric.Canvas('canvas');
+    const rect = new fabric.Rect({
+      left: 150,
+      top: 200,
+      originX: 'left',
+      originY: 'top',
+      width: 150,
+      height: 120,
+      angle: -10,
+      fill: 'rgba(255,0,0,0.5)',
+      transparentCorners: false
+    });
+    canvas.add(rect).setActiveObject(rect);
+    console.log(JSON.stringify(canvas));
   },
 
   created () {

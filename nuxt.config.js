@@ -56,7 +56,8 @@ module.exports = {
    ** Plugins to load before mounting the App
    */
   plugins: [
-    '~/plugins/moment.js'
+    '~/plugins/moment.js',
+    '@/plugins/fabric'
   ],
   /*
    ** Nuxt.js modules
