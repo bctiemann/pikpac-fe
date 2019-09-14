@@ -4,8 +4,8 @@
       <b-col sm="8">
         <div class="h-100 d-flex flex-column">
           <h3>Design editor</h3>
-          <b-row class="preview-pane h-100 mr-3 flex-grow-1 colored-box">
-            <canvas id="canvas" height="400" width="600" />
+          <b-row id="preview-pane" class="preview-pane h-100 mr-3 flex-grow-1 colored-box">
+            <canvas id="canvas" />
           </b-row>
         </div>
       </b-col>
@@ -193,7 +193,8 @@ export default {
         { label: 'Add images', target: 'images' },
         { label: 'Reset', target: 'reset' }
       ],
-      selectedPalette: 'style'
+      selectedPalette: 'style',
+      canvas: null
     };
   },
 
@@ -224,8 +225,11 @@ export default {
     await this.getPapers();
     await this.getProject({ projectId: this.$route.params.id, queryParams: { type: 'template' } });
 
+    window.addEventListener('resize', this.resizeCanvas, false);
+
     console.log('Component created!');
-    const canvas = new fabric.Canvas('canvas');
+    this.canvas = new fabric.Canvas('canvas');
+    this.resizeCanvas();
     const rect = new fabric.Rect({
       left: 150,
       top: 200,
@@ -237,8 +241,8 @@ export default {
       fill: 'rgba(255,0,0,0.5)',
       transparentCorners: false
     });
-    canvas.add(rect).setActiveObject(rect);
-    console.log(JSON.stringify(canvas));
+    this.canvas.add(rect).setActiveObject(rect);
+    console.log(JSON.stringify(this.canvas));
   },
 
   created () {
@@ -260,6 +264,12 @@ export default {
       'setProject',
       'setProjectProperty'
     ]),
+
+    resizeCanvas() {
+      this.canvas.setHeight(document.getElementById('preview-pane').offsetHeight);
+      this.canvas.setWidth(document.getElementById('preview-pane').offsetWidth);
+      this.canvas.renderAll();
+    },
 
     highlightPattern (pattern) {
       this.highlightedPattern = pattern;
