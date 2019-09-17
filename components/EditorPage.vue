@@ -43,6 +43,9 @@
                   </b-tabs>
                   <b-tabs v-else-if="selectedPalette === 'text'" content-class="mt-3" fill>
                     <b-tab title="Formatting">
+                      <b-btn @click="placeNewElement">
+                        Place Element
+                      </b-btn>
                       Formatting
                     </b-tab>
                     <b-tab title="Typefaces">
@@ -194,7 +197,9 @@ export default {
         { label: 'Reset', target: 'reset' }
       ],
       selectedPalette: 'style',
-      canvas: null
+      canvas: null,
+      startPointX: 0,
+      startPointY: 0
     };
   },
 
@@ -230,18 +235,9 @@ export default {
     console.log('Component created!');
     this.canvas = new fabric.Canvas('canvas');
     this.resizeCanvas();
-    const rect = new fabric.Rect({
-      left: 150,
-      top: 200,
-      originX: 'left',
-      originY: 'top',
-      width: 150,
-      height: 120,
-      angle: -10,
-      fill: 'rgba(255,0,0,0.5)',
-      transparentCorners: false
-    });
-    this.canvas.add(rect).setActiveObject(rect);
+
+    this.placeNewElement();
+
     console.log(JSON.stringify(this.canvas));
   },
 
@@ -266,9 +262,13 @@ export default {
     ]),
 
     resizeCanvas() {
-      this.canvas.setHeight(document.getElementById('preview-pane').offsetHeight);
-      this.canvas.setWidth(document.getElementById('preview-pane').offsetWidth);
+      const canvasWidth = document.getElementById('preview-pane').offsetWidth;
+      const canvasHeight = document.getElementById('preview-pane').offsetHeight;
+      this.canvas.setWidth(canvasWidth);
+      this.canvas.setHeight(canvasHeight);
       this.canvas.renderAll();
+      this.startPointX = canvasWidth / 2;
+      this.startPointY = canvasHeight / 2;
     },
 
     highlightPattern (pattern) {
@@ -303,6 +303,25 @@ export default {
       } else {
         this.selectedPalette = target;
       }
+    },
+
+    placeNewElement () {
+      const elementWidth = 150;
+      const elementHeight = 120;
+      const rect = new fabric.Rect({
+        left: this.startPointX - (elementWidth / 2),
+        top: this.startPointY - (elementHeight / 2),
+        originX: 'left',
+        originY: 'top',
+        width: elementWidth,
+        height: elementHeight,
+        angle: 0,
+        fill: 'rgba(255,0,0,0.5)',
+        transparentCorners: false
+      });
+      this.startPointX += 10;
+      this.startPointY += 10;
+      this.canvas.add(rect).setActiveObject(rect);
     },
 
     createProjectAndPush () {
