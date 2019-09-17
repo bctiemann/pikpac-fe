@@ -308,8 +308,9 @@ export default {
       }
     },
 
-    placeNewElement ({ id = 0, width = 150, height = 120, left = 0, top = 0, angle = 0 }) {
+    placeNewElement ({ id = null, width = 150, height = 120, left = 0, top = 0, angle = 0 }) {
       const rect = new fabric.Rect({
+        id: id,
         left: this.startPointX - (width / 2),
         top: this.startPointY - (height / 2),
         originX: 'left',
@@ -320,6 +321,7 @@ export default {
         fill: 'rgba(255,0,0,0.5)',
         transparentCorners: false
       });
+      console.log(rect);
       this.startPointX += 10;
       this.startPointY += 10;
       this.canvas.add(rect).setActiveObject(rect);
