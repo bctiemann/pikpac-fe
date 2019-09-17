@@ -308,11 +308,18 @@ export default {
       }
     },
 
-    placeNewElement ({ id = null, width = 150, height = 120, left = 0, top = 0, angle = 0 }) {
+    placeNewElement ({
+      id = null,
+      width = 150,
+      height = 120,
+      left = 0,
+      top = 0,
+      angle = 0
+    }) {
       const rect = new fabric.Rect({
         id: id,
-        left: this.startPointX - (width / 2),
-        top: this.startPointY - (height / 2),
+        left: left || this.startPointX - (width / 2),
+        top: top || this.startPointY - (height / 2),
         originX: 'left',
         originY: 'top',
         width: width,
