@@ -86,7 +86,7 @@
         </b-button>
       </div>
       <div>
-        <b-button @click="updateProject({ projectId: project.id, project: project })">
+        <b-button @click="saveDesign">
           Save
         </b-button>
         <b-button @click="createProjectAndPush">
@@ -236,7 +236,10 @@ export default {
     this.canvas = new fabric.Canvas('canvas');
     this.resizeCanvas();
 
-    this.placeNewElement();
+    for (const i in this.project.design.design_elements) {
+      this.placeNewElement(this.project.design.design_elements[i]);
+    };
+    // this.placeNewElement();
 
     console.log(JSON.stringify(this.canvas));
   },
@@ -305,23 +308,45 @@ export default {
       }
     },
 
-    placeNewElement () {
-      const elementWidth = 150;
-      const elementHeight = 120;
+    placeNewElement ({ id = 0, width = 150, height = 120, left = 0, top = 0, angle = 0 }) {
       const rect = new fabric.Rect({
-        left: this.startPointX - (elementWidth / 2),
-        top: this.startPointY - (elementHeight / 2),
+        left: this.startPointX - (width / 2),
+        top: this.startPointY - (height / 2),
         originX: 'left',
         originY: 'top',
-        width: elementWidth,
-        height: elementHeight,
-        angle: 0,
+        width: width,
+        height: height,
+        angle: angle,
         fill: 'rgba(255,0,0,0.5)',
         transparentCorners: false
       });
       this.startPointX += 10;
       this.startPointY += 10;
       this.canvas.add(rect).setActiveObject(rect);
+    },
+
+    saveDesign () {
+      const updatedProject = Object.assign({}, this.project);
+      const updatedDesign = Object.assign({}, this.project.design);
+      const designElements = [];
+      this.canvas.getObjects().forEach(function (element) {
+        console.log(element);
+        designElements.push({
+          id: element.id,
+          width: element.width,
+          height: element.height,
+          top: element.top,
+          left: element.left,
+          angle: element.angle
+        });
+      });
+      this.$set(updatedDesign, 'design_elements', designElements);
+      this.$set(updatedProject, 'design', updatedDesign);
+      const payload = {
+        projectId: this.project.id,
+        project: updatedProject
+      };
+      this.updateProject(payload);
     },
 
     createProjectAndPush () {
