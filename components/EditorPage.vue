@@ -237,7 +237,10 @@ export default {
     this.resizeCanvas();
 
     for (const i in this.project.design.design_elements) {
-      this.placeNewElement(this.project.design.design_elements[i]);
+      const newElement = this.project.design.design_elements[i];
+      newElement.scaleX = newElement.scale_x;
+      newElement.scaleY = newElement.scale_y;
+      this.placeNewElement(newElement);
     };
     // this.placeNewElement();
 
@@ -314,7 +317,9 @@ export default {
       height = 120,
       left = 0,
       top = 0,
-      angle = 0
+      angle = 0,
+      scaleX = 1,
+      scaleY = 1
     }) {
       const rect = new fabric.Rect({
         id: id,
@@ -325,6 +330,8 @@ export default {
         width: width,
         height: height,
         angle: angle,
+        scaleX: scaleX,
+        scaleY: scaleY,
         fill: 'rgba(255,0,0,0.5)',
         transparentCorners: false
       });
@@ -346,7 +353,9 @@ export default {
           height: element.height,
           top: element.top,
           left: element.left,
-          angle: element.angle
+          angle: element.angle,
+          scale_x: element.scaleX,
+          scale_y: element.scaleY
         });
       });
       this.$set(updatedDesign, 'design_elements', designElements);
