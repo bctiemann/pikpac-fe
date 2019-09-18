@@ -235,6 +235,7 @@ export default {
     console.log('Component created!');
     this.canvas = new fabric.Canvas('canvas');
     this.resizeCanvas();
+    this.setupCanvasControls();
 
     for (const i in this.project.design.design_elements) {
       const newElement = this.project.design.design_elements[i];
@@ -267,7 +268,45 @@ export default {
       'setProjectProperty'
     ]),
 
-    resizeCanvas() {
+    setupCanvasControls () {
+      this.canvas.on('mouse:down', function(opt) {
+        console.log('foo');
+        const evt = opt.e;
+        if (evt.altKey === true) {
+          this.isDragging = true;
+          this.selection = false;
+          this.lastPosX = evt.clientX;
+          this.lastPosY = evt.clientY;
+        }
+      });
+      this.canvas.on('mouse:move', function(opt) {
+        if (this.isDragging) {
+          const e = opt.e;
+          this.viewportTransform[4] += e.clientX - this.lastPosX;
+          this.viewportTransform[5] += e.clientY - this.lastPosY;
+          this.requestRenderAll();
+          this.lastPosX = e.clientX;
+          this.lastPosY = e.clientY;
+        }
+      });
+      this.canvas.on('mouse:up', function(opt) {
+        this.isDragging = false;
+        this.selection = true;
+      });
+      this.canvas.on('mouse:wheel', function(opt) {
+        const delta = opt.e.deltaY;
+        // const pointer = this.getPointer(opt.e);
+        let zoom = this.getZoom();
+        zoom = zoom + delta / 200;
+        if (zoom > 20) zoom = 20;
+        if (zoom < 0.01) zoom = 0.01;
+        this.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+        opt.e.preventDefault();
+        opt.e.stopPropagation();
+      });
+    },
+
+    resizeCanvas () {
       const canvasWidth = document.getElementById('preview-pane').offsetWidth;
       const canvasHeight = document.getElementById('preview-pane').offsetHeight;
       this.canvas.setWidth(canvasWidth);
