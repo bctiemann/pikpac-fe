@@ -280,81 +280,98 @@ export default {
       'setProjectProperty'
     ]),
 
-    addDeleteBtn (x, y) {
+    clearDeleteBtn () {
       const deleteBtns = document.getElementsByClassName('deleteBtn');
       for (const btn of deleteBtns) {
-        console.log(btn);
         btn.parentNode.removeChild(btn);
       };
-      // $(".deleteBtn").remove();
-      const btnLeft = x - 10;
-      const btnTop = y - 10;
+    },
+
+    addDeleteBtn (x, y, elementId) {
+      this.clearDeleteBtn();
+      const btnLeft = x - 0;
+      const btnTop = y + 20;
       const deleteBtn = document.createElement('img');
       deleteBtn.setAttribute('src', 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png');
       deleteBtn.setAttribute('class', 'deleteBtn');
+      deleteBtn.setAttribute('element-id', elementId);
       deleteBtn.setAttribute('style', 'position:absolute;top:' + btnTop + 'px;left:' + btnLeft + 'px;cursor:pointer;width:20px;height:20px;');
-      // const deleteBtn = '<img src="https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png" class="deleteBtn" style="position:absolute;top:' + btnTop + 'px;left:' + btnLeft + 'px;cursor:pointer;width:20px;height:20px;"/>';
-      console.log(deleteBtn);
+      deleteBtn.addEventListener('click', (event) => {
+        this.removeElement(event.target.getAttribute('element-id'));
+      });
       document.getElementById('preview-pane').appendChild(deleteBtn);
       // $(".canvas-container").append(deleteBtn);
-    },
-
-    canvasSelected (event) {
-      console.log(event);
-      this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
     },
 
     setupCanvasControls () {
       this.deleteCtrlImage = new Image();
       this.deleteCtrlImage.src = 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png';
 
-      // this.canvas.$on('object:selected', 'canvasSelected');
-
       this.canvas.on('object:selected', (event) => {
-        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
       });
       this.canvas.on('selection:cleared', (event) => {
-        console.log('deselected');
-        const deleteBtns = document.getElementsByClassName('deleteBtn');
-        for (const btn of deleteBtns) {
-          console.log(btn);
-          btn.parentNode.removeChild(btn);
-        };
+        this.clearDeleteBtn();
         // this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
       });
-      this.canvas.on('mouse:down', function(opt) {
+      this.canvas.on('mouse:down', (opt) => {
+        if (!this.canvas.getActiveObject()) {
+          this.clearDeleteBtn();
+        }
         const evt = opt.e;
         if (evt.altKey === true) {
-          this.isDragging = true;
-          this.selection = false;
-          this.lastPosX = evt.clientX;
-          this.lastPosY = evt.clientY;
+          this.canvas.isDragging = true;
+          this.canvas.selection = false;
+          this.canvas.lastPosX = evt.clientX;
+          this.canvas.lastPosY = evt.clientY;
         }
       });
-      this.canvas.on('mouse:move', function(opt) {
-        if (this.isDragging) {
+      this.canvas.on('mouse:move', (opt) => {
+        if (this.canvas.isDragging) {
           const e = opt.e;
-          this.viewportTransform[4] += e.clientX - this.lastPosX;
-          this.viewportTransform[5] += e.clientY - this.lastPosY;
-          this.requestRenderAll();
-          this.lastPosX = e.clientX;
-          this.lastPosY = e.clientY;
+          this.canvas.viewportTransform[4] += e.clientX - this.canvas.lastPosX;
+          this.canvas.viewportTransform[5] += e.clientY - this.canvas.lastPosY;
+          this.canvas.requestRenderAll();
+          this.canvas.lastPosX = e.clientX;
+          this.canvas.lastPosY = e.clientY;
         }
       });
-      this.canvas.on('mouse:up', function(opt) {
-        this.isDragging = false;
-        this.selection = true;
+      this.canvas.on('mouse:up', (opt) => {
+        this.canvas.isDragging = false;
+        this.canvas.selection = true;
       });
-      this.canvas.on('mouse:wheel', function(opt) {
+      this.canvas.on('mouse:wheel', (opt) => {
         const delta = opt.e.deltaY;
         // const pointer = this.getPointer(opt.e);
-        let zoom = this.getZoom();
+        let zoom = this.canvas.getZoom();
         zoom = zoom + delta / 200;
         if (zoom > 20) zoom = 20;
         if (zoom < 0.01) zoom = 0.01;
-        this.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+        this.canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
         opt.e.preventDefault();
         opt.e.stopPropagation();
+      });
+      this.canvas.on('object:scaling', (event) => {
+        this.clearDeleteBtn();
+      });
+      this.canvas.on('object:scaled', (event) => {
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
+      });
+      this.canvas.on('object:moving', (event) => {
+        this.clearDeleteBtn();
+      });
+      this.canvas.on('object:moved', (event) => {
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
+      });
+      this.canvas.on('object:rotating', (event) => {
+        this.clearDeleteBtn();
+      });
+      this.canvas.on('object:rotated', (event) => {
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
+      });
+      this.canvas.on('selection:updated', (event) => {
+        this.clearDeleteBtn();
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
       });
     },
 
@@ -432,6 +449,10 @@ export default {
       this.startPointX += 10;
       this.startPointY += 10;
       this.canvas.add(rect).setActiveObject(rect);
+    },
+
+    removeElement (elementId) {
+      this.canvas.remove(this.canvas.getActiveObject());
     },
 
     saveDesign () {
