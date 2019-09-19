@@ -199,7 +199,19 @@ export default {
       selectedPalette: 'style',
       canvas: null,
       startPointX: 0,
-      startPointY: 0
+      startPointY: 0,
+      hideControls: {
+        'tl': true,
+        'tr': false,
+        'bl': true,
+        'br': true,
+        'ml': true,
+        'mt': true,
+        'mr': true,
+        'mb': true,
+        'mtr': true
+      },
+      deleteCtrlImage: null
     };
   },
 
@@ -268,9 +280,49 @@ export default {
       'setProjectProperty'
     ]),
 
+    addDeleteBtn (x, y) {
+      const deleteBtns = document.getElementsByClassName('deleteBtn');
+      for (const btn of deleteBtns) {
+        console.log(btn);
+        btn.parentNode.removeChild(btn);
+      };
+      // $(".deleteBtn").remove();
+      const btnLeft = x - 10;
+      const btnTop = y - 10;
+      const deleteBtn = document.createElement('img');
+      deleteBtn.setAttribute('src', 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png');
+      deleteBtn.setAttribute('class', 'deleteBtn');
+      deleteBtn.setAttribute('style', 'position:absolute;top:' + btnTop + 'px;left:' + btnLeft + 'px;cursor:pointer;width:20px;height:20px;');
+      // const deleteBtn = '<img src="https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png" class="deleteBtn" style="position:absolute;top:' + btnTop + 'px;left:' + btnLeft + 'px;cursor:pointer;width:20px;height:20px;"/>';
+      console.log(deleteBtn);
+      document.getElementById('preview-pane').appendChild(deleteBtn);
+      // $(".canvas-container").append(deleteBtn);
+    },
+
+    canvasSelected (event) {
+      console.log(event);
+      this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
+    },
+
     setupCanvasControls () {
+      this.deleteCtrlImage = new Image();
+      this.deleteCtrlImage.src = 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png';
+
+      // this.canvas.$on('object:selected', 'canvasSelected');
+
+      this.canvas.on('object:selected', (event) => {
+        this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
+      });
+      this.canvas.on('selection:cleared', (event) => {
+        console.log('deselected');
+        const deleteBtns = document.getElementsByClassName('deleteBtn');
+        for (const btn of deleteBtns) {
+          console.log(btn);
+          btn.parentNode.removeChild(btn);
+        };
+        // this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y);
+      });
       this.canvas.on('mouse:down', function(opt) {
-        console.log('foo');
         const evt = opt.e;
         if (evt.altKey === true) {
           this.isDragging = true;
@@ -374,6 +426,8 @@ export default {
         fill: 'rgba(255,0,0,0.5)',
         transparentCorners: false
       });
+      rect.setControlsVisibility(this.hideControls);
+      // rect.drawControls({});
       console.log(rect);
       this.startPointX += 10;
       this.startPointY += 10;
