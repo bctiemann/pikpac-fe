@@ -210,8 +210,7 @@ export default {
         'mr': true,
         'mb': true,
         'mtr': true
-      },
-      deleteCtrlImage: null
+      }
     };
   },
 
@@ -292,7 +291,7 @@ export default {
       const btnLeft = x - 0;
       const btnTop = y + 20;
       const deleteBtn = document.createElement('img');
-      deleteBtn.setAttribute('src', 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png');
+      deleteBtn.setAttribute('src', '/close_icon.png');
       deleteBtn.setAttribute('class', 'deleteBtn');
       deleteBtn.setAttribute('element-id', elementId);
       deleteBtn.setAttribute('style', 'position:absolute;top:' + btnTop + 'px;left:' + btnLeft + 'px;cursor:pointer;width:20px;height:20px;');
@@ -300,13 +299,9 @@ export default {
         this.removeElement(event.target.getAttribute('element-id'));
       });
       document.getElementById('preview-pane').appendChild(deleteBtn);
-      // $(".canvas-container").append(deleteBtn);
     },
 
     setupCanvasControls () {
-      this.deleteCtrlImage = new Image();
-      this.deleteCtrlImage.src = 'https://cdn1.iconfinder.com/data/icons/ui-color/512/Untitled-12-128.png';
-
       this.canvas.on('object:selected', (event) => {
         this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
       });
