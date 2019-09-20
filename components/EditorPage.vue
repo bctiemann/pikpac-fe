@@ -247,6 +247,12 @@ export default {
     this.canvas = new fabric.Canvas('canvas');
     this.resizeCanvas();
     this.setupCanvasControls();
+    this.canvas.setBackgroundImage(this.project.product.default_template.template_file, this.canvas.renderAll.bind(this.canvas), {
+      // Optionally add an opacity lvl to the image
+      backgroundImageOpacity: 0.5,
+      // should the image be resized to fit the container?
+      backgroundImageStretch: false
+    });
 
     for (const i in this.project.design.design_elements) {
       const newElement = this.project.design.design_elements[i];
