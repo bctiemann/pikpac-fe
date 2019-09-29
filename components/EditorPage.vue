@@ -210,7 +210,8 @@ export default {
         'mr': true,
         'mb': true,
         'mtr': true
-      }
+      },
+      isDragging: false
     };
   },
 
@@ -319,27 +320,40 @@ export default {
         if (!this.canvas.getActiveObject()) {
           this.clearDeleteBtn();
         }
+        const pointer = this.canvas.getPointer(opt.e, true);
+        console.log('creating mouseDownPoint');
+        this.canvas.mouseDownPoint = new fabric.Point(pointer.x, pointer.y);
         const evt = opt.e;
         if (evt.altKey === true) {
-          this.canvas.isDragging = true;
+          this.isDragging = true;
           this.canvas.selection = false;
           this.canvas.lastPosX = evt.clientX;
           this.canvas.lastPosY = evt.clientY;
         }
       });
       this.canvas.on('mouse:move', (opt) => {
-        if (this.canvas.isDragging) {
+        if (this.isDragging) {
+        // if (this.canvas.mouseDownPoint) {
+          const pointer = this.canvas.getPointer(opt.e, true);
+          const mouseMovePoint = new fabric.Point(pointer.x, pointer.y);
+          this.canvas.relativePan(mouseMovePoint.subtract(this.canvas.mouseDownPoint));
+          this.canvas.mouseDownPoint = mouseMovePoint;
+          // this.keepPositionInBounds(this.canvas);
+
+          /*
           const e = opt.e;
           this.canvas.viewportTransform[4] += e.clientX - this.canvas.lastPosX;
           this.canvas.viewportTransform[5] += e.clientY - this.canvas.lastPosY;
           this.canvas.requestRenderAll();
           this.canvas.lastPosX = e.clientX;
           this.canvas.lastPosY = e.clientY;
+          */
         }
       });
       this.canvas.on('mouse:up', (opt) => {
-        this.canvas.isDragging = false;
+        this.isDragging = false;
         this.canvas.selection = true;
+        this.canvas.mouseDownPoint = null;
       });
       this.canvas.on('mouse:wheel', (opt) => {
         const delta = opt.e.deltaY;
@@ -374,6 +388,31 @@ export default {
         this.clearDeleteBtn();
         this.addDeleteBtn(event.target.oCoords.tr.x, event.target.oCoords.tr.y, event.target.id);
       });
+    },
+
+    keepPositionInBounds () {
+      const zoom = this.canvas.getZoom();
+      const xMin = (2 - zoom) * this.canvas.getWidth() / 2;
+      const xMax = zoom * this.canvas.getWidth() / 2;
+      const yMin = (2 - zoom) * this.canvas.getHeight() / 2;
+      const yMax = zoom * this.canvas.getHeight() / 2;
+
+      const point = new fabric.Point(this.canvas.getWidth() / 2, this.canvas.getHeight() / 2);
+      const center = fabric.util.transformPoint(point, this.canvas.viewportTransform);
+
+      const clampedCenterX = this.clamp(center.x, xMin, xMax);
+      const clampedCenterY = this.clamp(center.y, yMin, yMax);
+
+      const diffX = clampedCenterX - center.x;
+      const diffY = clampedCenterY - center.y;
+
+      if (diffX !== 0 || diffY !== 0) {
+        this.canvas.relativePan(new fabric.Point(diffX, diffY));
+      }
+    },
+
+    clamp(value, min, max) {
+      return Math.max(min, Math.min(value, max));
     },
 
     resizeCanvas () {
