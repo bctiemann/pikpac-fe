@@ -1,6 +1,6 @@
-# thinksmall-fe
+# pikpac-fe
 
-> ThinkSmall front-end
+> Pikpac front-end
 
 ## Build Setup
 
